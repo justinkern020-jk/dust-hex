@@ -987,10 +987,12 @@ function step(m: Match, a: Action): string | null {
       resolvePending(m, p, o ?? null);
       return null;
     }
-    case 'yield':
-      win(m, other(side), 'yield');
-      log(m, `${sideName(side)} yield${side === 'blue' ? '' : 's'}.`);
+    case 'yield': {
+      const ys = a.side ?? side;
+      win(m, other(ys), 'yield');
+      log(m, `${sideName(ys)} yield${ys === 'blue' ? '' : 's'}.`);
       return null;
+    }
     case 'end':
       endTurn(m);
       return null;

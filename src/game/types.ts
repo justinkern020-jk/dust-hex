@@ -307,7 +307,7 @@ export type Action =
   | { t: 'choose'; key: string }
   | { t: 'skip' }
   | { t: 'end' }
-  | { t: 'yield' };
+  | { t: 'yield'; side?: Side };
 
 export interface StepResult {
   state: Match;

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+  <defs>
+    <linearGradient id="blade" x1="4" y1="20" x2="20" y2="4" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#c9a84a"/>
+      <stop offset="45%" stop-color="#f3e2a8"/>
+      <stop offset="100%" stop-color="#8a6a32"/>
+    </linearGradient>
+    <linearGradient id="hilt" x1="12" y1="14" x2="18" y2="20" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#6d5228"/>
+      <stop offset="100%" stop-color="#3a2a16"/>
+    </linearGradient>
+  </defs>
+  <!-- occult dagger, tip up-left -->
+  <path d="M5.2 19.2 L14.6 9.8 L16.2 11.4 L6.8 20.8 Z" fill="url(#hilt)" stroke="#2a1c0c" stroke-width="0.6"/>
+  <path d="M13.2 8.4 L19.5 2.1 L21.2 3.8 L14.9 10.1 Z" fill="url(#blade)" stroke="#2a1c0c" stroke-width="0.55"/>
+  <path d="M13.6 8.8 L19.3 3.1" stroke="#fff8e0" stroke-width="0.7" stroke-linecap="round" opacity="0.55"/>
+  <circle cx="12.6" cy="12.6" r="1.55" fill="#e4c56a" stroke="#2a1c0c" stroke-width="0.55"/>
+  <circle cx="12.6" cy="12.6" r="0.55" fill="#2a1c0c" opacity="0.65"/>
+  <path d="M10.2 15 L8.6 16.6" stroke="#c9a84a" stroke-width="1.1" stroke-linecap="round"/>
+  <path d="M15 10.2 L16.6 8.6" stroke="#c9a84a" stroke-width="1.1" stroke-linecap="round"/>
+</svg>
