@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import type { Action, Card, FactionId, Match, Side, Target, TargetSpec, Unit } from '../game/types';
 import { card, faction, leaderOf, maybeCard } from '../game/cards';
 import { MAPS, actError, applyAction, bankFor, canAfford, deployTiles, holdings, mapById, moveTargets, newMatch, playCost, strikeTargets, targetOptions } from '../game/engine';
@@ -9,6 +9,7 @@ import { CardArt, CardPeek, KIND_LABEL } from './cardview';
 import { classifyGesture, dropAction, scrollTurnsToDrag, scrollToSlider, sliderToScroll, wheelToScroll, type HandSource } from '../game/drop';
 import { MINDS } from './Porch';
 import { WeatherLayer, pickWeather } from './Weather';
+import { flightMs, planSlides, slideKeyframes, slideTiming, type Box } from './coinMotion';
 import { playMusic, sfx, soundEvents } from './sound';
 
 const ME: Side = 'blue';
@@ -103,6 +104,12 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
   const hitId = useRef(1);
   const mRef = useRef(m);
   mRef.current = m;
+  // Coin motion (FLIP): last measured coin boxes, where the next deploy launches from, and the flight clock.
+  const gridRef = useRef<HTMLDivElement | null>(null);
+  const coinBoxes = useRef(new Map<string, Box>());
+  const launchRef = useRef<DOMRect | null>(null);
+  const flightUntil = useRef(0);
+  const inFlight = () => performance.now() < flightUntil.current;
 
   useEffect(() => {
     playMusic('ghost-town');
@@ -140,6 +147,7 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
   const aiToMove = !m.winner && (m.pending.length ? m.pending[0].side === 'red' : m.side === 'red');
   useEffect(() => {
     if (!aiToMove || primer) return;
+    const wait = Math.max(AI_DELAY, flightUntil.current - performance.now() + 140);
     const id = window.setTimeout(() => {
       const cur = mRef.current;
       const a = cur.pending.length ? choosePending(cur) : chooseAction(cur, opts.mind);
@@ -150,9 +158,77 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
         setM(r.state);
         after(r.state);
       }
-    }, AI_DELAY);
+    }, wait);
     return () => window.clearTimeout(id);
   }, [m, aiToMove, opts.mind, after, primer]);
+
+  useLayoutEffect(() => {
+    const grid = gridRef.current;
+    if (!grid) return;
+    const g = grid.getBoundingClientRect();
+    const rel = (r: DOMRect): Box => ({ x: r.left - g.left, y: r.top - g.top, w: r.width, h: r.height });
+    const els = new Map<string, HTMLElement>();
+    const now = new Map<string, Box>();
+    grid.querySelectorAll<HTMLElement>('[data-uid]').forEach((el) => {
+      const uid = el.dataset.uid!;
+      els.set(uid, el);
+      now.set(uid, rel(el.getBoundingClientRect()));
+    });
+    const prev = coinBoxes.current;
+    coinBoxes.current = now;
+    if (!prev.size && !m.events.some((e) => e.e === 'deploy')) return;
+    const deployed = new Set(m.events.filter((e) => e.e === 'deploy').map((e) => (e as { uid: string }).uid));
+    const launch = (uid: string): Box | null => {
+      if (!deployed.has(uid)) return null;
+      const u = m.units[uid];
+      if (!u) return null;
+      if (u.side === ME && launchRef.current) return rel(launchRef.current);
+      // The rival's coins (and leaders riding back) come out of their stronghold.
+      for (let r = 0; r < m.h; r++)
+        for (let c = 0; c < m.w; c++) {
+          const t = m.tiles[r][c];
+          if (t.k !== 'stronghold' || t.home !== u.side) continue;
+          const el = grid.querySelector(`[data-tile-r="${r}"][data-tile-c="${c}"]`);
+          if (!el) continue;
+          const b = rel(el.getBoundingClientRect());
+          const here = now.get(uid)!;
+          // Deploying onto the stronghold itself: drop in from that side's edge.
+          return Math.abs(b.x - here.x) + Math.abs(b.y - here.y) < 4 ? { ...b, y: b.y + (u.side === ME ? 1 : -1) * b.h * 0.9 } : b;
+        }
+      return null;
+    };
+    const slides = planSlides(prev, now, m.events, launch);
+    launchRef.current = null;
+    if (!slides.length) return;
+    const reduced = typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const wrap = grid.closest('.board-wrap') as HTMLElement | null;
+    const deploying = slides.some((x) => x.kind === 'deploy') && !reduced;
+    // A deploy from the hand flies over the hand rail and the frame: lift the board above them for the flight.
+    const socket = grid.closest('.bf-board-socket') as HTMLElement | null;
+    if (deploying && wrap) wrap.style.overflow = 'visible';
+    if (deploying && socket) socket.style.zIndex = '40';
+    for (const sl of slides) {
+      const el = els.get(sl.uid);
+      if (!el || typeof el.animate !== 'function') continue;
+      const tile = el.closest('.stone') as HTMLElement | null;
+      if (tile) tile.style.zIndex = '30';
+      el.classList.add('is-flying');
+      const anim = el.animate(slideKeyframes(sl, reduced), slideTiming(sl, reduced));
+      const done = () => {
+        el.classList.remove('is-flying');
+        if (tile) tile.style.zIndex = '';
+      };
+      anim.onfinish = done;
+      anim.oncancel = done;
+    }
+    const ms = flightMs(slides, reduced);
+    flightUntil.current = performance.now() + ms;
+    if (deploying)
+      window.setTimeout(() => {
+        if (wrap) wrap.style.overflow = '';
+        if (socket) socket.style.zIndex = '';
+      }, ms + 20);
+  }, [m]);
 
   const myTurn = m.side === ME && !m.winner && !m.pending.length;
 
@@ -204,7 +280,9 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
     else if (sel.k === 'lead') act({ t: 'lead', target: t });
   };
 
+  const handRect = (i: number | 'leader') => document.querySelector(i === 'leader' ? '[data-testid="hand-leader"]' : `[data-testid="hand-${i}"]`)?.getBoundingClientRect() ?? null;
   const onTile = (r: number, c: number) => {
+    if (inFlight()) return;
     const key = `${r},${c}`;
     const u = unitAt(m, r, c);
     if (pendingMine) {
@@ -221,8 +299,14 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
       const hit = lit.options.filter((o) => !o.gid && !o.did && ((o.r === r && o.c === c) || (u && o.uid === u.uid)));
       if (hit.length) return fireTarget(hit[0]);
     }
-    if (sel?.k === 'hand' && card(m.hand[ME][sel.i]).kind === 'unit' && lit.tiles.has(key)) return void act({ t: 'deploy', i: sel.i, r, c });
-    if (sel?.k === 'leader' && lit.tiles.has(key)) return void act({ t: 'deploy', i: 'leader', r, c });
+    if (sel?.k === 'hand' && card(m.hand[ME][sel.i]).kind === 'unit' && lit.tiles.has(key)) {
+      launchRef.current = handRect(sel.i);
+      return void act({ t: 'deploy', i: sel.i, r, c });
+    }
+    if (sel?.k === 'leader' && lit.tiles.has(key)) {
+      launchRef.current = handRect('leader');
+      return void act({ t: 'deploy', i: 'leader', r, c });
+    }
     if (sel?.k === 'unit') {
       if (lit.strikes.has(key)) return void act({ t: 'strike', uid: sel.uid, r, c });
       if (lit.moves.has(key)) return void act({ t: 'move', uid: sel.uid, r, c });
@@ -236,6 +320,7 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
   };
 
   const onHand = (i: number) => {
+    if (inFlight()) return;
     if (!myTurn) return setPeek({ c: card(m.hand[ME][i]) });
     if (sel?.k === 'hand' && sel.i === i) return setSel(null);
     const c = card(m.hand[ME][i]);
@@ -393,7 +478,11 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
     if (g.mode === 'drag') {
       const t = tileAt(e.clientX, e.clientY);
       const a = t ? dropAction(mRef.current, ME, g.src, t[0], t[1]) : null;
-      if (a) act(a);
+      if (a) {
+        // The coin settles from where the card was let go.
+        if (a.t === 'deploy') launchRef.current = new DOMRect(e.clientX - 28, e.clientY - 48, 56, 56);
+        act(a);
+      }
       else if (t) setToast('That tile is not lit for this card. Drop it on a lit tile.');
       setDrag(null);
     }
@@ -408,7 +497,7 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
   }
   live.current = { move: onGestureMove, up: onGestureUp, cancel: onGestureCancel };
   const startGesture = (src: HandSource, c: Card) => (e: React.PointerEvent) => {
-    if (e.button !== 0 || gesture.current) return;
+    if (e.button !== 0 || gesture.current || inFlight()) return;
     const touch = e.pointerType !== 'mouse';
     swallowClick.current = false;
     gesture.current = {
@@ -654,6 +743,7 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
         role="button"
         tabIndex={0}
         data-unit={u.cardId}
+        data-uid={u.uid}
         data-side={u.side}
         className={`stone-coin is-${u.side} ${foe ? 'coin-foe' : 'coin-mine'} ${picked ? 'stone-picked' : ''} ${u.sick || isSpent(u) ? 'is-sick' : ''} ${canStep && !picked ? 'can-step' : ''} ${u.leader ? 'is-leader' : ''}`}
         title={`${c.name} · Power ${u.power} · Cost ${c.cost}${fast ? ' · Fast' : ''}${u.kw.includes('ranged') ? ' · Ranged' : ''}${u.gear.length ? ` · Carrying ${u.gear.map((g) => card(g.cardId).name).join(', ')}` : ''}`}
@@ -755,7 +845,7 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
               Lead
             </button>
           )}
-          <button type="button" className="brass-btn brass-btn-solid" id="end-turn" data-testid="end-turn" disabled={!myTurn} onClick={() => act({ t: 'end' })}>
+          <button type="button" className="brass-btn brass-btn-solid" id="end-turn" data-testid="end-turn" disabled={!myTurn} onClick={() => !inFlight() && act({ t: 'end' })}>
             End turn
           </button>
           <button
@@ -817,7 +907,7 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
         <div className="bf-board-socket">
           <img className="bf-board-socket-frame" src="/assets/images/bf_board_frame.png" alt="" aria-hidden draggable={false} />
           <div className={`board-wrap${map.mood === 'bright' ? ' mood-bright' : ''}`} style={{ backgroundImage: `url(/assets/maps/${map.id}.jpg), url(/assets/maps/${map.id === 'big-empty' ? 'outer-fence' : 'gallows-mesa'}.jpg)` }}>
-            <div className={`board-grid${m.w > 5 ? ' is-big' : ''}`} role="grid" data-testid="board" style={{ gridTemplateColumns: `repeat(${m.w}, minmax(0, 1fr))`, gridTemplateRows: `repeat(${m.h}, minmax(0, 1fr))` }}>
+            <div ref={gridRef} className={`board-grid${m.w > 5 ? ' is-big' : ''}`} role="grid" data-testid="board" style={{ gridTemplateColumns: `repeat(${m.w}, minmax(0, 1fr))`, gridTemplateRows: `repeat(${m.h}, minmax(0, 1fr))` }}>
               {m.tiles.map((row, r) =>
                 row.map((t, c) => {
                   if (t.k === 'void') return <div key={`${r}-${c}`} className="tile-void" aria-hidden />;

@@ -285,3 +285,6 @@
   .bf-board-socket { width: min(100%, 38rem, 100dvh - 23.5rem); margin: 0 auto var(--dh-s2); }
   .bf-banner-slot { min-height: 2.25rem; }
 }
+
+/* Coins in flight: the glide owns the transform; no clicks land mid-air. */
+.stone-coin.is-flying { animation: none !important; pointer-events: none; will-change: transform, filter; }

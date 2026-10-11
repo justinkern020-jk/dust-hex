@@ -94,7 +94,7 @@ try {
       ok(await page.locator('[data-testid="drag-ghost"]').isVisible(), 'a ghost card follows the pointer');
       ok((await page.locator('[data-testid="tile-4-1"].dh-drop-ok').count()) === 1, 'the lit tile under the pointer is highlighted');
       await page.mouse.up();
-      await page.waitForTimeout(300);
+      await page.waitForTimeout(500);
       ok((await unitOn(page, 4, 1)) === 1, 'mouse drag up to a lit gate deploys the unit');
       ok((await handCount(page)) === n0 - 1, 'the card left the hand');
       // drop on an unlit tile: nothing happens, a hint shows
@@ -112,7 +112,7 @@ try {
       await page.click('[data-testid="hand-0"]');
       await page.waitForSelector('[data-testid="aim-banner"]');
       await page.click('[data-testid="tile-4-3"]');
-      await page.waitForTimeout(300);
+      await page.waitForTimeout(500);
       ok((await unitOn(page, 4, 3)) === 1, 'tap a card, then a lit tile, still deploys');
     }
     // inspect
@@ -136,7 +136,7 @@ try {
     await page.mouse.down();
     for (let i = 1; i <= 12; i++) await page.mouse.move(from.x + ((to.x - from.x) * i) / 12, from.y + ((to.y - from.y) * i) / 12);
     await page.mouse.up();
-    await page.waitForTimeout(300);
+    await page.waitForTimeout(500);
     ok((await unitOn(page, 4, 3)) === 1, 'a slanted mouse drag across to a lit gate deploys');
     await ctx.close();
   }
@@ -147,7 +147,7 @@ try {
     page.on('pageerror', (e) => errs.push(String(e)));
     await open(page);
     const cdp = await ctx.newCDPSession(page);
-    await page.waitForTimeout(300);
+    await page.waitForTimeout(500);
     const touch = (type, x, y) => cdp.send('Input.dispatchTouchEvent', { type, touchPoints: type === 'touchEnd' ? [] : [{ x, y, id: 1 }] });
     await page.locator('[data-testid="hand-row"]').scrollIntoViewIfNeeded();
     // sideways swipe scrolls natively
@@ -176,7 +176,7 @@ try {
         await page.waitForTimeout(16);
       }
       await touch('touchEnd');
-      await page.waitForTimeout(400);
+      await page.waitForTimeout(500);
       ok((await unitOn(page, 4, 1)) === 1, 'touch drag up to a lit gate deploys the unit');
       ok((await handCount(page)) === n0 - 1, 'the card left the hand');
     }
