@@ -122,11 +122,15 @@ describe('keyword units', () => {
   }
   const winged = CARDS.filter((c) => c.kind === 'unit' && c.kw.includes('winged'));
   for (const c of winged) {
-    it(`${c.id} may enter on any empty tile`, () => {
+    it(`${c.id} may enter on any empty tile outside the rival half`, () => {
       let m = field();
-      m = deployCard(m, 'blue', c.id, 1, 0);
+      m = deployCard(m, 'blue', c.id, 2, 1);
       m = settle(m);
-      expect(m.units[uidAt(m, 1, 0)!].cardId).toBe(c.id);
+      expect(m.units[uidAt(m, 2, 1)!].cardId).toBe(c.id);
+      const f = field();
+      f.hand.blue = [c.id];
+      const r = tryRun(f, { t: 'deploy', i: 0, r: 1, c: 0 });
+      expect(r.error).toBeTruthy();
     });
   }
   const crown = CARDS.filter((c) => c.kind === 'unit' && c.kw.includes('crown'));
