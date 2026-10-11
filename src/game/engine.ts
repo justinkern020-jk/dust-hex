@@ -504,10 +504,10 @@ function runPlay(m: Match, side: Side, c: Card, target: Target | undefined) {
         const hh = heightAt(m, p.r, p.c);
         const low = unitsOf(m, foe).filter((u) => {
           const q = posOf(m, u.uid)!;
-          return heightAt(m, q.r, q.c) < hh && dist(p, q) <= 2;
+          return heightAt(m, q.r, q.c) <= hh && dist(p, q) <= 2;
         });
-        if (!low.length) log(m, 'Thunder rolls, but no one stands below within reach.');
-        pushPending(m, { side, prompt: `Thunder on the Ridge: ${nameOf(tu)} deals ${n} to an enemy below.`, resolve: 'dmgUnit', options: low.map((u) => unitOption(m, u)), data: { n, ground: true }, source: c.id });
+        if (!low.length) log(m, 'Thunder rolls, but no enemy stands within reach and no higher.');
+        pushPending(m, { side, prompt: `Thunder on the Ridge: ${nameOf(tu)} deals ${n} to an enemy within two tiles.`, resolve: 'dmgUnit', options: low.map((u) => unitOption(m, u)), data: { n, ground: true }, source: c.id });
         break;
       }
       case 'carry': {

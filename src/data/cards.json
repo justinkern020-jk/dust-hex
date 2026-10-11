@@ -520,13 +520,13 @@
    "High Ground"
   ],
   "mark": "Supernatural",
-  "text": "Choose an allied unit on higher ground. It deals 2 Power to one enemy below it within two tiles, and that enemy cannot climb on its next turn.",
+  "text": "Choose an allied unit. It deals 2 Power to one enemy within two tiles that does not stand above it, and that enemy cannot climb on its next turn.",
   "quote": "The earth is the mother of all people, and all people should have equal rights upon it.",
   "quoted": "Hinmatóowyalahtq̓it (Chief Joseph), North American Review, April 1879",
   "art": "/cards/thunder-ridge.jpg",
   "artPos": "center 40%",
   "target": {
-   "kind": "heightAlly"
+   "kind": "ally"
   },
   "play": [
    {
@@ -2853,7 +2853,7 @@
   "id": "pearl-hart",
   "name": "Pearl Hart",
   "faction": "gang",
-  "cost": 2,
+  "cost": 3,
   "power": 2,
   "mark": "Globe Stage",
   "standin": "belle",
@@ -3025,7 +3025,7 @@
   "id": "jackalope",
   "name": "Jackalope",
   "faction": "gang",
-  "cost": 1,
+  "cost": 2,
   "power": 1,
   "mark": "Converse County",
   "standin": "cactus-cat",
@@ -3626,7 +3626,7 @@
   "name": "Judge Roy Bean",
   "faction": "star",
   "cost": 3,
-  "power": 2,
+  "power": 3,
   "mark": "Langtry",
   "standin": "boot-clerk",
   "ab": [
@@ -3710,7 +3710,7 @@
   "name": "George Maledon",
   "faction": "star",
   "cost": 2,
-  "power": 2,
+  "power": 3,
   "mark": "Fort Smith",
   "standin": "night-jailer",
   "ab": [
@@ -4301,7 +4301,7 @@
   "id": "buffalo-calf-road",
   "name": "Buffalo Calf Road Woman",
   "faction": "grass",
-  "cost": 2,
+  "cost": 3,
   "power": 3,
   "mark": "Northern Cheyenne",
   "standin": "pony-herd",
@@ -4357,7 +4357,7 @@
   "id": "mustang-runner",
   "name": "Mustang Runner",
   "faction": "grass",
-  "cost": 2,
+  "cost": 3,
   "power": 2,
   "mark": "The Grass",
   "standin": "pony-herd",
@@ -4554,7 +4554,7 @@
   "name": "Black Elk",
   "faction": "lodge",
   "cost": 3,
-  "power": 2,
+  "power": 3,
   "mark": "Oglala Lakota",
   "standin": "ridge-listener",
   "ab": [
@@ -4618,7 +4618,7 @@
   "name": "Tall Bull",
   "faction": "lodge",
   "cost": 4,
-  "power": 4,
+  "power": 5,
   "mark": "Cheyenne Dog Soldiers",
   "standin": "red-cloud",
   "text": "Hold. Enemy units adjacent to it cannot move. They may still strike.",
@@ -4642,7 +4642,7 @@
   "name": "Dog Soldier",
   "faction": "lodge",
   "cost": 2,
-  "power": 2,
+  "power": 3,
   "mark": "Cheyenne Dog Soldiers",
   "standin": "empty-lodge",
   "text": "Hold. Enemy units adjacent to it cannot move. They may still strike.",
@@ -4722,7 +4722,7 @@
   "name": "Weather Watcher",
   "faction": "lodge",
   "cost": 1,
-  "power": 1,
+  "power": 2,
   "mark": "The Lodge",
   "standin": "ridge-listener",
   "ab": [
@@ -4838,7 +4838,7 @@
   "name": "Hail Caller",
   "faction": "lodge",
   "cost": 3,
-  "power": 2,
+  "power": 3,
   "mark": "The Lodge",
   "standin": "empty-lodge",
   "ab": [
