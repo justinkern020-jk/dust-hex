@@ -840,6 +840,9 @@ function resolvePending(m: Match, p: Pending, o: PendingOption | null) {
       }
       return;
     }
+    case 'lookTile':
+      if (o.r != null) lookAt(m, p.side, o.r, o.c!, p.source ? card(p.source).name : 'You');
+      return;
     case 'drawOrLook':
       if (o.key === 'draw') draw(m, p.side, 1);
       else lookAuto(m, p.side, 'The marshal');
@@ -1051,7 +1054,7 @@ function step(m: Match, a: Action): string | null {
       m.money[side] -= cost;
       m.hand[side].splice(a.i, 1);
       if (rite) {
-        const cole = unitsOf(m, other(side)).find((u) => abilitiesOf(u.cardId).some((ab) => ab.on === 'enemyRite' && ab.op === 'deny') && !isSpent(u) && u.turnUse['deny'] !== m.turn && (u.pinUntil ?? 0) < nextTurnOf(m, u.side));
+        const cole = unitsOf(m, other(side)).find((u) => abilitiesOf(u.cardId).some((ab) => ab.on === 'enemyRite' && ab.op === 'deny') && !isSpent(u) && !((u.turnUse['deny'] ?? -1) >= m.turn) && (u.pinUntil ?? 0) < nextTurnOf(m, u.side));
         if (cole) {
           log(m, `${side === 'blue' ? 'You play' : 'The rival plays'} ${c.name}. ${nameOf(cole)} is watching.`);
           m.pending.push({

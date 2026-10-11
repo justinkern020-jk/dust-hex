@@ -499,9 +499,23 @@ export function fire(m: Match, u: Unit, ab: Ability, ctx: FireCtx = {}) {
       log(m, `${name}: ${sideName(foe)} discards ${card(cid).name}.`);
       return;
     }
-    case 'look':
-      lookAuto(m, u.side, name);
+    case 'look': {
+      if (ab.on !== 'enter') {
+        lookAuto(m, u.side, name);
+        return;
+      }
+      const seen = new Set(m.scouted[u.side]);
+      const cands = allTiles(m).filter(([r, c]) => !seen.has(key(r, c)) && !m.board[r][c]);
+      pushPending(m, {
+        side: u.side,
+        prompt: `${name}: look at one hidden tile.`,
+        resolve: 'lookTile',
+        options: cands.map(([r, c]) => tileOption(r, c)),
+        optional: true,
+        source: u.cardId,
+      });
       return;
+    }
     case 'lookAll':
       revealAll(m, u.side);
       log(m, `${name} sees every hidden death on the field.`);

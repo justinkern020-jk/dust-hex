@@ -29,9 +29,11 @@ export function field(opts: { blue?: FactionId; red?: FactionId; seed?: number }
   return m;
 }
 
-export function put(m: Match, cardId: string, side: Side, r: number, c: number, o: { power?: number; leader?: boolean; gear?: string[] } = {}): Unit {
+export function put(m: Match, cardId: string, side: Side, r: number, c: number, o: { power?: number; leader?: boolean; gear?: string[]; deny?: boolean } = {}): Unit {
   const u = makeUnit(m, cardId, side, { leader: o.leader, sick: false });
   u.enteredTurn = m.turn - 1;
+  // Cole's Deny would interrupt every test rite; switch it off unless asked for.
+  if (cardId === 'cole' && !o.deny) u.turnUse.deny = 1e9;
   if (o.power != null) {
     u.power = o.power;
     u.maxPower = Math.max(u.maxPower, o.power);
