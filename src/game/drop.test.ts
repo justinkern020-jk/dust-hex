@@ -1,6 +1,6 @@
 /** Drag from the hand: which way a gesture reads, and what a drop does. */
 import { describe, expect, it } from 'vitest';
-import { classifyGesture, dropAction, scrollToSlider, sliderToScroll, wheelToScroll } from './drop';
+import { scrollTurnsToDrag, classifyGesture, dropAction, scrollToSlider, sliderToScroll, wheelToScroll } from './drop';
 import { applyAction } from './engine';
 import { field, put } from './testkit';
 
@@ -14,6 +14,16 @@ describe('gesture reading', () => {
     expect(classifyGesture(-12, -14)).toBe('drag'); // a thumb leaning off true
     expect(classifyGesture(40, -6)).toBe('scroll');
     expect(classifyGesture(-30, 10)).toBe('scroll');
+  });
+  it('a slanted pull up toward the board still drags', () => {
+    expect(classifyGesture(32, -17)).toBe('drag');
+    expect(classifyGesture(-40, -22)).toBe('drag');
+    expect(classifyGesture(30, -12)).toBe('scroll');
+    expect(classifyGesture(30, 12)).toBe('scroll');
+  });
+  it('a mouse scroll that rises well toward the board turns into a drag', () => {
+    expect(scrollTurnsToDrag(-20)).toBe(false);
+    expect(scrollTurnsToDrag(-60)).toBe(true);
   });
 });
 

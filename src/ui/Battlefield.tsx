@@ -6,7 +6,7 @@ import { chooseAction, choosePending, type Mind } from '../game/ai';
 import { isSpent } from '../game/rules';
 import { posOf, unitAt } from '../game/core';
 import { CardArt, CardPeek, KIND_LABEL } from './cardview';
-import { classifyGesture, dropAction, scrollToSlider, sliderToScroll, wheelToScroll, type HandSource } from '../game/drop';
+import { classifyGesture, dropAction, scrollTurnsToDrag, scrollToSlider, sliderToScroll, wheelToScroll, type HandSource } from '../game/drop';
 import { MINDS } from './Porch';
 import { WeatherLayer, pickWeather } from './Weather';
 import { playMusic, sfx, soundEvents } from './sound';
@@ -297,7 +297,7 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
   };
 
   // ---- dragging from the hand and scrolling it
-  const gesture = useRef<{ id: number; src: HandSource; x0: number; y0: number; mode: 'pending' | 'drag' | 'scroll' | 'none'; scroll0: number; touch: boolean; hold: number } | null>(null);
+  const gesture = useRef<{ id: number; src: HandSource; x0: number; y0: number; mode: 'pending' | 'drag' | 'scroll' | 'none'; scroll0: number; touch: boolean; hold: number; lx: number; ly: number; raf: number } | null>(null);
   const swallowClick = useRef(false);
   // Window listeners must be the same functions to add and remove; they call the latest handlers.
   const live = useRef({ move: (_e: PointerEvent) => {}, up: (_e: PointerEvent) => {}, cancel: () => {} });
@@ -314,9 +314,31 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
     const el = document.elementFromPoint(x, y)?.closest('[data-tile-r]') as HTMLElement | null;
     return el ? [Number(el.dataset.tileR), Number(el.dataset.tileC)] : null;
   };
+  // Near the top edge mid-drag, the page scrolls up so the whole board can be reached.
+  const edgeSpeed = (y: number) => {
+    const edge = 72;
+    // Only upward: the board is always above the hand.
+    return y < edge ? -Math.ceil((edge - y) / 4) : 0;
+  };
+  const edgeTick = () => {
+    const g = gesture.current;
+    if (!g || g.mode !== 'drag') return;
+    const v = edgeSpeed(g.ly);
+    if (!v) {
+      g.raf = 0;
+      return;
+    }
+    window.scrollBy(0, v);
+    const t = tileAt(g.lx, g.ly);
+    setDrag({ src: g.src, x: g.lx, y: g.ly, over: t ? `${t[0]},${t[1]}` : null });
+    g.raf = window.requestAnimationFrame(edgeTick);
+  };
   const endGesture = () => {
     const g = gesture.current;
-    if (g) window.clearTimeout(g.hold);
+    if (g) {
+      window.clearTimeout(g.hold);
+      if (g.raf) window.cancelAnimationFrame(g.raf);
+    }
     gesture.current = null;
     window.removeEventListener('pointermove', stable.move);
     window.removeEventListener('pointerup', stable.up);
@@ -346,10 +368,23 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
     }
     if (g.mode === 'drag') {
       e.preventDefault();
+      g.lx = e.clientX;
+      g.ly = e.clientY;
       const t = tileAt(e.clientX, e.clientY);
       setDrag({ src: g.src, x: e.clientX, y: e.clientY, over: t ? `${t[0]},${t[1]}` : null });
+      if (!g.raf && edgeSpeed(e.clientY)) g.raf = window.requestAnimationFrame(edgeTick);
     } else if (g.mode === 'scroll' && rowRef.current) {
-      rowRef.current.scrollLeft = g.scroll0 - dx;
+      if (scrollTurnsToDrag(dy) && canDrag(g.src)) {
+        rowRef.current.scrollLeft = g.scroll0;
+        g.mode = 'drag';
+        slotH.current = slotRef.current?.offsetHeight ?? 0;
+        setSel(g.src === 'leader' ? { k: 'leader' } : { k: 'hand', i: g.src });
+        setToast(null);
+        g.lx = e.clientX;
+        g.ly = e.clientY;
+        const t = tileAt(e.clientX, e.clientY);
+        setDrag({ src: g.src, x: e.clientX, y: e.clientY, over: t ? `${t[0]},${t[1]}` : null });
+      } else rowRef.current.scrollLeft = g.scroll0 - dx;
     }
   }
   function onGestureUp(e: PointerEvent) {
@@ -383,6 +418,9 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
       y0: e.clientY,
       mode: 'pending',
       scroll0: 0,
+      lx: e.clientX,
+      ly: e.clientY,
+      raf: 0,
       touch,
       // Press and hold reads the card, for phones without a double-click.
       hold: touch

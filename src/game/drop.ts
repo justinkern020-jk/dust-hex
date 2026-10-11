@@ -11,15 +11,20 @@ export type Gesture = 'pending' | 'drag' | 'scroll';
 
 /**
  * Decide what a pointer movement means once it has travelled far enough.
- * Mostly vertical: the card is being dragged toward the board.
- * Mostly horizontal: the hand is being scrolled.
+ * Toward the board (up, even on a slant of about 27 degrees or more): the card is dragged.
+ * Mostly sideways: the hand is scrolled.
  */
 export function classifyGesture(dx: number, dy: number, threshold = 8): Gesture {
   const ax = Math.abs(dx);
   const ay = Math.abs(dy);
   if (Math.max(ax, ay) < threshold) return 'pending';
-  // A slight lean toward vertical is enough: thumbs rarely move straight up.
-  return ay >= ax * 0.8 ? 'drag' : 'scroll';
+  if (dy < 0 && ay >= ax * 0.5) return 'drag';
+  return ay >= ax * 1.2 ? 'drag' : 'scroll';
+}
+
+/** A sideways mouse scroll that then heads well up toward the board becomes a drag. */
+export function scrollTurnsToDrag(dy: number, rise = 48): boolean {
+  return dy <= -rise;
 }
 
 export type HandSource = number | 'leader';

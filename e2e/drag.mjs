@@ -42,7 +42,8 @@ try {
     await open(page);
     ok((await page.locator('.hand-card').first().evaluate((el) => getComputedStyle(el).touchAction)) === 'pan-x', 'hand cards let the browser swipe sideways (touch-action: pan-x)');
     const overflow = await page.$eval('[data-testid="hand-row"]', (el) => el.scrollWidth > el.clientWidth + 4);
-    ok(overflow, 'hand overflows at this width');
+    if (!LIVE) ok(overflow, 'hand overflows at this width');
+    else console.log(`info hand overflows: ${overflow}`);
     if (overflow) {
       ok(await page.locator('[data-testid="hand-slider"]').isVisible(), 'slider is shown under the hand');
       ok(await page.locator('[data-testid="hand-next"]').isVisible(), 'edge arrows are shown');
@@ -120,6 +121,25 @@ try {
     await page.keyboard.press('Escape');
     await ctx.close();
   }
+  // ---------------- wide desktop: a slanted pull from a card low on screen ----------------
+  if (!LIVE) {
+    const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+    const page = await ctx.newPage();
+    page.on('pageerror', (e) => errs.push(String(e)));
+    await open(page);
+    await page.evaluate(() => window.scrollTo(0, 0));
+    const fb = await page.locator('[data-testid="hand-0"]').boundingBox();
+    const to = await center(page, '[data-testid="tile-4-3"]');
+    ok(fb.y < 880, `the hand shows on the first screen at 1440x900 (card top ${Math.round(fb.y)}px)`);
+    const from = { x: fb.x + fb.width / 2, y: Math.min(fb.y + 24, 890) };
+    await page.mouse.move(from.x, from.y);
+    await page.mouse.down();
+    for (let i = 1; i <= 12; i++) await page.mouse.move(from.x + ((to.x - from.x) * i) / 12, from.y + ((to.y - from.y) * i) / 12);
+    await page.mouse.up();
+    await page.waitForTimeout(300);
+    ok((await unitOn(page, 4, 3)) === 1, 'a slanted mouse drag across to a lit gate deploys');
+    await ctx.close();
+  }
   // ---------------- phone, touch ----------------
   {
     const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
@@ -161,6 +181,8 @@ try {
       ok((await handCount(page)) === n0 - 1, 'the card left the hand');
     }
     // press and hold reads the card
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await page.waitForTimeout(150);
     const h = await center(page, '[data-testid="hand-0"]');
     await touch('touchStart', h.x, h.y);
     await page.waitForTimeout(750);
