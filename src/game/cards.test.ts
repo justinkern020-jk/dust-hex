@@ -738,8 +738,9 @@ describe('Silver Star', () => {
     expect(m.units[h.uid].power).toBe(1);
     expect(m.units[a.uid].power).toBeLessThanOrEqual(2);
   });
-  it('Ledger: the first card each turn gains 1', () => {
+  it('Ledger: the first card each turn gains 1 while your leader is on the board', () => {
     let m = field({ blue: 'star' });
+    put(m, 'bass', 'blue', 3, 2, { leader: true });
     m = playCard(m, 'blue', 'ledger');
     expect(m.ledger.blue).toBe(true);
     m = endTurn(m);

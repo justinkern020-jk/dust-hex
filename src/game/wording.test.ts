@@ -1,4 +1,5 @@
 /** The printed-text pass: one vocabulary, and cards that do what they now say. */
+import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { CARDS, card } from './cards';
 import { field, put, run, playCard, settle, tryRun } from './testkit';
@@ -92,5 +93,98 @@ describe('cards fixed in the sense pass', () => {
       m = run(m, { t: 'lead', target: { uid: a.uid } });
       expect(tryRun(m, { t: 'move', uid: a.uid, r: 1, c: 0 }).error, leader).toBeNull();
     }
+  });
+});
+
+describe('Western wording pass: every card reads plainly', () => {
+  const texts = CARDS.flatMap((c) => [[c.id, c.text], ...(c.lead ? [[`${c.id} (lead)`, c.lead.text]] : [])] as [string, string][]);
+  it('every card has text that fits a phone card', () => {
+    for (const c of CARDS) {
+      expect(c.text.length, c.id).toBeGreaterThan(10);
+      expect(c.text.length, c.id).toBeLessThanOrEqual(210);
+    }
+  });
+  it('every card opens with a named ability (a short lead-in ending in a full stop)', () => {
+    for (const c of CARDS) expect(c.text, c.id).toMatch(/^[A-Z][A-Za-z’'\- ]{1,30}\./);
+  });
+  it('no bare "his/her/its strikes": the card says who strikes', () => {
+    for (const [id, t] of texts) expect(t, id).not.toMatch(/\b(his|her|its|their) strikes?\b/i);
+  });
+  it('damage is never written as Power given to someone', () => {
+    for (const [id, t] of texts) {
+      expect(t, id).not.toMatch(/\b\d+ Power (to|at|on)\b/i);
+      expect(t, id).not.toMatch(/deals? (\+?\d+|his|her|its) Power\b/i);
+      expect(t, id).not.toMatch(/Power to the attacker|attacker gains/i);
+      expect(t, id).not.toMatch(/\bgets? \+\d/);
+    }
+  });
+  it('no occult jargon in rules text', () => {
+    const banned = /\b(occult\w*|rites?|ritual\w*|sigils?|covens?|grimoires?|spells?|incantations?|hex(es)?|curse[sd]?|summon\w*|arcane|demon\w*|s[eé]ance|pentagram|magic\w*|witchcraft|working|oaths?|muster\w*|plates?)\b/i;
+    for (const [id, t] of texts) expect(t, id).not.toMatch(banned);
+    for (const c of CARDS) if (c.lead?.label) expect(c.lead.label, c.id).not.toMatch(banned);
+  });
+  it('arrival abilities say "When you deploy"', () => {
+    for (const c of CARDS.filter((x) => x.ab?.some((a) => a.on === 'enter'))) expect(c.text, c.id).toMatch(/When you deploy/);
+    for (const [id, t] of texts) expect(t, id).not.toMatch(/\bwhen (he|she|it|they) enters?\b/i);
+  });
+  it('leader passives that only work on the board say so', () => {
+    for (const id of ['crook', 'red-cloud', 'sitting-bull', 'faro-widow']) expect(card(id).text, id).toMatch(/is on the board/);
+  });
+  it('Frank James names himself as the one who hits harder, not the leader', () => {
+    const t = card('frank-james').text;
+    expect(t).toMatch(/While your leader is on the board, Frank James deals 1 extra damage when he strikes/);
+    expect(card('frank-james').kind).toBe('unit');
+  });
+  it('ranged cards only promise no strike back for the two-tile shot', () => {
+    for (const c of CARDS.filter((x) => x.kw.includes('ranged'))) {
+      expect(c.text, c.id).toMatch(/two tiles away in a straight line, and that target cannot strike back/);
+      expect(c.text, c.id).not.toMatch(/is not answered/);
+    }
+  });
+  it('one name per keyword: Command cards say Command, and the glossary agrees', () => {
+    for (const c of CARDS.filter((x) => x.kw.includes('crown'))) expect(c.text, c.id).toMatch(/^Command\./);
+    for (const c of CARDS) expect(c.text, c.id).not.toMatch(/\bCrown\b/);
+    const view = readFileSync(new URL('../ui/cardview.tsx', import.meta.url), 'utf8');
+    expect(view).toMatch(/crown: \['Command'/);
+    expect(view).toMatch(/ranged: \['Ranged', '[^']*answered as usual/);
+  });
+  it('Tough, Hold, Harbor, Returns and Fast read the same on every card', () => {
+    const want: Record<string, RegExp> = {
+      tough: /Tough\. .*takes 1 less/,
+      hold: /Hold\. .*cannot move, though they can still strike|Hold\. Enemy units next to .* cannot move/,
+      harbor: /Harbor\. .*enemy tricks cannot target your other units/,
+      fast: /Fast\./,
+    };
+    for (const c of CARDS) for (const k of Object.keys(want)) if (c.kw.includes(k)) expect(c.text, `${c.id} ${k}`).toMatch(want[k]);
+    for (const c of CARDS.filter((x) => x.ab?.some((a) => a.op === 'returns') && x.kind === 'unit'))
+      expect(c.text, c.id).toMatch(/^Returns\. .*the first time (he|she|it) is destroyed, (he|she|it) rides back in at the start of your next turn, exhausted\.$/);
+  });
+  it('every leader has a Western Lead name and plain Lead text', () => {
+    for (const c of CARDS.filter((x) => x.kind === 'leader')) {
+      expect(c.lead?.label, c.id).toBeTruthy();
+      expect(c.lead!.text, c.id).toMatch(/\.$/);
+    }
+    expect(card('bass').lead?.label).toBe('Deputize');
+    expect(card('crook').lead?.label).toBe('Boots and Saddles');
+  });
+});
+
+describe('card text after the engine fixes', () => {
+  it('traps say they spring on enemy units only', () => {
+    for (const c of CARDS.filter((x) => x.kind === 'trap')) {
+      expect(c.text, c.id).toMatch(/The first enemy unit to enter it/);
+      expect(c.text, c.id).not.toMatch(/either side/);
+    }
+  });
+  it('moved traps stay known to their owner', () => {
+    expect(card('widow-lamp').text).toMatch(/Only you and its owner are shown where/);
+    expect(card('tommyknockers').text).toMatch(/shown only to you and its owner/);
+  });
+  it('Cole, Night Ledger and La Llorona say what the engine now does', () => {
+    expect(card('cole').text).toMatch(/Once each round, while Cole Younger is on the board, you may cancel a trick/);
+    expect(card('cole').text).not.toMatch(/is ready/);
+    expect(card('ledger').text).toMatch(/While your leader is on the board/);
+    expect(card('llorona').text).toMatch(/deck top if full/);
+    expect(card('sitting-bull').text).toMatch(/that turn may move one extra tile/);
   });
 });

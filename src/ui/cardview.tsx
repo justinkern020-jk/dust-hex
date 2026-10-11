@@ -12,22 +12,22 @@ export const KIND_LABEL: Record<string, string> = {
 };
 
 export const KW_TEXT: Record<string, [string, string]> = {
-  fast: ['Fast', 'Strikes first in melee. A killing blow is not answered.'],
+  fast: ['Fast', 'Strikes first in melee. An enemy it kills cannot strike back.'],
   slow: ['Slow', 'Strikes last in melee.'],
-  tough: ['Tough', 'Every blow against it deals 1 less damage. Power it simply loses is not reduced.'],
-  ranged: ['Ranged', 'Strikes 2 tiles away in a straight line, never on a diagonal. The target does not answer.'],
-  delay: ['Delay', 'Cannot move or strike the turn it enters.'],
+  tough: ['Tough', 'Whenever it takes damage, it takes 1 less. Power it loses is not reduced.'],
+  ranged: ['Ranged', 'Can also strike an enemy 2 tiles away in a straight line, never on a diagonal. That target cannot strike back; a strike next to it is answered as usual.'],
+  delay: ['Delay', 'Cannot move or strike the turn you deploy it.'],
   cryptid: ['Cryptid', 'A sighting from this side’s bestiary.'],
   harbor: ['Harbor', 'While it stands, enemy tricks can name no other unit on its side.'],
   untargetable: ['Untargetable', 'Enemy tricks cannot name it.'],
   noRangedTarget: ['Veiled', 'Ranged strikes cannot name it.'],
   noAnswer: ['Unanswered', 'Units it strikes do not strike back.'],
   evenGround: ['Even ground', 'While it stands, ranged strikes cannot name units on its side.'],
-  winged: ['Winged', 'May enter on any empty tile outside the rival’s half.'],
+  winged: ['Winged', 'You may deploy it on any empty tile outside the rival’s half.'],
   trapproof: ['Sure-footed', 'Traps cannot destroy it, though they can still hurt it.'],
   climber: ['Climber', 'If its first move in a turn is a climb, it does not spend its move.'],
-  hold: ['Hold', 'Enemy units next to it cannot move.'],
-  crown: ['Crown', 'Your units next to it deal 1 extra damage when they strike.'],
+  hold: ['Hold', 'Enemy units next to it cannot move. They can still strike.'],
+  crown: ['Command', 'Your other units next to it deal 1 extra damage when they strike.'],
 };
 
 export function kwList(c: Card) {
