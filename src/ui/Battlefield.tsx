@@ -11,7 +11,13 @@ import { WeatherLayer, pickWeather } from './Weather';
 import { playMusic, sfx, soundEvents } from './sound';
 
 const ME: Side = 'blue';
-const AI_DELAY = 520;
+const AI_DELAY = (() => {
+  try {
+    return new URLSearchParams(window.location.search).get('fast') != null ? 40 : 520;
+  } catch {
+    return 520;
+  }
+})();
 
 type Sel =
   | { k: 'unit'; uid: string }

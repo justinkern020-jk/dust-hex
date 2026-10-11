@@ -4430,9 +4430,9 @@
    }
   ],
   "text": "Fast. After he strikes and survives, he may move one tile.",
-  "quote": "No photograph of him has ever been proven. He would not sit for one.",
-  "quoted": "Card note",
-  "quoteSource": "note",
+  "quote": "We preferred hunting to a life of idleness on the reservation, where we were driven against our will.",
+  "quoted": "Attributed to Crazy Horse, 1877",
+  "quoteSource": "attributed",
   "art": "/cards/red-cloud.jpg"
  },
  {
@@ -4455,9 +4455,9 @@
   "mark": "Oglala Lakota",
   "standin": "empty-lodge",
   "text": "Harbor. Enemy rites cannot target another allied unit while it stands.",
-  "quote": "He spoke for the Oglala in Washington more times than any man of his generation.",
-  "quoted": "Card note",
-  "quoteSource": "note",
+  "quote": "There was a woman with an infant in her arms who was killed as she almost touched the flag of truce.",
+  "quoted": "American Horse, testimony on Wounded Knee, Washington, February 1891",
+  "quoteSource": "attested",
   "art": "/cards/empty-lodge.jpg"
  },
  {
@@ -4497,7 +4497,7 @@
   "name": "High Backbone",
   "faction": "lodge",
   "cost": 4,
-  "power": 4,
+  "power": 5,
   "mark": "Minneconjou Lakota",
   "standin": "ridge-listener",
   "ab": [
@@ -4693,7 +4693,7 @@
   "name": "Little Wolf",
   "faction": "lodge",
   "cost": 3,
-  "power": 3,
+  "power": 4,
   "mark": "Northern Cheyenne",
   "standin": "ridge-listener",
   "ab": [

@@ -1355,3 +1355,52 @@ describe('leader LEAD powers', () => {
     expect(m.hand.blue.length).toBe(h + 1);
   });
 });
+
+describe('ability groups (every card with the op)', () => {
+  const killDraw = CARDS.filter((c) => c.kind === 'unit' && c.ab?.some((a) => a.on === 'kill' && (a.op === 'draw' || a.op === 'drawBank')));
+  for (const c of killDraw) {
+    it(`${c.id} draws when it destroys a unit`, () => {
+      let m = field({ blue: c.faction });
+      const u = put(m, c.id, 'blue', 2, 2, { power: 9 });
+      put(m, 'billy', 'red', 1, 2, { power: 1 });
+      const h = m.hand.blue.length;
+      m = settle(run(m, { t: 'strike', uid: u.uid, r: 1, c: 2 }));
+      expect(m.hand.blue.length).toBeGreaterThan(h);
+    });
+  }
+  const deathDraw = CARDS.filter((c) => c.kind === 'unit' && c.ab?.some((a) => a.on === 'death' && a.op === 'draw'));
+  for (const c of deathDraw) {
+    it(`${c.id} draws when it is destroyed`, () => {
+      let m = field({ blue: c.faction });
+      put(m, c.id, 'blue', 2, 2, { power: 1 });
+      const a = put(m, 'cole', 'red', 1, 2, { power: 9 });
+      m.side = 'red';
+      const h = m.hand.blue.length;
+      m = settle(run(m, { t: 'strike', uid: a.uid, r: 2, c: 2 }));
+      expect(m.hand.blue.length).toBeGreaterThan(h);
+    });
+  }
+  const rideOn = CARDS.filter((c) => c.kind === 'unit' && c.ab?.some((a) => a.on === 'afterStrike' && a.op === 'rideOn'));
+  for (const c of rideOn) {
+    it(`${c.id} may move one tile after striking and surviving`, () => {
+      let m = field({ blue: c.faction });
+      const s = put(m, c.id, 'blue', 2, 2, { power: 9 });
+      put(m, 'cole', 'red', 1, 2, { power: 6 });
+      m = run(m, { t: 'strike', uid: s.uid, r: 1, c: 2 });
+      expect(m.pending[0]?.resolve).toBe('moveTo');
+      m = run(m, { t: 'choose', key: '2,2' });
+      expect(uidAt(m, 2, 2)).toBe(s.uid);
+    });
+  }
+  const high = CARDS.filter((c) => c.kind === 'unit' && c.kw.includes('highStriker'));
+  for (const c of high) {
+    it(`${c.id} strikes from higher ground for +2`, () => {
+      let m = field({ blue: c.faction });
+      m.tiles[3][2].h = 1;
+      const g = put(m, c.id, 'blue', 3, 2, { power: 3 });
+      const d = put(m, 'cole', 'red', 2, 2, { power: 9 });
+      m = run(m, { t: 'strike', uid: g.uid, r: 2, c: 2 });
+      expect(m.units[d.uid].power).toBe(4);
+    });
+  }
+});
