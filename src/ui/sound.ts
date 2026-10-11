@@ -190,6 +190,10 @@ type MenuSlot = { src: AudioBufferSourceNode | null; gain: GainNode | null; el: 
 let menu = null as MenuSlot | null;
 const menuNow = () => menu;
 let menuWanted = false;
+/** Mirror the menu loop's state on <html data-menu-music> (handy for checks and styling). */
+function markMenu(on: boolean) {
+  if (typeof document !== 'undefined') document.documentElement.dataset.menuMusic = on ? 'on' : 'off';
+}
 /** Play the menu loop (fades in). Safe to call repeatedly; does nothing while muted or before a gesture. */
 export function playMenuMusic() {
   menuWanted = true;
@@ -203,7 +207,7 @@ export function playMenuMusic() {
     el.loop = true;
     el.volume = MENU_VOL;
     menu = { src: null, gain: null, el };
-    void el.play().catch(() => undefined);
+    void el.play().then(() => markMenu(true)).catch(() => undefined);
     return;
   }
   const slot: MenuSlot = { src: null, gain: null, el: null };
@@ -224,6 +228,7 @@ export function playMenuMusic() {
       src.start();
       slot.src = src;
       slot.gain = g;
+      markMenu(true);
     })
     .catch(() => {
       if (menuNow() === slot) menu = null;
@@ -235,6 +240,7 @@ export function stopMenuMusic(ms = 900) {
   const m = menu;
   menu = null;
   if (!m) return;
+  markMenu(false);
   if (m.el) {
     m.el.pause();
     return;

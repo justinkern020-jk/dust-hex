@@ -1,40 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
 import { FACTIONS } from './game/cards';
-import { MAPS, resolveMapId } from './game/engine';
-import type { FactionId } from './game/types';
+import { MAPS } from './game/engine';
 import type { Mind } from './game/ai';
 import { Porch } from './ui/Porch';
+import { Title } from './ui/Title';
+import { launchScreen, type Screen } from './ui/launch';
 import { Codex } from './ui/Codex';
-import { Battlefield, type BattleOpts } from './ui/Battlefield';
+import { Battlefield } from './ui/Battlefield';
 import { playMenuMusic, preloadMenuAudio, unlockAudio } from './ui/sound';
 
-type Screen = { s: 'porch' } | { s: 'codex' } | { s: 'battle'; opts: BattleOpts; key: number };
 const MIND_KEY = 'dusthex.mind';
 
-function initialScreen(): Screen {
-  // Deep links for testing and sharing: ?side=gang&rival=lodge&map=gallows-mesa&mind=expert
-  try {
-    const q = new URLSearchParams(window.location.search);
-    if (q.get('codex') != null) return { s: 'codex' };
-    const side = q.get('side') as FactionId | null;
-    if (side && FACTIONS.some((f) => f.id === side)) {
-      const rival = (q.get('rival') as FactionId | null) ?? FACTIONS.find((f) => f.id !== side)!.id;
-      const map = resolveMapId(q.get('map')) ?? 'gallows-mesa';
-      const mind = (q.get('mind') as Mind | null) ?? 'expert';
-      // Testing aids (opening hand, money) exist only in dev builds.
-      const dev = import.meta.env.DEV;
-      const deal = dev ? q.get('deal')?.split(',').filter(Boolean) : undefined;
-      const money = dev && q.get('money') != null ? Number(q.get('money')) : undefined;
-      return { s: 'battle', opts: { blue: side, red: rival, mapId: map, mind, deal, money }, key: 1 };
-    }
-  } catch {
-    /* ignore */
-  }
-  return { s: 'porch' };
-}
-
 export function App() {
-  const [screen, setScreen] = useState<Screen>(initialScreen);
+  const [screen, setScreen] = useState<Screen>(() => launchScreen(window.location.search, import.meta.env.DEV));
   const [mind, setMindState] = useState<Mind>(() => {
     try {
       const v = localStorage.getItem(MIND_KEY) as Mind | null;
@@ -53,7 +31,7 @@ export function App() {
   };
   useEffect(() => {
     document.body.dataset.screen = screen.s;
-    // Menus (porch, codex) play the Dust Devil loop; a match fades it out itself.
+    // Menus (title, porch, codex) play the Dust Devil loop; a match fades it out itself.
     if (screen.s !== 'battle') playMenuMusic();
   }, [screen.s]);
   // Browsers only allow audio after a user gesture: unlock on the first one.
@@ -73,6 +51,8 @@ export function App() {
     };
   }, []);
 
+  // The title card shows once per fresh launch; leaving a match returns to the porch.
+  if (screen.s === 'title') return <Title onDone={() => setScreen({ s: 'porch' })} />;
   if (screen.s === 'codex') return <Codex onBack={() => setScreen({ s: 'porch' })} />;
   if (screen.s === 'battle')
     return <Battlefield key={screen.key} opts={screen.opts} onLeave={() => setScreen({ s: 'porch' })} />;

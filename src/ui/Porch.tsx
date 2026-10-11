@@ -18,12 +18,19 @@ export const MINDS: { id: Mind; label: string }[] = [
 export function Porch({ mind, setMind, onRide, onCodex }: { mind: Mind; setMind: (m: Mind) => void; onRide: (f: FactionId) => void; onCodex: () => void }) {
   return (
     <main className="porch dh-porch" data-testid="frontier-porch">
-      <img className="porch-photo" src="/assets/titles/frontier-porch.jpg" alt="" />
+      <picture>
+        <source media="(orientation: portrait)" srcSet="/assets/titles/keyart-tall.webp" type="image/webp" />
+        <source media="(orientation: portrait)" srcSet="/assets/titles/keyart-tall.jpg" />
+        <source srcSet="/assets/titles/keyart-wide.webp" type="image/webp" />
+        <img className="porch-photo dh-porch-art" src="/assets/titles/keyart-wide.jpg" alt="" />
+      </picture>
       <div className="porch-shade" />
       <div className="porch-sheet dh-porch-sheet">
         <header className="dh-porch-head">
           <p className="porch-kicker">A haunted range</p>
-          <h1>Dust Hex</h1>
+          <h1 className="dh-logo dh-logo-porch" aria-label="Dust Hex">
+            <span>Dust</span> <span>Hex</span>
+          </h1>
           <span className="dh-rule" aria-hidden />
           <p className="porch-lede">Choose who you ride for. Cryptids are not a side: each one is a sighting that steps in from its side’s bestiary.</p>
         </header>
