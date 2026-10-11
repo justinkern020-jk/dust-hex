@@ -24,10 +24,16 @@ async function run(browser, label, ctxOpts) {
   const errs = [];
   page.on('pageerror', (e) => errs.push(String(e)));
   await page.addInitScript(() => localStorage.setItem('dusthex.settings.v1', JSON.stringify({ sound: false, music: false })));
+  // A fresh launch opens on the title card: ride past it to the porch.
+  const home = async () => {
+    await page.goto(BASE, { waitUntil: 'networkidle' });
+    await page.locator('[data-testid="title-start"]').click();
+    await page.waitForSelector('[data-testid="frontier-porch"]');
+  };
   const tap = (sel) => (ctxOpts.hasTouch ? page.locator(sel).first().tap() : page.locator(sel).first().click());
 
   // 1. First launch: starters for all six sides, no gold.
-  await page.goto(BASE, { waitUntil: 'networkidle' });
+  await home();
   ok((await gold(page)) === 0, `${label}: first launch shows 0 gold on the porch`);
   ok((await page.locator('[data-testid="ride-deck-gang"]').textContent()).includes('Starter deck'), `${label}: each side rides with its starter deck`);
   const col0 = await readCol(page);
@@ -59,7 +65,7 @@ async function run(browser, label, ctxOpts) {
     c.gold = 400;
     localStorage.setItem(k, JSON.stringify(c));
   }, KEY);
-  await page.goto(BASE, { waitUntil: 'networkidle' });
+  await home();
   await tap('[data-testid="open-shop"]');
   await page.waitForSelector('[data-testid="trading-post"]');
   await shot(page, `shop_${label}`);
