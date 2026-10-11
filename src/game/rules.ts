@@ -327,13 +327,16 @@ function runDeath(m: Match, u: Unit, ab: Ability, p: { r: number; c: number } | 
     case 'lloronaReturns':
       if (m.exile[u.side].includes(`spent:${u.cardId}`)) return false;
       m.exile[u.side].push(`spent:${u.cardId}`);
+      loseMoney(m, u.side, 2);
       if (m.hand[u.side].length < HAND_CAP) {
         m.hand[u.side].push(u.cardId);
-        loseMoney(m, u.side, 2);
         log(m, `${name} goes back to the river, and to the hand. ${sideName(u.side)} pays 2.`);
-        return true;
+      } else {
+        // A full hand: she waits on top of the deck instead of being lost.
+        m.deck[u.side].unshift(u.cardId);
+        log(m, `${name} goes back to the river, and to the top of the deck. ${sideName(u.side)} pays 2.`);
       }
-      return false;
+      return true;
     case 'lastShot': {
       if (!p) return false;
       const n = ab.n ?? card(u.cardId).power ?? 1;
@@ -693,7 +696,7 @@ export function cardPlayed(m: Match, side: Side, c: Card) {
   if (c.kind === 'item') m.played.items += 1;
   if (c.kind === 'device') m.played.devices += 1;
   m.events.push({ e: 'play', side, cardId: c.id });
-  if (m.ledger[side] && m.played.cards === 1) {
+  if (m.ledger[side] && m.played.cards === 1 && leaderUnit(m, side)) {
     bank(m, side, 1);
     log(m, `The ledger takes its line: gain 1.`);
   }
@@ -901,7 +904,8 @@ export function enterTile(m: Match, uid: string, from: { r: number; c: number } 
   const u = m.units[uid];
   if (!u) return;
   const t = trapAt(m, to.r, to.c);
-  if (t && !(t.owner === u.side && (t.kind === 'hidebehind' || t.kind === 'cinders'))) {
+  // Every trap knows its owner: your own units pass over it safely.
+  if (t && t.owner !== u.side) {
     springTrap(m, u, t);
     if (!m.units[uid]) return;
   }
@@ -1113,6 +1117,10 @@ export function doStrike(m: Match, uid: string, r: number, c: number) {
       log(m, `${dName} answers for ${back}.`);
       damage(m, a.uid, back, { strike: true, killer: d.uid });
     }
+    // A miss is still the strike: Grave Round is spent and after-strike abilities fire.
+    const still = m.units[a.uid];
+    if (grave && still) removeGear(m, still, grave.gid, 'exile');
+    if (still) for (const ab of abilitiesOf(still.cardId)) if (ab.on === 'afterStrike') fire(m, still, ab, { struck: d });
     return;
   }
 

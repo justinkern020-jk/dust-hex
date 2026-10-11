@@ -363,6 +363,7 @@ function endTurn(m: Match) {
     m.exile[s].push('false-coffin');
   }
   m.coffins = m.coffins.filter((x) => x.side !== s);
+  m.visionStep[s] = false;
   const n = other(s);
   m.side = n;
   m.turn += 1;
@@ -947,8 +948,11 @@ function resolvePending(m: Match, p: Pending, o: PendingOption | null) {
           t.r = o.r;
           t.c = o.c!;
           t.owner = t.owner ?? p.side;
-          t.known = { blue: p.side === 'blue', red: p.side === 'red' };
-          m.scouted[other(p.side)] = m.scouted[other(p.side)].filter((k) => k !== key(o.r!, o.c!));
+          // The owner always knows where their trap is; so does the side that moved it. Anyone else loses sight of it.
+          for (const sd of ['blue', 'red'] as Side[]) {
+            t.known[sd] = sd === t.owner || sd === p.side;
+            if (!t.known[sd]) m.scouted[sd] = m.scouted[sd].filter((k) => k !== key(o.r!, o.c!));
+          }
           log(m, `The hidden death is moved. The rival is not shown where.`);
         }
       } else if (d.did) {
@@ -1119,7 +1123,8 @@ function step(m: Match, a: Action): string | null {
       m.money[side] -= cost;
       m.hand[side].splice(a.i, 1);
       if (rite) {
-        const cole = unitsOf(m, other(side)).find((u) => abilitiesOf(u.cardId).some((ab) => ab.on === 'enemyRite' && ab.op === 'deny') && !isSpent(u) && !((u.turnUse['deny'] ?? -1) >= m.turn) && (u.pinUntil ?? 0) < nextTurnOf(m, u.side));
+        // Cole may call the bluff while he is on the board, once a round, whatever he did on his own turn.
+        const cole = unitsOf(m, other(side)).find((u) => abilitiesOf(u.cardId).some((ab) => ab.on === 'enemyRite' && ab.op === 'deny') && !((u.turnUse['deny'] ?? -1) >= m.turn - 1));
         if (cole) {
           log(m, `${side === 'blue' ? 'You play' : 'The rival plays'} ${c.name}. ${nameOf(cole)} is watching.`);
           m.pending.push({

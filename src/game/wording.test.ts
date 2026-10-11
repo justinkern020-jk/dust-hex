@@ -168,3 +168,23 @@ describe('Western wording pass: every card reads plainly', () => {
     expect(card('crook').lead?.label).toBe('Boots and Saddles');
   });
 });
+
+describe('card text after the engine fixes', () => {
+  it('traps say they spring on enemy units only', () => {
+    for (const c of CARDS.filter((x) => x.kind === 'trap')) {
+      expect(c.text, c.id).toMatch(/The first enemy unit to enter it/);
+      expect(c.text, c.id).not.toMatch(/either side/);
+    }
+  });
+  it('moved traps stay known to their owner', () => {
+    expect(card('widow-lamp').text).toMatch(/Only you and its owner are shown where/);
+    expect(card('tommyknockers').text).toMatch(/shown only to you and its owner/);
+  });
+  it('Cole, Night Ledger and La Llorona say what the engine now does', () => {
+    expect(card('cole').text).toMatch(/Once each round, while Cole Younger is on the board, you may cancel a trick/);
+    expect(card('cole').text).not.toMatch(/is ready/);
+    expect(card('ledger').text).toMatch(/While your leader is on the board/);
+    expect(card('llorona').text).toMatch(/deck top if full/);
+    expect(card('sitting-bull').text).toMatch(/that turn may move one extra tile/);
+  });
+});

@@ -105,7 +105,7 @@
    "Deny"
   ],
   "mark": "Jackson County",
-  "text": "Calls the Bluff. When the rival plays a trick, if Cole Younger is ready, you may exhaust him to cancel it.",
+  "text": "Calls the Bluff. Once each round, while Cole Younger is on the board, you may cancel a trick the rival plays. He is then exhausted for your next turn.",
   "quote": "In the whole lot there could not be found six pages of truth.",
   "quoted": "Cole Younger, The Story of Cole Younger by Himself (1903)",
   "art": "/cards/cole.jpg",
@@ -673,7 +673,7 @@
    "Trap"
   ],
   "mark": "Trap",
-  "text": "Rattler. Hide a viper on an empty tile; the rival is not shown which. The first unit of either side to enter it is destroyed.",
+  "text": "Rattler. Hide a viper on an empty tile; the rival is not shown which. The first enemy unit to enter it is destroyed.",
   "quote": "It is admitted that the rattlesnake has a poison-fang for its own defence and for the destruction of its prey.",
   "quoted": "Charles Darwin, On the Origin of Species, 6th edition (1872)",
   "art": "/cards/shaft-viper.jpg",
@@ -951,7 +951,7 @@
    "Reveal"
   ],
   "mark": "Supernatural",
-  "text": "Lantern Light. Look at one tile. If a trap or device is there, you may move it to another empty tile; the rival is not shown where.",
+  "text": "Lantern Light. Look at one tile. If a trap or device is there, you may move it to another empty tile. Only you and its owner are shown where.",
   "quote": "We jumped into the stage, the driver cracked his whip, and we bowled away and left “the States” behind us.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/widow-lamp.jpg",
@@ -1242,7 +1242,7 @@
    "Attach"
   ],
   "mark": "Item",
-  "text": "Paper Trail. Pin to your leader. From then on, the first card you play or deploy each turn gains you 1 money.",
+  "text": "Paper Trail. Pin to your leader. While your leader is on the board, the first card you play or deploy each turn gains you 1 money.",
   "quote": "He had absolute charge of the mails, express matter, passengers and stage-coach, until he delivered them to the next conductor, and got his receipt for them.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/ledger.jpg",
@@ -2096,7 +2096,7 @@
    "Trap"
   ],
   "mark": "Trap",
-  "text": "Bottomless Shaft. Hide a mine shaft on an empty tile; the rival is not shown which. The first unit of either side to enter it is destroyed.",
+  "text": "Bottomless Shaft. Hide a mine shaft on an empty tile; the rival is not shown which. The first enemy unit to enter it is destroyed.",
   "quote": "The alkali dust cut through our lips, it persecuted our eyes, it ate through the delicate membranes and made our noses bleed.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/mine-shaft.jpg",
@@ -2119,7 +2119,7 @@
    "Trap"
   ],
   "mark": "Trap",
-  "text": "Alkali Sink. Hide a sink on an empty tile; the rival is not shown which. The first unit of either side to enter it loses 3 Power and cannot move on its next turn.",
+  "text": "Alkali Sink. Hide a sink on an empty tile; the rival is not shown which. The first enemy unit to enter it loses 3 Power and cannot move on its next turn.",
   "quote": "It was like drinking lye, and not weak lye, either.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/alkali.jpg",
@@ -2142,7 +2142,7 @@
    "Trap"
   ],
   "mark": "Trap",
-  "text": "Deadfall. Hide a deadfall on an empty tile; the rival is not shown which. The first unit of either side to enter it loses 2 Power and cannot strike this turn.",
+  "text": "Deadfall. Hide a deadfall on an empty tile; the rival is not shown which. The first enemy unit to enter it loses 2 Power and cannot strike this turn.",
   "quote": "Imagine a vast, waveless ocean stricken dead and turned to ashes.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/deadfall.jpg",
@@ -2165,7 +2165,7 @@
    "Trap"
   ],
   "mark": "Trap",
-  "text": "Cave-In. Hide a collapse on an empty tile; the rival is not shown which. The first unit of either side to enter it is destroyed, and one enemy item or device next to it is exiled.",
+  "text": "Cave-In. Hide a collapse on an empty tile; the rival is not shown which. The first enemy unit to enter it is destroyed, and one enemy item or device next to it is exiled.",
   "quote": "The sage-brush is a singularly hardy plant, and grows right in the midst of deep sand, and among barren rocks.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/cave-in.jpg",
@@ -2286,7 +2286,7 @@
    "Bestiary"
   ],
   "mark": "The Drift",
-  "text": "Cryptid. Knocking. Once each turn, look at one tile; if a trap is there, you may move it to another empty tile. The Tommyknockers cannot move or strike the turn you deploy them.",
+  "text": "Cryptid. Knocking. Once each turn, look at a tile; you may move a trap there to another empty tile, shown only to you and its owner. The Tommyknockers cannot move or strike the turn you deploy them.",
   "quote": "We must not look at goblin men, we must not buy their fruits.",
   "quoted": "Christina Rossetti, Goblin Market (1862)",
   "art": "/cards/tommyknockers.jpg",
@@ -2635,7 +2635,7 @@
    "Bestiary"
   ],
   "mark": "The River",
-  "text": "Cryptid. Weeping. When you deploy La Llorona and at the start of your turn, the strongest enemy next to her cannot move on its next turn. The first time she is destroyed, she returns to your hand; lose 2 money.",
+  "text": "Cryptid. When you deploy her and at your turn’s start, the strongest enemy next to her cannot move on its next turn. The first time she is destroyed, lose 2 money and return her to hand (deck top if full).",
   "quote": "Be with me always—take any form—drive me mad!",
   "quoted": "Emily Brontë, Wuthering Heights (1847)",
   "art": "/cards/llorona.jpg",
