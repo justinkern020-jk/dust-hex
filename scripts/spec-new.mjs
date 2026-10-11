@@ -15,7 +15,7 @@ const RETURNS = 'Returns. The first time it is destroyed, set it aside. At the s
 export const NEW = [
   // ------------------------------------------------ Red Creek Gang (+12)
   u({ id: 'frank-james', name: 'Frank James', faction: 'gang', rarity: 'rare', cost: 3, power: 3, tags: ['Brothers'], mark: 'Clay County', standin: 'cole',
-    ab: [{ on: 'static', op: 'leaderBond', n: 1 }], text: 'Brothers. While your leader is on the field, his strikes deal +1 Power.',
+    ab: [{ on: 'static', op: 'leaderBond', n: 1 }], text: 'While your leader is on the board, Frank James deals 1 extra damage when he strikes.',
     quote: 'I have been hunted for twenty-one years, have literally lived in the saddle, have never known a day of perfect peace.', quoted: 'Frank James on his surrender to Gov. Crittenden, October 1882', quoteSource: 'attested' }),
   u({ id: 'sam-bass', name: 'Sam Bass', faction: 'gang', rarity: 'uncommon', cost: 2, power: 3, tags: ['Train Robber'], mark: 'Round Rock', standin: 'billy',
     ab: [{ on: 'kill', op: 'bank', n: 1 }], text: 'Train Robber. When he destroys a unit, gain 1 money.',

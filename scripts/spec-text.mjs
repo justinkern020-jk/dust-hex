@@ -29,7 +29,7 @@ export const TEXT = {
   'cactus-cat': 'Cryptid. Fast. It strikes first. When it destroys a unit, the rival loses 1 money.',
   'the-raven': 'Return a unit to its owner’s hand. A leader goes back to the tray instead, and its owner discards a card at random.',
   hidebehind: 'Cryptid. Hide it on an empty tile; your rival is not shown which. The first enemy to enter that tile takes 3 damage, and the Hidebehind is revealed beside it, exhausted.',
-  'frank-james': 'Brothers. While your leader is on the field, his strikes deal 1 extra damage.',
+  'frank-james': 'While your leader is on the board, Frank James deals 1 extra damage when he strikes.',
   'dynamite-dick': 'Powder. When he is destroyed, deal 1 damage to each enemy next to him.',
   'kid-curry': fast(),
   joaquin: `${returns()} They showed a head in a jar, and the diggings still were not sure it was his.`,
