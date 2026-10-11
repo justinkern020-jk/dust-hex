@@ -3,7 +3,7 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { BASE, LEADERS } from './spec-base.mjs';
 import { NEW } from './spec-new.mjs';
-import { TEXT, LEAD_TEXT } from './spec-text.mjs';
+import { TEXT, LEAD_TEXT, LEAD_LABEL } from './spec-text.mjs';
 
 /** Strip the last borrowed terms from printed text. */
 function westWords(t) {
@@ -68,8 +68,10 @@ for (const n of NEW) {
   out.push({ rarity: 'uncommon', kw: [], tags: [], isNew: true, ...n });
 }
 for (const c of out) {
-  if (TEXT[c.id]) c.text = TEXT[c.id];
-  if (LEAD_TEXT[c.id]) c.lead = { ...c.lead, text: LEAD_TEXT[c.id] };
+  if (!TEXT[c.id]) throw new Error(`No printed text for ${c.id} in spec-text.mjs`);
+  c.text = TEXT[c.id];
+  if (c.lead && !LEAD_TEXT[c.id]) throw new Error(`No Lead text for ${c.id} in spec-text.mjs`);
+  if (LEAD_TEXT[c.id]) c.lead = { ...c.lead, text: LEAD_TEXT[c.id], ...(LEAD_LABEL[c.id] ? { label: LEAD_LABEL[c.id] } : {}) };
 }
 // Player-facing vocabulary: the card kind is a Trick, units deploy, no oaths.
 const NAME = { 'salt-oath': 'Salt Line' };
@@ -90,7 +92,7 @@ for (const c of out) {
   if (c.lead) c.lead = { ...c.lead, text: words(c.lead.text), ...(c.lead.label ? { label: words(c.lead.label) } : {}) };
   c.tags = (c.tags ?? []).map((t) => TAG[t] ?? t);
 }
-for (const id of [...Object.keys(TEXT), ...Object.keys(LEAD_TEXT)]) if (!out.some((c) => c.id === id)) throw new Error(`text for unknown card ${id}`);
+for (const id of [...Object.keys(TEXT), ...Object.keys(LEAD_TEXT), ...Object.keys(LEAD_LABEL)]) if (!out.some((c) => c.id === id)) throw new Error(`text for unknown card ${id}`);
 for (const [f, id] of Object.entries(LEADERS)) {
   const c = out.find((x) => x.id === id);
   if (!c || c.kind !== 'leader' || c.faction !== f) throw new Error(`leader ${f}`);

@@ -13,7 +13,7 @@
    "Returns"
   ],
   "mark": "Missouri",
-  "text": "Raid. Each time he destroys a unit, draw 1 and gain 2 money. The first time he is destroyed, set him aside; at the start of your next turn he rides back in, exhausted.",
+  "text": "Raid. Each time Jesse James destroys a unit, draw 1 and gain 2 money. Hard to Bury. The first time he is destroyed, he rides back in at the start of your next turn, exhausted.",
   "quote": "I know that we are outlaws, and that there is big money on our heads.",
   "quoted": "Jesse W. James, letter, History of Daviess County (1882)",
   "art": "/cards/jesse.jpg",
@@ -33,7 +33,7 @@
   "lead": {
    "op": "drawBank",
    "n": 1,
-   "label": "Raid",
+   "label": "Rob the Bank",
    "text": "Draw 1 and gain 2 money."
   }
  },
@@ -53,7 +53,7 @@
    "Fast"
   ],
   "mark": "Lincoln County",
-  "text": "Fast. He strikes first, and a killing blow is not answered. He would rather fight armed than be taken in a window.",
+  "text": "Fast. Billy the Kid gets the jump: he strikes first in melee, and an enemy he kills cannot strike back.",
   "quote": "I am not afraid to die like a man fighting, but I would not like to be killed like a dog unarmed.",
   "quoted": "W. H. Bonney to Lew Wallace, 20 March 1879",
   "art": "/cards/billy.jpg",
@@ -74,7 +74,7 @@
    "Harbor"
   ],
   "mark": "Indian Territory",
-  "text": "Harbor. While she stands, enemy tricks can target only her, not your other units. Once a turn, when you play an Outlaw (Gang or Choir) card, gain 1 money.",
+  "text": "Harbor. While Belle Starr is on the board, enemy tricks cannot target your other units. Bandit Queen. Once each turn, when you play or deploy a Gang or Choir card, gain 1 money.",
   "quote": "I regard myself as a woman who has seen much of life.",
   "quoted": "Belle Starr, Fort Smith Elevator, as recorded in later Arkansas accounts of that interview",
   "art": "/cards/belle.jpg",
@@ -105,7 +105,7 @@
    "Deny"
   ],
   "mark": "Jackson County",
-  "text": "Deny. When the rival plays a trick, you may exhaust Cole Younger to cancel it. He has heard every lie they printed.",
+  "text": "Calls the Bluff. When the rival plays a trick, if Cole Younger is ready, you may exhaust him to cancel it.",
   "quote": "In the whole lot there could not be found six pages of truth.",
   "quoted": "Cole Younger, The Story of Cole Younger by Himself (1903)",
   "art": "/cards/cole.jpg",
@@ -130,7 +130,7 @@
    "Expend"
   ],
   "mark": "Item",
-  "text": "Attach to a unit you control. Its next strike deals 2 extra damage, then exile Grave Round. If that strike destroys a unit, enemy tricks cannot target the bearer until your next turn.",
+  "text": "Hot Load. Attach to one of your units. That unit’s next strike deals 2 extra damage; then exile Grave Round. If that strike destroys a unit, enemy tricks cannot target the bearer until your next turn.",
   "quote": "The good people of this world are very far from being satisfied with each other, and my arms are the best peacemakers.",
   "quoted": "Samuel Colt, letter to Charles Manby, 18 May 1852",
   "art": "/cards/grave-round.jpg",
@@ -157,7 +157,7 @@
    "Line"
   ],
   "mark": "Device",
-  "text": "Place on an empty tile. Your unit that moves onto it may move one more tile. The first enemy unit to enter it loses 2 Power.",
+  "text": "Iron Road. Place on an empty tile. When one of your units moves onto it, that unit may move one more tile. The first enemy unit to enter it loses 2 Power.",
   "quote": "I and Frank have been lied on and persecuted enough. We cannot stand everything.",
   "quoted": "Jesse W. James to Mr. Flood, 5 June 1875",
   "art": "/cards/hell-rail.jpg",
@@ -179,7 +179,7 @@
    "Trick"
   ],
   "mark": "Supernatural",
-  "text": "Return a destroyed Outlaw unit from your discard to your hand. If your leader has fallen, you may deploy him instead, exhausted. The dust on the road arrives before the horses.",
+  "text": "Saddle Up. Return a Gang or Choir unit from your discard pile to your hand. Or, if your leader has fallen, bring the leader back onto the board, exhausted.",
   "quote": "The dirty little coward that shot Mr. Howard has laid poor Jesse in his grave.",
   "quoted": "Traditional, “Jesse James,” sung after 1882",
   "art": "/cards/ride-back.jpg",
@@ -206,7 +206,7 @@
    "Unshaken"
   ],
   "mark": "Deputy Marshal",
-  "text": "Duty. The first strike against him each turn deals him no damage. When he destroys a unit, draw 1 or look at one hidden tile.",
+  "text": "Duty. The first strike against Bass Reeves each turn deals him no damage. Bring Them In. When he destroys a unit, draw 1 or look at the hidden tile nearest your units.",
   "quote": "He was never known to show the slightest excitement under any circumstance. He does not know what fear is.",
   "quoted": "Oklahoma City Weekly Times-Journal, on Bass Reeves",
   "art": "/cards/bass.jpg",
@@ -219,12 +219,12 @@
   ],
   "lead": {
    "op": "standFast",
-   "label": "Duty",
+   "label": "Deputize",
    "target": {
     "kind": "ally",
     "optional": true
    },
-   "text": "One of your units gains Tough, and the first time it would be destroyed it stays at 1 Power instead. Draw 1."
+   "text": "Choose one of your units: it gains Tough, and the first time damage would destroy it, it stays at 1 Power instead. Draw 1."
   }
  },
  {
@@ -242,7 +242,7 @@
    "Steady"
   ],
   "mark": "Dodge City",
-  "text": "Steady. If you have not played a card this turn, his strikes deal 1 extra damage and are not answered.",
+  "text": "Steady. If you have not played or deployed a card this turn, Wyatt Earp deals 1 extra damage when he strikes, and the target cannot strike back.",
   "quote": "The mad merry scamp with heart of gold and nerves of steel.",
   "quoted": "Wyatt Earp on Doc Holliday, San Francisco Examiner, 2 August 1896",
   "art": "/cards/wyatt.jpg",
@@ -261,7 +261,7 @@
    "Last Shot"
   ],
   "mark": "Deadwood",
-  "text": "Last Shot. When he is destroyed, he strikes one enemy next to him for his printed Power. He names someone as he goes.",
+  "text": "Dead Man’s Hand. When Wild Bill is destroyed, he fires at an enemy unit next to him, dealing damage equal to his printed Power.",
   "quote": "While firing my last shot, I will gently breathe the name of my wife Agnes, and with wishes even for my enemies I will make the plunge and try to swim to the other shore.",
   "quoted": "J. B. Hickok, letter to Agnes Lake, 1876",
   "art": "/cards/hickok.jpg",
@@ -286,7 +286,7 @@
    "Reveal"
   ],
   "mark": "Item",
-  "text": "Attach to a unit you control. Before it moves onto a tile, it looks at that tile. If it is a trap, the move is turned aside.",
+  "text": "Tin Star. Attach to one of your units. When that unit would move onto a tile hiding an enemy trap, it spots the trap and stays put.",
   "quote": "Place a warrant for arrest in his hands and no circumstance can cause him to deviate.",
   "quoted": "Oklahoma City Weekly Times-Journal, on Bass Reeves",
   "art": "/cards/silver-star.jpg",
@@ -312,7 +312,7 @@
    "Hold"
   ],
   "mark": "Device",
-  "text": "Play on an enemy unit. It cannot move on its next turn. Paper, for a little while, is stronger than a horse.",
+  "text": "Wanted. Choose an enemy unit. It cannot move on its next turn.",
   "quote": "If the governor of our State will guarantee us a fair trial, we will surrender.",
   "quoted": "Jesse W. James, letter, History of Daviess County (1882)",
   "art": "/cards/open-warrant.jpg",
@@ -339,7 +339,7 @@
    "Ward"
   ],
   "mark": "Supernatural",
-  "text": "Until your next turn, any unit that strikes your leader loses 2 Power first. The circle is only salt. It still holds.",
+  "text": "Line in the Sand. Until your next turn, any enemy unit that strikes your leader loses 2 Power first.",
   "quote": "Treat all men alike. Give them the same laws. Give them all an even chance to live and grow.",
   "quoted": "Hinmatóowyalahtq̓it (Chief Joseph), North American Review, April 1879",
   "art": "/cards/salt-oath.jpg",
@@ -363,7 +363,7 @@
    "Vision"
   ],
   "mark": "Hunkpapa Lakota",
-  "text": "Vision. At the start of your turn, look at the hidden tile nearest your units. The first of your units to move that turn may move one extra tile.",
+  "text": "Vision. While Sitting Bull is on the board, at the start of your turn look at the hidden tile nearest your units, and the first of your units to move that turn may move one extra tile.",
   "quote": "God made me an Indian.",
   "quoted": "Sitting Bull, as reported by Nelson A. Miles, Personal Recollections (1896)",
   "art": "/cards/sitting-bull.jpg",
@@ -376,7 +376,7 @@
   ],
   "lead": {
    "op": "bullVision",
-   "label": "Vision",
+   "label": "Rally the Camp",
    "target": {
     "kind": "ally",
     "spent": true,
@@ -400,7 +400,7 @@
    "Break Away"
   ],
   "mark": "Chiricahua Apache",
-  "text": "Break Away. His strikes from higher ground deal 2 extra damage instead of 1. The first time he would be destroyed, he survives at 1 Power and slips to a nearby empty tile.",
+  "text": "High Ground. Geronimo deals 2 extra damage, not 1, when he strikes from higher ground. Break Away. The first time damage would destroy him, he survives at 1 Power and slips to a nearby empty tile.",
   "quote": "I was born on the prairies where the wind blew free and there was nothing to break the light of the sun.",
   "quoted": "Geronimo, Geronimo's Story of His Life, ed. S. M. Barrett (1906)",
   "art": "/cards/geronimo.jpg",
@@ -427,7 +427,7 @@
    "Even Ground"
   ],
   "mark": "Nimíipuu",
-  "text": "Even Ground. While he stands, ranged strikes cannot target your units.",
+  "text": "Even Ground. While Chief Joseph is on the board, enemy ranged strikes cannot target your units.",
   "quote": "Let me be a free man, free to travel, free to stop, free to work, free to trade where I choose.",
   "quoted": "Hinmatóowyalahtq̓it (Chief Joseph), North American Review, April 1879",
   "art": "/cards/joseph.jpg",
@@ -446,7 +446,7 @@
    "Two Roads"
   ],
   "mark": "Comanche",
-  "text": "Two Roads. Once a turn, return an enemy item or device to its owner's hand. He can speak in both camps, and neither camp likes it.",
+  "text": "Two Roads. Once each turn, return an item or device the rival owns to the rival’s hand.",
   "quote": "I love my mother. I want my people to follow, get educated, know work, and make a living when the payments stop.",
   "quoted": "Quanah Parker, remarks at his mother's reburial (1910), Chronicles of Oklahoma (1921)",
   "art": "/cards/quanah.jpg",
@@ -472,7 +472,7 @@
    "Attach"
   ],
   "mark": "Item",
-  "text": "Attach to a unit you control. The first strike against it each turn deals 1 less damage.",
+  "text": "Rawhide Case. Attach to one of your units. The first strike against that unit each turn deals 1 less damage.",
   "quote": "You might as well expect the rivers to run backward as that any man who was born a free man should be contented penned up.",
   "quoted": "Hinmatóowyalahtq̓it (Chief Joseph), North American Review, April 1879",
   "art": "/cards/parfleche.jpg",
@@ -499,7 +499,7 @@
    "Call"
   ],
   "mark": "Device",
-  "text": "Exhaust this device: move one of your units one tile. It may still strike. A short call carries farther than a shot.",
+  "text": "Eagle-Bone Whistle. Exhaust: move one of your units one tile. It can still strike this turn.",
   "quote": "I was no chief and never had been, but because I had been more deeply wronged than others, this honor was conferred upon me.",
   "quoted": "Geronimo, Geronimo's Story of His Life, ed. S. M. Barrett (1906)",
   "art": "/cards/bone-whistle.jpg",
@@ -529,7 +529,7 @@
    "High Ground"
   ],
   "mark": "Supernatural",
-  "text": "Choose one of your units. It deals 2 damage to an enemy within two tiles that is not on higher ground, and that enemy cannot climb on its next turn.",
+  "text": "Rolling Thunder. Choose one of your units. It deals 2 damage to an enemy unit within two tiles that is not on higher ground than it, and that enemy cannot climb on its next turn.",
   "quote": "The earth is the mother of all people, and all people should have equal rights upon it.",
   "quoted": "Hinmatóowyalahtq̓it (Chief Joseph), North American Review, April 1879",
   "art": "/cards/thunder-ridge.jpg",
@@ -557,7 +557,7 @@
    "Pack Train"
   ],
   "mark": "Brigadier General",
-  "text": "Pack Train. Your devices cost 1 less. Once a turn, one of your units that has already acted may act again.",
+  "text": "Pack Train. While Crook is on the board, your devices cost 1 less. Remount. Once each turn, Crook can let one of your other units that has already acted act again.",
   "quote": "All the tribes tell the same story. They are surrounded on all sides, the game is destroyed or driven away, and there remains but one thing for them to do: fight while they can.",
   "quoted": "George Crook, on the tribes of the Plains",
   "art": "/cards/crook.jpg",
@@ -580,8 +580,8 @@
   },
   "lead": {
    "op": "trainUp",
-   "label": "Pack train",
-   "text": "Every unit of yours that has already acted may act again. Draw 1."
+   "label": "Boots and Saddles",
+   "text": "All of your units may act again this turn. Draw 1."
   }
  },
  {
@@ -596,7 +596,7 @@
    "Attach"
   ],
   "mark": "Item",
-  "text": "Attach to a unit you control. The first time a strike would destroy it, it stays at 1 Power instead. Then exile Five in the Wheel. The chamber under the hammer was empty on purpose.",
+  "text": "Empty Chamber. Attach to one of your units. The first time a strike would destroy that unit, it stays at 1 Power instead; then exile Five in the Wheel.",
   "quote": "The boldest plan is the best and safest.",
   "quoted": "J. B. Hickok, as reported by George Ward Nichols, Harper's New Monthly, February 1867",
   "art": "/cards/five-wheel.jpg",
@@ -622,7 +622,7 @@
    "Flash"
   ],
   "mark": "Device",
-  "text": "Name a tile and look at it. Then deal 1 damage to an enemy unit standing lower than that tile.",
+  "text": "Heliograph. Choose a tile and look at it. Then deal 1 damage to an enemy unit standing lower than that tile.",
   "quote": "Another reason was I wanted to make my own living and not be dependent on relations or friends.",
   "quoted": "Cathay Williams, St. Louis Daily Times, 2 January 1876",
   "art": "/cards/signal-glass.jpg",
@@ -648,7 +648,7 @@
    "Trick"
   ],
   "mark": "Supernatural",
-  "text": "Deal 2 damage to each enemy unit. Your own units are not touched. The smoke hangs after the men are gone.",
+  "text": "Volley Fire. Deal 2 damage to each enemy unit. Your units are not hit.",
   "quote": "Sometimes men fall down a shaft, there, a thousand feet deep. In such cases, the usual plan is to hold an inquest.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/dead-volley.jpg",
@@ -673,7 +673,7 @@
    "Trap"
   ],
   "mark": "Trap",
-  "text": "Hide a viper on an empty tile; your rival is not shown which. The first unit to enter it is destroyed, and the tile is revealed.",
+  "text": "Rattler. Hide a viper on an empty tile; the rival is not shown which. The first unit of either side to enter it is destroyed.",
   "quote": "It is admitted that the rattlesnake has a poison-fang for its own defence and for the destruction of its prey.",
   "quoted": "Charles Darwin, On the Origin of Species, 6th edition (1872)",
   "art": "/cards/shaft-viper.jpg",
@@ -696,7 +696,7 @@
    "Switch"
   ],
   "mark": "The Line",
-  "text": "Switch. When an enemy unit moves next to him, you may shove it onto a different tile next to it. It loses 1 Power.",
+  "text": "Throw the Switch. When an enemy unit moves next to the Switchman, you may shove that unit onto another open tile beside it. If you do, it loses 1 Power.",
   "quote": "I have literally lived in the saddle.",
   "quoted": "Frank James, interview, Kansas City Journal, 7 October 1882",
   "art": "/cards/switchman.jpg",
@@ -723,7 +723,7 @@
    "Bank"
   ],
   "mark": "The Layout",
-  "text": "Bank. Once a turn, when you play a trick, item or device, draw 1. She cannot move or strike the turn she enters.",
+  "text": "Dealer’s Edge. While the Faro Widow is on the board, the first time each turn you play a trick, item or device, draw 1. She cannot move or strike the turn you deploy her.",
   "quote": "I have never known a day of perfect peace.",
   "quoted": "Frank James, interview, Kansas City Journal, 7 October 1882",
   "art": "/cards/faro-widow.jpg",
@@ -744,7 +744,7 @@
   "lead": {
    "op": "draw",
    "n": 1,
-   "label": "House cut",
+   "label": "House Cut",
    "text": "Draw 1."
   }
  },
@@ -765,7 +765,7 @@
    "Cinders"
   ],
   "mark": "Night Road",
-  "text": "Fast. He may move one extra tile each turn. The tile he leaves becomes a one-shot trap: the next enemy to enter it loses 2 Power.",
+  "text": "Fast. Hell for Leather. The Cinder Rider may move one extra tile each turn. Each tile he leaves becomes a trap: the next enemy unit to enter it loses 2 Power.",
   "quote": "When I slept it was literally in the midst of an arsenal.",
   "quoted": "Frank James, interview, Kansas City Journal, 7 October 1882",
   "art": "/cards/cinder-rider.jpg",
@@ -791,7 +791,7 @@
    "Returns"
   ],
   "mark": "The Road",
-  "text": "Returns. The first time he is destroyed, set him aside; at the start of your next turn he rides back in, exhausted.",
+  "text": "Returns. The Clay County Shade is hard to bury: the first time he is destroyed, he rides back in at the start of your next turn, exhausted.",
   "quote": "If I heard dogs bark more fiercely than usual, I stood to my arms.",
   "quoted": "Frank James, interview, Kansas City Journal, 7 October 1882",
   "art": "/cards/clay-shade.jpg",
@@ -816,7 +816,7 @@
    "First"
   ],
   "mark": "Item",
-  "text": "Attach to a unit you control. Its next strike lands first and deals 1 extra damage. Then exile Derringer.",
+  "text": "Hideout Gun. Attach to one of your units. That unit’s next strike lands first and deals 1 extra damage; then exile Derringer.",
   "quote": "I will never surrender to be mobbed by a set of bloodthirsty poltroons.",
   "quoted": "Jesse W. James, letter, History of Daviess County (1882)",
   "art": "/cards/derringer.jpg",
@@ -842,7 +842,7 @@
    "Attach"
   ],
   "mark": "Item",
-  "text": "Choose a destroyed Outlaw unit in your discard. At the end of this turn it returns to your hand. Then exile False Coffin.",
+  "text": "Playing Dead. Choose a Gang or Choir unit in your discard pile. At the end of this turn, return it to your hand. Then exile False Coffin.",
   "quote": "I was tired of an outlaw's life.",
   "quoted": "Frank James, interview, Kansas City Journal, 7 October 1882",
   "art": "/cards/false-coffin.jpg",
@@ -868,7 +868,7 @@
    "Fast"
   ],
   "mark": "Night Road",
-  "text": "Fast. When he enters, you may move another of your units one tile.",
+  "text": "Fast. Riderless strikes first in melee, and an enemy he kills cannot strike back. Loose Horse. When you deploy him, you may move another of your units one tile.",
   "quote": "We left our six fine horses and took six mules in their place.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/riderless.jpg",
@@ -894,7 +894,7 @@
    "Line"
   ],
   "mark": "Device",
-  "text": "Place on an empty tile. Enemy units cannot move onto it. Exhaust: deal 1 damage to an enemy unit next to it.",
+  "text": "Barbed Wire. Place on an empty tile. Enemy units cannot move onto it. Exhaust: deal 1 damage to an enemy unit next to the wire.",
   "quote": "The coach we were in had a neat hole through its front—a reminiscence of its last trip through this region.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/night-wire.jpg",
@@ -922,7 +922,7 @@
    "Device"
   ],
   "mark": "Device",
-  "text": "Exhaust: deal 2 damage to any unit. If that destroys it, deal 1 damage to an enemy unit next to it.",
+  "text": "Light the Fuse. Exhaust: deal 2 damage to any unit. If that destroys it, deal 1 damage to an enemy unit next to where it stood.",
   "quote": "Think of that for perishable horse and human flesh and blood to do!",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/powder-fuse.jpg",
@@ -951,7 +951,7 @@
    "Reveal"
   ],
   "mark": "Supernatural",
-  "text": "Look at one hidden tile. You may move that trap or device onto a different empty tile. Neither player is shown the new tile.",
+  "text": "Lantern Light. Look at one tile. If a trap or device is there, you may move it to another empty tile; the rival is not shown where.",
   "quote": "We jumped into the stage, the driver cracked his whip, and we bowled away and left “the States” behind us.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/widow-lamp.jpg",
@@ -980,7 +980,7 @@
    "Hold"
   ],
   "mark": "The Cells",
-  "text": "Hold. Enemy units next to him cannot move. They may still strike.",
+  "text": "Hold. The Night Jailer pins enemies down: enemy units next to him cannot move, though they can still strike.",
   "quote": "The station-boss stopped dead still, and glared at me speechless.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/night-jailer.jpg",
@@ -1001,7 +1001,7 @@
    "Record"
   ],
   "mark": "The Book",
-  "text": "Record. When an enemy unit is destroyed, gain 1 money. He cannot move or strike the turn he enters.",
+  "text": "Body Count. When an enemy unit is destroyed, gain 1 money. The Boot Hill Clerk cannot move or strike the turn you deploy him.",
   "quote": "It was the loneliest land for a grave!",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/boot-clerk.jpg",
@@ -1027,7 +1027,7 @@
    "Hold"
   ],
   "mark": "Supernatural",
-  "text": "Choose an enemy unit. This turn it cannot strike, or strike back.",
+  "text": "Hung Jury. Choose an enemy unit. This turn it cannot strike or strike back.",
   "quote": "The “divide” was high, unoccupied ground, between the towns, the scene of twenty midnight murders and a hundred robberies.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/silver-jury.jpg",
@@ -1054,7 +1054,7 @@
    "Hold"
   ],
   "mark": "Item",
-  "text": "Attach to an enemy unit. It cannot move. Its controller may pay 2 money to break the manacles and exile this.",
+  "text": "Irons. Attach to an enemy unit. It cannot move. On their turn, the rival may pay 2 money to break the Manacles and exile them.",
   "quote": "He carried no arms—he carried nothing that was not absolutely necessary.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/manacles.jpg",
@@ -1085,7 +1085,7 @@
    "Expend"
   ],
   "mark": "Item",
-  "text": "Exile an enemy item or device. If it was on an enemy unit, that unit loses 1 Power.",
+  "text": "Turnkey. Exile an item or device the rival owns. If it was attached to an enemy unit, that unit loses 1 Power.",
   "quote": "The building consisted of barns, stable-room for twelve or fifteen horses, and a hut for an eating-room for passengers.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/jail-key.jpg",
@@ -1111,7 +1111,7 @@
    "Trick"
   ],
   "mark": "Supernatural",
-  "text": "Destroy an enemy unit with Power 2 or less. If there is none, draw 1 instead.",
+  "text": "Hangman’s Knot. Destroy an enemy unit with 2 Power or less. If there is none, draw 1 instead.",
   "quote": "Every twenty steps we passed the skeleton of some dead beast of burthen, with its dust-coated skin stretched tightly over its empty ribs.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/gallows-rope.jpg",
@@ -1140,7 +1140,7 @@
    "Reveal"
   ],
   "mark": "The Boards",
-  "text": "Reveal. At the start of your turn, look at the hidden tile nearest your units. If it is a trap, the next of your units to step onto a trap sees it and stays put.",
+  "text": "On Watch. At the start of your turn, look at the hidden tile nearest your units. If it hides a trap, the next of your units that would step onto a trap spots it and stays put.",
   "quote": "Away across the endless dead level of the prairie a black speck appears against the sky, and it is plain that it moves.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/night-watch.jpg",
@@ -1164,7 +1164,7 @@
    "Device"
   ],
   "mark": "Device",
-  "text": "When a unit is destroyed, look at the top card of your deck. If it is a Silver Star card, draw it. Otherwise leave it.",
+  "text": "Inquest. Whenever a unit is destroyed, look at the top card of your deck. If it is a Silver Star card, draw it.",
   "quote": "We gave up the breakfast, and paid our dollar apiece and went back to our mail-bag bed in the coach.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/coroner.jpg",
@@ -1190,7 +1190,7 @@
    "Call"
   ],
   "mark": "Device",
-  "text": "Exhaust: move up to two of your Silver Star units one tile each.",
+  "text": "Form a Posse. Exhaust: move up to two of your Silver Star units one tile each.",
   "quote": "We changed horses every ten miles, all day long, and fairly flew over the hard, level road.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/posse-bell.jpg",
@@ -1218,7 +1218,7 @@
    "Last Shot"
   ],
   "mark": "The Saloon",
-  "text": "Slow. He strikes last. The first time a strike would destroy him, he stays at 1 Power and strikes the attacker for his full Power.",
+  "text": "Slow. Hang Fire strikes last in melee. Late Shot. The first time a strike would destroy him, he stays at 1 Power and fires back at the unit that struck him, dealing damage equal to his full Power.",
   "quote": "Bemis did not want the mule; but the owner came out with a double-barreled shotgun and persuaded him to buy it, anyhow.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/hang-fire.jpg",
@@ -1242,7 +1242,7 @@
    "Attach"
   ],
   "mark": "Item",
-  "text": "Pin to your leader. The first time each turn you play a card, gain 1 money.",
+  "text": "Paper Trail. Pin to your leader. From then on, the first card you play or deploy each turn gains you 1 money.",
   "quote": "He had absolute charge of the mails, express matter, passengers and stage-coach, until he delivered them to the next conductor, and got his receipt for them.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/ledger.jpg",
@@ -1262,7 +1262,7 @@
    "Promises"
   ],
   "mark": "Oglala Lakota",
-  "text": "Promises. While he stands, enemy devices cost 1 more. Once a turn, you may exhaust him to let one of your units that has already acted act again.",
+  "text": "Treaty Terms. While Red Cloud is on the board, the rival’s devices cost 1 more. Once each turn, you may exhaust Red Cloud to let one of your other units that has already acted act again.",
   "quote": "The Great Father that made us both wishes peace to be kept; we want to keep peace.",
   "quoted": "Red Cloud, Cooper Union, New York, June 1870",
   "art": "/cards/red-cloud.jpg",
@@ -1286,7 +1286,7 @@
   },
   "lead": {
    "op": "cloudWord",
-   "label": "Word",
+   "label": "Red Cloud’s War",
    "target": {
     "kind": "ally",
     "spent": true,
@@ -1311,7 +1311,7 @@
    "Climb"
   ],
   "mark": "The Height",
-  "text": "When he enters, look at one hidden tile. If his first move in a turn is a climb, it does not spend his move.",
+  "text": "Listener. When you deploy the Ridge Listener, look at one hidden tile. Climber. If his first move in a turn is a climb, it does not spend his move.",
   "quote": "I know every stream and every wood between the Rio Grande and the Arkansas.",
   "quoted": "Paruasemena (Ten Bears), Medicine Lodge council, October 1867",
   "art": "/cards/ridge-listener.jpg",
@@ -1335,7 +1335,7 @@
    "Trick"
   ],
   "mark": "Supernatural",
-  "text": "Move one of your units up to two tiles. It cannot strike this turn.",
+  "text": "Hidden Crossing. Move one of your units up to two tiles. It cannot strike this turn.",
   "quote": "I want to die there and not within walls.",
   "quoted": "Paruasemena (Ten Bears), Medicine Lodge council, October 1867",
   "art": "/cards/river-mist.jpg",
@@ -1362,7 +1362,7 @@
    "Attach"
   ],
   "mark": "Item",
-  "text": "Attach to a unit you control. The first strike against it each turn deals 1 less damage.",
+  "text": "War Shield. Attach to one of your units. The first strike against that unit each turn deals 1 less damage.",
   "quote": "They were not sweet like sugar, but bitter like gourds.",
   "quoted": "Paruasemena (Ten Bears), Medicine Lodge council, October 1867",
   "art": "/cards/painted-shield.jpg",
@@ -1389,7 +1389,7 @@
    "Even Ground"
   ],
   "mark": "Yamparika Comanche",
-  "text": "Even Ground. The first strike against each of your units each turn deals it no damage.",
+  "text": "Peace Talker. While Ten Bears is on the board, the first strike against each of your units each turn deals that unit no damage.",
   "quote": "Do not ask us to give up the buffalo for the sheep.",
   "quoted": "Paruasemena (Ten Bears), Medicine Lodge council, October 1867",
   "art": "/cards/ten-bears.jpg",
@@ -1413,7 +1413,7 @@
    "Attach"
   ],
   "mark": "Item",
-  "text": "Attach to a unit you control. At the start of your turn, draw 1.",
+  "text": "Keeping Count. Attach to one of your units. At the start of your turn, draw 1.",
   "quote": "I was born where there were no enclosures and everything drew a free breath.",
   "quoted": "Paruasemena (Ten Bears), Medicine Lodge council, October 1867",
   "art": "/cards/winter-count.jpg",
@@ -1439,7 +1439,7 @@
    "Herd"
   ],
   "mark": "The Grass",
-  "text": "Herd. When it enters, you may move another of your units one tile.",
+  "text": "Stampede. When you deploy the Pony Herd, you may move another of your units one tile.",
   "quote": "Along about an hour after breakfast we saw the first prairie-dog villages, the first antelope, and the first wolf.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/pony-herd.jpg",
@@ -1465,7 +1465,7 @@
    "Hold"
   ],
   "mark": "Supernatural",
-  "text": "Choose a tile. Until your next turn, a unit on it cannot move off it.",
+  "text": "Snowbound. Choose a tile. Until your next turn, any unit on that tile cannot move.",
   "quote": "Ask anyone who has gone through our country to California; ask those who have settled there and in Utah, and you will find that we have treated them always well.",
   "quoted": "Red Cloud, Cooper Union, New York, June 1870",
   "art": "/cards/cold-ring.jpg",
@@ -1494,7 +1494,7 @@
    "Harbor"
   ],
   "mark": "Winter",
-  "text": "Harbor. While it stands, enemy tricks can target only it, not your other units. When it is destroyed, gain 2 money.",
+  "text": "Harbor. The Empty Lodge draws enemy fire: while it is on the board, enemy tricks cannot target your other units. Left Behind. When it is destroyed, gain 2 money.",
   "quote": "Camp-fires and hot suppers in the deserts would be impossible but for the friendly sage-brush.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/empty-lodge.jpg",
@@ -1519,7 +1519,7 @@
    "Attach"
   ],
   "mark": "Item",
-  "text": "Attach to a unit you control. If a strike destroys that unit, the attacker takes 2 damage.",
+  "text": "Vengeance. Attach to one of your units. If a strike destroys that unit, the unit that struck it takes 2 damage.",
   "quote": "Then he and the waiting ravens explore the skeleton and polish the bones.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/buffalo-skull.jpg",
@@ -1546,7 +1546,7 @@
    "Climb"
   ],
   "mark": "Item",
-  "text": "Attach to a unit you control. It gains 1 Power while it carries the blanket. Pay 1 money: pass Trade Blanket to another of your units.",
+  "text": "Fair Trade. Attach to one of your units. That unit gains 1 Power while it carries the blanket. Pay 1 money: move Trade Blanket to another of your units.",
   "quote": "When a party camps, the first thing to be done is to cut sage-brush.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/trade-blanket.jpg",
@@ -1581,7 +1581,7 @@
    "Pack Train"
   ],
   "mark": "10th Cavalry",
-  "text": "Pack Train. Your devices cost 1 less. The first time each turn you play a device, draw 1.",
+  "text": "Pack Train. While Flipper is on the board, your devices cost 1 less. Engineer. The first time each turn you play a device, draw 1.",
   "quote": "I wanted to prove that it was not done because of my color.",
   "quoted": "Henry O. Flipper, The Colored Cadet at West Point (1878)",
   "art": "/cards/flipper.jpg",
@@ -1619,7 +1619,7 @@
    "High Ground"
   ],
   "mark": "The Troop",
-  "text": "Crown. Your units next to him deal 1 extra damage when they strike. He cannot move or strike the turn he enters.",
+  "text": "Command. The Empty Guidon rallies the line: your other units next to it deal 1 extra damage when they strike. It cannot move or strike the turn you deploy it.",
   "quote": "War is cruelty, and you cannot refine it.",
   "quoted": "William T. Sherman to the Atlanta council, 12 September 1864",
   "art": "/cards/empty-guidon.jpg",
@@ -1638,7 +1638,7 @@
    "Watch"
   ],
   "mark": "The Bluff",
-  "text": "Watch. The first enemy unit to move adjacent to him each turn loses 2 Power.",
+  "text": "Lookout. Each turn, the first enemy unit to move next to the Last Sentry loses 2 Power.",
   "quote": "You cannot qualify war in harsher terms than I will.",
   "quoted": "William T. Sherman to the Atlanta council, 12 September 1864",
   "art": "/cards/last-sentry.jpg",
@@ -1664,7 +1664,7 @@
    "Device"
   ],
   "mark": "Device",
-  "text": "Exhaust: deal 1 damage to each enemy unit.",
+  "text": "Crank It. Exhaust: deal 1 damage to each enemy unit.",
   "quote": "It occurred to me that if I could invent a machine—a gun—that would by its rapidity of fire enable one man to do as much battle duty as a hundred it would to a great extent, supersede the necessity of large armies.",
   "quoted": "Richard J. Gatling, postwar letter, quoted in American Heritage, November 1987",
   "art": "/cards/gatling.jpg",
@@ -1690,7 +1690,7 @@
    "Call"
   ],
   "mark": "Device",
-  "text": "Exhaust: one of your Army units that has already acted may act again.",
+  "text": "Sound the Charge. Exhaust: one of your Army units that has already acted may act again.",
   "quote": "From the moment I reached Sill I haven't experienced any thing but happiness.",
   "quoted": "Henry O. Flipper, The Colored Cadet at West Point (1878)",
   "art": "/cards/bugle.jpg",
@@ -1721,7 +1721,7 @@
    "Device"
   ],
   "mark": "Device",
-  "text": "Exhaust: gain 2 money. If an enemy unit stands next to your stronghold, gain 1 instead.",
+  "text": "Supply Run. Exhaust: gain 2 money, or only 1 if an enemy unit is next to your stronghold.",
   "quote": "There was a great pile of it strapped on top of the stage, and both the fore and hind boots were full.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/supply-wagon.jpg",
@@ -1746,7 +1746,7 @@
    "Watch"
   ],
   "mark": "The Troop",
-  "text": "Enemy units that move adjacent to him lose 1 Power and cannot strike this turn.",
+  "text": "Picket. When an enemy unit moves next to the Picket Line, that unit loses 1 Power and cannot strike this turn.",
   "quote": "The stage-coach traveled about a hundred to a hundred and twenty-five miles a day, the pony-rider about two hundred and fifty.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/picket-line.jpg",
@@ -1771,7 +1771,7 @@
    "Attach"
   ],
   "mark": "Item",
-  "text": "Attach to a unit you control. The first time it takes damage and lives, it regains up to 2 lost Power. Then exile Surgeon’s Roll.",
+  "text": "Field Dressing. Attach to one of your units. The first time that unit takes damage and survives, it regains up to 2 lost Power; then exile Surgeon’s Roll.",
   "quote": "I have been disposed not only to overlook the offence, but to forgive and forget it.",
   "quoted": "Henry O. Flipper, The Colored Cadet at West Point (1878)",
   "art": "/cards/surgeon-kit.jpg",
@@ -1798,7 +1798,7 @@
    "High Ground"
   ],
   "mark": "Device",
-  "text": "Exhaust: deal 3 damage to one enemy unit.",
+  "text": "Big Gun. Exhaust: deal 3 damage to an enemy unit.",
   "quote": "Our coach was a great swinging and swaying stage, of the most sumptuous description—an imposing cradle on wheels.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/howitzer.jpg",
@@ -1826,7 +1826,7 @@
    "Device"
   ],
   "mark": "Device",
-  "text": "Place on an empty tile. Enemy tricks cost 1 more while it stands. Units cannot move onto that tile.",
+  "text": "Cut the Wire. Place on an empty tile. While it is on the board, enemy tricks cost 1 more, and no unit can move onto that tile.",
   "quote": "We were spinning along through Kansas, and in the course of an hour and a half we were fairly abroad on the great Plains.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/cut-wire.jpg",
@@ -1849,7 +1849,7 @@
    "Returns"
   ],
   "mark": "The Troop",
-  "text": "When another allied Army unit is destroyed, you may exhaust Empty Saddle. If you do, return that unit to your hand.",
+  "text": "Riderless Horse. When another of your Army units (not your leader) is destroyed, you may exhaust Empty Saddle to return that unit to your hand.",
   "quote": "His horse was stripped of all unnecessary weight, too.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/empty-saddle.jpg",
@@ -1877,7 +1877,7 @@
    "Ward"
   ],
   "mark": "Device",
-  "text": "Place on a tile. Your units on that tile cannot be targeted by enemy tricks.",
+  "text": "Canvas Cover. Place on a tile. Enemy tricks cannot target your units on that tile.",
   "quote": "We took two or three blankets for protection against frosty weather in the mountains.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/sibley.jpg",
@@ -1899,7 +1899,7 @@
    "Device"
   ],
   "mark": "Device",
-  "text": "Exhaust: move one of your units up to two tiles. It cannot strike this turn.",
+  "text": "Litter Wagon. Exhaust: move one of your units up to two tiles. It cannot strike this turn.",
   "quote": "We breakfasted at Horse-Shoe Station, six hundred and seventy-six miles out from St. Joseph.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/ambulance.jpg",
@@ -1930,7 +1930,7 @@
    "Fast"
   ],
   "mark": "7th Cavalry",
-  "text": "Fast. He strikes first, and a killing blow is not answered.",
+  "text": "Fast. Custer gets the jump: he strikes first in melee, and an enemy he kills cannot strike back.",
   "quote": "If I were an Indian, I think that I would greatly prefer to cast my lot with those of my people who adhered to the free life of the plains rather than to the limits of a reservation.",
   "quoted": "George Armstrong Custer, My Life on the Plains (1874)",
   "art": "/cards/custer.jpg",
@@ -1951,7 +1951,7 @@
    "Tough"
   ],
   "mark": "5th Infantry",
-  "text": "Tough. Every blow against him deals 1 less damage.",
+  "text": "Tough. Nelson Miles is hard as rawhide: whenever he takes damage, he takes 1 less.",
   "quote": "The most abominable criminal military blunder and a horrible massacre of women and children.",
   "quoted": "Nelson A. Miles to his wife, on Wounded Knee, December 1890",
   "art": "/cards/miles.jpg",
@@ -1972,7 +1972,7 @@
    "Tough"
   ],
   "mark": "Buffalo Soldier",
-  "text": "Tough. Every blow against her deals 1 less damage. She enlisted under the name William Cathay.",
+  "text": "Tough. Cathay Williams is hard as rawhide: whenever she takes damage, she takes 1 less.",
   "quote": "Only two persons, a cousin and a particular friend, members of the regiment, knew that I was a woman.",
   "quoted": "Cathay Williams, St. Louis Daily Times, 2 January 1876",
   "art": "/cards/cathay.jpg",
@@ -1993,7 +1993,7 @@
    "Tough"
   ],
   "mark": "7th Cavalry",
-  "text": "Tough. Every blow against him deals 1 less damage.",
+  "text": "Tough. Benteen is hard as rawhide: whenever he takes damage, he takes 1 less.",
   "quote": "My Lie on the Plains.",
   "quoted": "Frederick Benteen, on Custer's My Life on the Plains",
   "art": "/cards/benteen.jpg",
@@ -2014,7 +2014,7 @@
    "Tough"
   ],
   "mark": "Frisco",
-  "text": "Tough. Every blow against him deals 1 less damage.",
+  "text": "Tough. Elfego Baca is hard as rawhide: whenever he takes damage, he takes 1 less.",
   "quote": "I will show the Texans there is at least one Mexican in the county who is not afraid of an American cowboy.",
   "quoted": "Elfego Baca, 1884",
   "art": "/cards/baca.jpg",
@@ -2035,7 +2035,7 @@
    "Ranged"
   ],
   "mark": "Lincoln County",
-  "text": "Ranged. He strikes up to two tiles away in a straight line and is not answered.",
+  "text": "Ranged. Pat Garrett can also shoot an enemy two tiles away in a straight line, and that target cannot strike back.",
   "quote": "He never spoke. A struggle or two, a little strangling sound as he gasped for breath, and the Kid was with his many victims.",
   "quoted": "Pat Garrett, The Authentic Life of Billy the Kid (1882)",
   "art": "/cards/garrett.jpg",
@@ -2056,7 +2056,7 @@
    "Fast"
   ],
   "mark": "Tombstone",
-  "text": "Fast. He strikes first, and a killing blow is not answered.",
+  "text": "Fast. Doc Holliday gets the jump: he strikes first in melee, and an enemy he kills cannot strike back.",
   "quote": "This is funny.",
   "quoted": "John H. Holliday, last words, Glenwood Springs, 8 November 1887",
   "art": "/cards/doc.jpg",
@@ -2077,7 +2077,7 @@
    "Tough"
   ],
   "mark": "Dodge City",
-  "text": "Tough. Every blow against him deals 1 less damage.",
+  "text": "Tough. Bat Masterson is hard as rawhide: whenever he takes damage, he takes 1 less.",
   "quote": "I never killed a white person that I remember. Might have aimed my gun at one or two.",
   "quoted": "W. B. Masterson to the New York Times, 1905",
   "art": "/cards/bat.jpg",
@@ -2096,7 +2096,7 @@
    "Trap"
   ],
   "mark": "Trap",
-  "text": "Hide a shaft on an empty tile; your rival is not shown which. The first unit to enter it is destroyed, and the tile is revealed.",
+  "text": "Bottomless Shaft. Hide a mine shaft on an empty tile; the rival is not shown which. The first unit of either side to enter it is destroyed.",
   "quote": "The alkali dust cut through our lips, it persecuted our eyes, it ate through the delicate membranes and made our noses bleed.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/mine-shaft.jpg",
@@ -2119,7 +2119,7 @@
    "Trap"
   ],
   "mark": "Trap",
-  "text": "Hide a sink on an empty tile; your rival is not shown which. The first unit to enter loses 3 Power and cannot move on its next turn.",
+  "text": "Alkali Sink. Hide a sink on an empty tile; the rival is not shown which. The first unit of either side to enter it loses 3 Power and cannot move on its next turn.",
   "quote": "It was like drinking lye, and not weak lye, either.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/alkali.jpg",
@@ -2142,7 +2142,7 @@
    "Trap"
   ],
   "mark": "Trap",
-  "text": "Hide a deadfall on an empty tile; your rival is not shown which. The first unit to enter loses 2 Power and cannot strike this turn.",
+  "text": "Deadfall. Hide a deadfall on an empty tile; the rival is not shown which. The first unit of either side to enter it loses 2 Power and cannot strike this turn.",
   "quote": "Imagine a vast, waveless ocean stricken dead and turned to ashes.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/deadfall.jpg",
@@ -2165,7 +2165,7 @@
    "Trap"
   ],
   "mark": "Trap",
-  "text": "Hide a collapse on an empty tile; your rival is not shown which. The first unit to enter is destroyed, and one enemy item or device next to it is exiled.",
+  "text": "Cave-In. Hide a collapse on an empty tile; the rival is not shown which. The first unit of either side to enter it is destroyed, and one enemy item or device next to it is exiled.",
   "quote": "The sage-brush is a singularly hardy plant, and grows right in the midst of deep sand, and among barren rocks.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/cave-in.jpg",
@@ -2193,7 +2193,7 @@
    "Bestiary"
   ],
   "mark": "The Wild Man",
-  "text": "Cryptid. Tough. The first damage dealt to him is ignored. The name came later; the frontier accounts came first.",
+  "text": "Cryptid. Tough. Whenever Sasquatch takes damage, it takes 1 less. Tall Tale. The first time it would take damage or lose Power, it takes none.",
   "quote": "His nostrils were struck by a strong, wild-beast odor, and he caught the loom of a great body in the darkness at the mouth of the lean-to.",
   "quoted": "Theodore Roosevelt, The Wilderness Hunter (1893)",
   "art": "/cards/sasquatch.jpg",
@@ -2222,7 +2222,7 @@
    "Bestiary"
   ],
   "mark": "Blackfeet",
-  "text": "Cryptid. When it enters, deal 1 damage to each enemy unit.",
+  "text": "Cryptid. Thunderclap. When you deploy the Thunderbird, deal 1 damage to each enemy unit.",
   "quote": "You have heard the Thunder, for he is everywhere.",
   "quoted": "George Bird Grinnell, Blackfeet Indian Stories (1913)",
   "art": "/cards/thunderbird.jpg",
@@ -2251,7 +2251,7 @@
    "Bestiary"
   ],
   "mark": "The Bluff",
-  "text": "Cryptid. When it destroys a unit, gain 2 money. Each enemy unit that enters while it stands loses 1 Power.",
+  "text": "Cryptid. Bounty. When the Piasa destroys a unit, gain 2 money. Looming. While it is on the board, each unit the rival deploys loses 1 Power.",
   "quote": "They have horns on their heads like those of deer, a horrible look, red eyes.",
   "quoted": "Jacques Marquette, journal of the 1673 voyage",
   "art": "/cards/piasa.jpg",
@@ -2286,7 +2286,7 @@
    "Bestiary"
   ],
   "mark": "The Drift",
-  "text": "Cryptid. Once each turn, look at one hidden tile. If it is a trap, you may move it to a different empty tile. They cannot move or strike the turn they enter.",
+  "text": "Cryptid. Knocking. Once each turn, look at one tile; if a trap is there, you may move it to another empty tile. The Tommyknockers cannot move or strike the turn you deploy them.",
   "quote": "We must not look at goblin men, we must not buy their fruits.",
   "quoted": "Christina Rossetti, Goblin Market (1862)",
   "art": "/cards/tommyknockers.jpg",
@@ -2318,7 +2318,7 @@
    "Bestiary"
   ],
   "mark": "Arizona",
-  "text": "Cryptid. Fast. It strikes first. When it destroys a unit, the rival loses 1 money.",
+  "text": "Cryptid. Fast. The Cactus Cat strikes first in melee, and an enemy it kills cannot strike back. Rustler. When it destroys a unit, the rival loses 1 money.",
   "quote": "The cactus cat has thorny hair, the thorns being especially long and rigid on its ears.",
   "quoted": "William T. Cox, Fearsome Creatures of the Lumberwoods (1910)",
   "art": "/cards/cactus-cat.jpg",
@@ -2348,7 +2348,7 @@
    "Bestiary"
   ],
   "mark": "Rhinelander",
-  "text": "Cryptid. When it enters, exhaust an enemy unit. Traps cannot destroy it. Shepard's 1893 beast was a hoax, and the card knows it.",
+  "text": "Cryptid. Bully. When you deploy the Hodag, choose an enemy unit: it cannot move or strike on its next turn. Traps cannot destroy the Hodag.",
   "quote": "The outward and visible sign of an inward fear.",
   "quoted": "Ambrose Bierce, The Devil's Dictionary (1911)",
   "art": "/cards/hodag.jpg",
@@ -2373,7 +2373,7 @@
    "Bestiary"
   ],
   "mark": "Supernatural",
-  "text": "Return a unit to its owner’s hand. A leader goes back to the tray instead, and its owner discards a card at random.",
+  "text": "Ill Omen. Return a unit on the board to its owner’s hand. A leader goes back to its owner’s tray instead, and that player discards a card at random.",
   "quote": "Quoth the Raven, \"Nevermore.\"",
   "quoted": "Edgar Allan Poe, The Raven (1845)",
   "art": "/cards/the-raven.jpg",
@@ -2405,7 +2405,7 @@
    "Bestiary"
   ],
   "mark": "Point Pleasant",
-  "text": "Cryptid. Ranged. It strikes up to two tiles away and is not answered. Point Pleasant still talks of red eyes over the river, and of Cornstalk’s curse.",
+  "text": "Cryptid. Ranged. The Mothman can also strike an enemy two tiles away in a straight line, and that target cannot strike back.",
   "quote": "And his eyes have all the seeming of a demon's that is dreaming.",
   "quoted": "Edgar Allan Poe, The Raven (1845)",
   "art": "/cards/mothman.jpg",
@@ -2429,7 +2429,7 @@
    "Bestiary"
   ],
   "mark": "The Road",
-  "text": "Cryptid. Fast. It strikes first. The first time an enemy unit crosses onto your half, you may move the dog next to it.",
+  "text": "Cryptid. Fast. The Black Dog strikes first in melee, and an enemy it kills cannot strike back. Tracker. The first time an enemy unit crosses onto your half, you may move the dog next to it.",
   "quote": "Listen to them—the children of the night. What music they make!",
   "quoted": "Bram Stoker, Dracula (1897)",
   "art": "/cards/black-dog.jpg",
@@ -2455,7 +2455,7 @@
    "Bestiary"
   ],
   "mark": "Supernatural",
-  "text": "Look at the rival’s hand. Choose one card there. They discard it. You gain 1 money.",
+  "text": "Card Sharp. Look at the rival’s hand and choose a card; the rival discards it. Gain 1 money.",
   "quote": "Strange is the night where black stars rise.",
   "quoted": "Robert W. Chambers, The King in Yellow (1895)",
   "art": "/cards/yellow-sign.jpg",
@@ -2479,7 +2479,7 @@
    "Bestiary"
   ],
   "mark": "Supernatural",
-  "text": "Look at every hidden tile. Destroy one trap, or deal 2 damage to an enemy unit.",
+  "text": "Lamp in the Window. Look at every hidden tile. Then destroy one enemy trap, or deal 2 damage to an enemy unit.",
   "quote": "I was aware of a person on the other side of the window and looking straight in.",
   "quoted": "Henry James, The Turn of the Screw (1898)",
   "art": "/cards/at-the-window.jpg",
@@ -2503,7 +2503,7 @@
    "Bestiary"
   ],
   "mark": "Supernatural",
-  "text": "Exhaust a unit. Until your next turn it cannot strike, and the other side’s tricks cannot target it.",
+  "text": "Locked Room. Choose a unit. Until your next turn, it cannot move or strike, and tricks played by its enemies cannot target it.",
   "quote": "One need not be a chamber to be haunted.",
   "quoted": "Emily Dickinson, Poems",
   "art": "/cards/haunted-chamber.jpg",
@@ -2536,7 +2536,7 @@
    "Bestiary"
   ],
   "mark": "The Ridge",
-  "text": "Cryptid. Tricks and ranged strikes cannot target it. Units it strikes do not strike back.",
+  "text": "Cryptid. Unseen. Enemy tricks and ranged strikes cannot target the Damned Thing, and units it strikes cannot strike back.",
   "quote": "It was as if something had passed along between me and them; but I could not see it.",
   "quoted": "Ambrose Bierce, The Damned Thing (1893)",
   "art": "/cards/damned-thing.jpg",
@@ -2555,7 +2555,7 @@
    "Bestiary"
   ],
   "mark": "Supernatural",
-  "text": "Destroy a unit with 2 Power or less. If you do, its owner draws 1.",
+  "text": "Hanging Bridge. Destroy any unit with 2 Power or less. Its owner draws 1.",
   "quote": "A man stood upon a railroad bridge in northern Alabama, looking down into the swift water twenty feet below.",
   "quoted": "Ambrose Bierce, An Occurrence at Owl Creek Bridge (1890)",
   "art": "/cards/owl-creek.jpg",
@@ -2587,7 +2587,7 @@
    "Bestiary"
   ],
   "mark": "Bear Lake",
-  "text": "Cryptid. Hold. Enemy units next to it cannot move.",
+  "text": "Cryptid. Hold. Enemy units next to the Bear Lake Monster cannot move, though they can still strike.",
   "quote": "They represent it as being of the serpent kind, but having legs about eighteen inches long.",
   "quoted": "Joseph C. Rich, letter, Deseret Evening News (1868)",
   "art": "/cards/bear-lake.jpg",
@@ -2611,7 +2611,7 @@
    "Bestiary"
   ],
   "mark": "The Timber",
-  "text": "Cryptid. Hide it on an empty tile; your rival is not shown which. The first enemy to enter that tile takes 3 damage, and the Hidebehind is revealed beside it, exhausted.",
+  "text": "Cryptid. Ambush. Hide the Hidebehind on an empty tile; the rival is not shown which. The first enemy unit to enter that tile takes 3 damage, and the Hidebehind appears there or beside it, exhausted.",
   "quote": "It is too incredible, too monstrous; such things can never be in this quiet world.",
   "quoted": "Arthur Machen, The Great God Pan (1894)",
   "art": "/cards/hidebehind.jpg",
@@ -2635,7 +2635,7 @@
    "Bestiary"
   ],
   "mark": "The River",
-  "text": "Cryptid. When she enters and at the start of your turn, the strongest enemy next to her cannot move on its next turn. The first time she is destroyed, she returns to your hand and you lose 2 money.",
+  "text": "Cryptid. Weeping. When you deploy La Llorona and at the start of your turn, the strongest enemy next to her cannot move on its next turn. The first time she is destroyed, she returns to your hand; lose 2 money.",
   "quote": "Be with me always—take any form—drive me mad!",
   "quoted": "Emily Brontë, Wuthering Heights (1847)",
   "art": "/cards/llorona.jpg",
@@ -2674,7 +2674,7 @@
    "Bestiary"
   ],
   "mark": "The Road",
-  "text": "Cryptid. Fast. It strikes first. After it strikes and survives, you may move it one tile. A unit it destroys cannot return.",
+  "text": "Cryptid. Fast. Headless. After the Rider strikes and survives, you may move it one tile. A unit it destroys is exiled, and that unit’s “when destroyed” abilities do not happen.",
   "quote": "The apparition of a figure on horseback, without a head.",
   "quoted": "Washington Irving, The Legend of Sleepy Hollow (1820)",
   "art": "/cards/sleepy-hollow.jpg",
@@ -2704,7 +2704,7 @@
    "Bestiary"
   ],
   "mark": "The Barrens",
-  "text": "Cryptid. It may enter on any empty tile outside the rival’s half. Tricks cannot target it the turn it enters.",
+  "text": "Cryptid. Winged. You may deploy the Leeds Devil on any empty tile outside the rival’s half. Enemy tricks cannot target it the turn you deploy it.",
   "quote": "Beware, for I am fearless and therefore powerful.",
   "quoted": "Mary Shelley, Frankenstein (1818)",
   "art": "/cards/leeds-devil.jpg",
@@ -2723,7 +2723,7 @@
    "Bestiary"
   ],
   "mark": "Supernatural",
-  "text": "Name a unit. It cannot move or strike until your next turn. Draw 1.",
+  "text": "Wrong Turn. Choose a unit. It cannot move or strike until your next turn. Draw 1.",
   "quote": "The fiend in his own shape is less hideous than when he rages in the breast of man.",
   "quoted": "Nathaniel Hawthorne, Young Goodman Brown (1835)",
   "art": "/cards/goodman-path.jpg",
@@ -2755,7 +2755,7 @@
    "Bestiary"
   ],
   "mark": "Supernatural",
-  "text": "Attach to an enemy unit. At the start of your turn it loses 1 Power. If it is destroyed while Carmilla is attached, draw 1 and gain 2 money.",
+  "text": "Night Visitor. Attach to an enemy unit. At the start of each of your turns, that unit loses 1 Power. If it is destroyed while Carmilla is attached, draw 1 and gain 2 money.",
   "quote": "You are mine, you shall be mine, you and I are one for ever.",
   "quoted": "Sheridan Le Fanu, Carmilla (1872)",
   "art": "/cards/carmilla.jpg",
@@ -2789,10 +2789,10 @@
     "n": 1
    }
   ],
-  "text": "While your leader is on the board, Frank James deals 1 extra damage when he strikes.",
   "quote": "I have been hunted for twenty-one years, have literally lived in the saddle, have never known a day of perfect peace.",
   "quoted": "Frank James on his surrender to Gov. Crittenden, October 1882",
   "quoteSource": "attested",
+  "text": "Brothers in the Saddle. While your leader is on the board, Frank James deals 1 extra damage when he strikes.",
   "art": "/cards/frank-james.jpg"
  },
  {
@@ -2816,10 +2816,10 @@
     "n": 1
    }
   ],
-  "text": "Train Robber. When he destroys a unit, gain 1 money.",
   "quote": "The world is bobbing around me.",
   "quoted": "Sam Bass, last words, Round Rock, Texas, 21 July 1878",
   "quoteSource": "attested",
+  "text": "Train Robber. When Sam Bass destroys a unit, gain 1 money.",
   "art": "/cards/sam-bass.jpg"
  },
  {
@@ -2843,10 +2843,10 @@
     "n": 1
    }
   ],
-  "text": "Poet. When he destroys a unit, draw 1. He leaves a verse in the strongbox.",
   "quote": "I’ve labored long and hard for bread, for honor and for riches, but on my corns too long you’ve tread, you fine-haired sons of bitches.",
   "quoted": "Verse left at a robbed Wells Fargo stage, 1877",
   "quoteSource": "attested",
+  "text": "Poet Bandit. When Black Bart destroys a unit, draw 1.",
   "art": "/cards/black-bart.jpg"
  },
  {
@@ -2873,10 +2873,10 @@
     "n": 1
    }
   ],
-  "text": "Fast. When she enters, the rival loses 1 money.",
   "quote": "I shall not consent to be tried under a law in which my sex had no voice in making.",
   "quoted": "Pearl Hart at her trial, Florence, Arizona, 1899",
   "quoteSource": "attested",
+  "text": "Fast. Pearl Hart gets the jump: she strikes first in melee, and an enemy she kills cannot strike back. Stage Holdup. When you deploy her, the rival loses 1 money.",
   "art": "/cards/pearl-hart.jpg"
  },
  {
@@ -2900,10 +2900,10 @@
     "n": 2
    }
   ],
-  "text": "Bank Man. When he takes a money tile that was not yours, gain 2 money.",
   "quote": "I’ve robbed more banks than any man in America.",
   "quoted": "Attributed to Henry Starr, c. 1920",
   "quoteSource": "attributed",
+  "text": "Bank Man. When Henry Starr steps onto a money claim you do not hold, gain 2 money.",
   "art": "/cards/henry-starr.jpg"
  },
  {
@@ -2927,10 +2927,10 @@
     "n": 1
    }
   ],
-  "text": "Powder. When he is destroyed, deal 1 damage to each enemy next to him.",
   "quote": "Dan Clifton rode with the Doolins and earned the name the slow way: one fuse at a time.",
   "quoted": "Card note",
   "quoteSource": "note",
+  "text": "Short Fuse. When Dynamite Dick is destroyed, deal 1 damage to each enemy unit next to him.",
   "art": "/cards/dynamite-dick.jpg"
  },
  {
@@ -2949,10 +2949,10 @@
   "cost": 4,
   "power": 4,
   "mark": "Wild Bunch",
-  "text": "Fast. He strikes first, and a killing blow is not answered.",
   "quote": "The most vicious outlaw in America.",
   "quoted": "Attributed to William Pinkerton, of Harvey Logan",
   "quoteSource": "attributed",
+  "text": "Fast. Kid Curry gets the jump: he strikes first in melee, and an enemy he kills cannot strike back.",
   "art": "/cards/kid-curry.jpg"
  },
  {
@@ -2975,10 +2975,10 @@
     "op": "rideOn"
    }
   ],
-  "text": "Ride On. After he strikes and survives, he may move one tile.",
   "quote": "Harry Longabaugh took his name from a Wyoming jail and never gave it back.",
   "quoted": "Card note",
   "quoteSource": "note",
+  "text": "Hit and Run. After the Sundance Kid strikes and survives, he may move one tile.",
   "art": "/cards/sundance.jpg"
  },
  {
@@ -3001,10 +3001,10 @@
     "op": "returns"
    }
   ],
-  "text": "Returns. The first time he is destroyed, set him aside; at the start of your next turn he rides back in, exhausted. They showed a head in a jar, and the diggings still were not sure it was his.",
   "quote": "Joaquin is dead, they say. Then who rode through Sonora last night?",
   "quoted": "Gold Country saying (folk)",
   "quoteSource": "folk",
+  "text": "Returns. Joaquin Murrieta is hard to bury: the first time he is destroyed, he rides back in at the start of your next turn, exhausted.",
   "art": "/cards/joaquin.jpg"
  },
  {
@@ -3033,10 +3033,10 @@
     "n": 1
    }
   ],
-  "text": "Cryptid. Fast. When it enters, draw 1.",
   "quote": "The licence is good from midnight to two, and only for a man who does not drink.",
   "quoted": "Douglas, Wyoming, tall tale",
   "quoteSource": "folk",
+  "text": "Cryptid. Fast. The Jackalope strikes first in melee, and an enemy it kills cannot strike back. Lucky Find. When you deploy it, draw 1.",
   "art": "/cards/jackalope.jpg"
  },
  {
@@ -3060,10 +3060,10 @@
     "n": 2
    }
   ],
-  "text": "Bequest. When he is destroyed, draw 2. He took the map with him.",
   "quote": "No miner will ever find my mine.",
   "quoted": "Attributed to Jacob Waltz, 1891 (legend)",
   "quoteSource": "folk",
+  "text": "Lost Mine. When the Lost Dutchman is destroyed, draw 2.",
   "art": "/cards/lost-dutchman.jpg"
  },
  {
@@ -3088,10 +3088,10 @@
     "op": "look"
    }
   ],
-  "text": "Hard Rock. When he enters, look at one hidden tile. Traps cannot destroy him.",
   "quote": "Wherever there is a hole in the ground, you will find a Cornishman at the bottom of it.",
   "quoted": "Mining-camp saying",
   "quoteSource": "folk",
+  "text": "Hard Rock. When you deploy Cousin Jack, look at one hidden tile. Traps cannot destroy him, though they can still hurt him.",
   "art": "/cards/cousin-jack.jpg"
  },
  {
@@ -3110,10 +3110,10 @@
   "cost": 3,
   "power": 2,
   "mark": "Cheyenne Gallows",
-  "text": "Ranged. He strikes up to two tiles away in a straight line and is not answered.",
   "quote": "Killing men is my specialty. I look at it as a business proposition, and I think I have a corner on the market.",
   "quoted": "Attributed to Tom Horn, hanged at Cheyenne in 1903",
   "quoteSource": "attributed",
+  "text": "Ranged. Tom Horn can also shoot an enemy two tiles away in a straight line, and that target cannot strike back.",
   "art": "/cards/tom-horn.jpg"
  },
  {
@@ -3137,10 +3137,10 @@
     "n": 2
    }
   ],
-  "text": "Last Word. When he is destroyed, he strikes one enemy next to him for 2 damage.",
   "quote": "I’ll be in hell before you start breakfast, boys! Let her rip!",
   "quoted": "Tom Ketchum on the gallows, Clayton, New Mexico, 26 April 1901",
   "quoteSource": "attested",
+  "text": "Last Word. When Black Jack Ketchum is destroyed, he deals 2 damage to an enemy unit next to him.",
   "art": "/cards/black-jack-ketchum.jpg"
  },
  {
@@ -3163,10 +3163,10 @@
     "op": "returns"
    }
   ],
-  "text": "Returns. The first time he is destroyed, set him aside; at the start of your next turn he rides back in, exhausted.",
   "quote": "Here lies Lester Moore. Four slugs from a .44. No Les, no more.",
   "quoted": "Epitaph, Boot Hill Graveyard, Tombstone",
   "quoteSource": "attested",
+  "text": "Returns. Lester Moore is hard to bury: the first time he is destroyed, he rides back in at the start of your next turn, exhausted.",
   "art": "/cards/lester-moore.jpg"
  },
  {
@@ -3193,10 +3193,10 @@
     "op": "discardRandom"
    }
   ],
-  "text": "Cryptid. Torment. When she enters, the rival discards a card at random.",
   "quote": "I would rather fight the British again than have any more dealings with that torment.",
   "quoted": "Attributed to Andrew Jackson (legend)",
   "quoteSource": "folk",
+  "text": "Cryptid. Torment. When you deploy her, the rival discards a card at random.",
   "art": "/cards/bell-witch.jpg"
  },
  {
@@ -3220,10 +3220,10 @@
     "n": 1
    }
   ],
-  "text": "Hungry. When he destroys a unit, he gains 1 Power for good and regains all lost Power.",
   "quote": "There was seven Democrats in Hinsdale County, and you ate five of them.",
   "quoted": "Apocryphal sentence of Judge M. B. Gerry, 1883",
   "quoteSource": "folk",
+  "text": "Hungry. When Alferd Packer destroys a unit, he gains 1 Power for good and regains all lost Power.",
   "art": "/cards/alferd-packer.jpg"
  },
  {
@@ -3252,10 +3252,10 @@
     "n": 1
    }
   ],
-  "text": "Cryptid. It may enter on any empty tile outside the rival’s half. When it enters, deal 1 damage to an enemy unit.",
   "quote": "If the owl calls your name at the window, do not answer it.",
   "quoted": "Border warning (folk)",
   "quoteSource": "folk",
+  "text": "Cryptid. Winged. You may deploy La Lechuza on any empty tile outside the rival’s half. Owl’s Cry. When you deploy her, deal 1 damage to an enemy unit.",
   "art": "/cards/lechuza.jpg"
  },
  {
@@ -3282,10 +3282,10 @@
     "n": 1
    }
   ],
-  "text": "Fast. When Charley is destroyed, draw 1. The secret came out only at the laying-out.",
   "quote": "Charley Parkhurst drove stage for twenty years. The town learned she was a woman when they laid her out.",
   "quoted": "Card note",
   "quoteSource": "note",
+  "text": "Fast. One-Eyed Charley gets the jump: she strikes first in melee, and an enemy she kills cannot strike back. Driver’s Secret. When Charley is destroyed, draw 1.",
   "art": "/cards/charley-parkhurst.jpg"
  },
  {
@@ -3308,10 +3308,10 @@
     "op": "exhume"
    }
   ],
-  "text": "Exhume. When he enters, return a unit card from your discard to your hand.",
   "quote": "Nobody stays buried in a town that pays by the pound.",
   "quoted": "Margin of a Choir hymnal (invented)",
   "quoteSource": "invented",
+  "text": "Grave Robber. When you deploy the Resurrection Man, you may return a unit card from your discard pile to your hand.",
   "art": "/cards/resurrection-man.jpg"
  },
  {
@@ -3336,10 +3336,10 @@
     "once": "turn"
    }
   ],
-  "text": "Trade. Once each turn, when any unit is destroyed, gain 1 money.",
   "quote": "Measure twice. Somebody always comes back for the second box.",
   "quoted": "Undertaker’s rule (invented)",
   "quoteSource": "invented",
+  "text": "Pine Boxes. Once each turn, when any unit is destroyed, gain 1 money.",
   "art": "/cards/undertaker.jpg"
  },
  {
@@ -3363,10 +3363,10 @@
     "n": 2
    }
   ],
-  "text": "Mend. When he enters, one of your units regains up to 2 lost Power.",
   "quote": "There is nothing out today but crows and Methodist preachers.",
   "quoted": "Frontier saying for foul weather",
   "quoteSource": "folk",
+  "text": "Camp Meeting. When you deploy the Circuit Rider, one of your units regains up to 2 lost Power.",
   "art": "/cards/circuit-rider.jpg"
  },
  {
@@ -3389,10 +3389,10 @@
     "op": "weep"
    }
   ],
-  "text": "Weep. When she enters, the strongest enemy next to her cannot move on its next turn.",
   "quote": "She is still waiting at the chapel door. Do not walk past her.",
   "quoted": "Night church warning (invented)",
   "quoteSource": "invented",
+  "text": "Left at the Altar. When you deploy the Weeping Bride, the strongest enemy unit next to her cannot move on its next turn.",
   "art": "/cards/weeping-bride.jpg"
  },
  {
@@ -3415,10 +3415,10 @@
     "op": "rideOn"
    }
   ],
-  "text": "Ride On. After he strikes and survives, he may move one tile.",
   "quote": "Nobody passes the hearse. Nobody.",
   "quoted": "Choir road saying (invented)",
   "quoteSource": "invented",
+  "text": "Last Ride. After the Hearse Driver strikes and survives, he may move one tile.",
   "art": "/cards/hearse-driver.jpg"
  },
  {
@@ -3437,10 +3437,10 @@
   "cost": 3,
   "power": 3,
   "mark": "The Night Church",
-  "text": "Harbor. While she stands, enemy tricks can target only her, not your other units.",
   "quote": "Sing the second verse slower. They are listening.",
   "quoted": "Choir rehearsal (invented)",
   "quoteSource": "invented",
+  "text": "Harbor. The Night Deaconess draws enemy fire: while she is on the board, enemy tricks cannot target your other units.",
   "art": "/cards/deaconess.jpg"
  },
  {
@@ -3463,10 +3463,10 @@
     "op": "returns"
    }
   ],
-  "text": "Returns. The first time he is destroyed, set him aside; at the start of your next turn he rides back in, exhausted.",
   "quote": "Lazarus, come forth.",
   "quoted": "John 11:43, King James Version",
   "quoteSource": "attested",
+  "text": "Returns. Brother Lazarus is hard to bury: the first time he is destroyed, he rides back in at the start of your next turn, exhausted.",
   "art": "/cards/brother-lazarus.jpg"
  },
  {
@@ -3491,10 +3491,10 @@
     "once": "turn"
    }
   ],
-  "text": "Dirge. Once each turn, when another of your units is destroyed, draw 1.",
   "quote": "Play it again, softer. The dead keep time.",
   "quoted": "Choir loft (invented)",
   "quoteSource": "invented",
+  "text": "Dirge. Once each turn, when another of your units is destroyed, draw 1.",
   "art": "/cards/organist.jpg"
  },
  {
@@ -3518,10 +3518,10 @@
     "n": 1
    }
   ],
-  "text": "Manhunter. When he destroys a unit, draw 1.",
   "quote": "One of the Three Guardsmen. He ran Bill Doolin to ground in 1896.",
   "quoted": "Card note",
   "quoteSource": "note",
+  "text": "Manhunter. When Heck Thomas destroys a unit, draw 1.",
   "art": "/cards/heck-thomas.jpg"
  },
  {
@@ -3540,10 +3540,10 @@
   "cost": 4,
   "power": 4,
   "mark": "Three Guardsmen",
-  "text": "Steady. If you have not played a card this turn, his strikes deal 1 extra damage and are not answered.",
   "quote": "He would charge hell with a bucket of water.",
   "quoted": "Attributed to Theodore Roosevelt, of Tilghman",
   "quoteSource": "attributed",
+  "text": "Steady. If you have not played or deployed a card this turn, Bill Tilghman deals 1 extra damage when he strikes, and the target cannot strike back.",
   "art": "/cards/bill-tilghman.jpg"
  },
  {
@@ -3562,10 +3562,10 @@
   "cost": 2,
   "power": 3,
   "mark": "Three Guardsmen",
-  "text": "Tough. Every blow against him deals 1 less damage.",
   "quote": "The Dane of the Three Guardsmen. He said he had served in the French Foreign Legion, and nobody tested it.",
   "quoted": "Card note",
   "quoteSource": "note",
+  "text": "Tough. Chris Madsen is hard as rawhide: whenever he takes damage, he takes 1 less.",
   "art": "/cards/chris-madsen.jpg"
  },
  {
@@ -3590,10 +3590,10 @@
     "op": "pinEnemy"
    }
   ],
-  "text": "Law West of the Pecos. He cannot move or strike the turn he enters. When he enters, choose an enemy unit: it cannot move on its next turn.",
   "quote": "Hang ’em first, try ’em later.",
   "quoted": "Attributed to Judge Roy Bean (legend)",
   "quoteSource": "folk",
+  "text": "Law West of the Pecos. When you deploy Judge Roy Bean, choose an enemy unit: it cannot move on its next turn. Roy Bean cannot move or strike the turn you deploy him.",
   "art": "/cards/roy-bean.jpg"
  },
  {
@@ -3613,10 +3613,10 @@
   "cost": 3,
   "power": 4,
   "mark": "Texas Rangers",
-  "text": "Tough. Every blow against him deals 1 less damage.",
   "quote": "No man in the wrong can stand up against a fellow that’s in the right and keeps on a-comin’.",
   "quoted": "Capt. Bill McDonald, Texas Rangers",
   "quoteSource": "attested",
+  "text": "Tough. Capt. McDonald is hard as rawhide: whenever he takes damage, he takes 1 less.",
   "art": "/cards/bill-mcdonald.jpg"
  },
  {
@@ -3642,10 +3642,10 @@
     "n": 2
    }
   ],
-  "text": "Hanging Judge. He cannot move or strike the turn he enters. When he enters, destroy an enemy unit with Power 2 or less.",
   "quote": "I never hanged a man. It is the law.",
   "quoted": "Attributed to Judge Isaac C. Parker",
   "quoteSource": "attributed",
+  "text": "Hanging Judge. When you deploy Judge Parker, destroy an enemy unit with 2 Power or less. He cannot move or strike the turn you deploy him.",
   "art": "/cards/isaac-parker.jpg"
  },
  {
@@ -3670,10 +3670,10 @@
     "once": "turn"
    }
   ],
-  "text": "Hangman. Once each turn, when an enemy unit is destroyed, gain 1 money.",
   "quote": "I never hanged a man who came back to have the job done over.",
   "quoted": "Attributed to George Maledon, Fort Smith",
   "quoteSource": "attributed",
+  "text": "Hangman. Once each turn, when an enemy unit is destroyed, gain 1 money.",
   "art": "/cards/george-maledon.jpg"
  },
  {
@@ -3692,10 +3692,10 @@
   "cost": 4,
   "power": 4,
   "mark": "Deadwood",
-  "text": "Hold. Enemy units next to him cannot move. They may still strike.",
   "quote": "Deadwood’s first sheriff. Hickok was already dead; Bullock made sure the town noticed the law had arrived anyway.",
   "quoted": "Card note",
   "quoteSource": "note",
+  "text": "Hold. Seth Bullock pins enemies down: enemy units next to him cannot move, though they can still strike.",
   "art": "/cards/seth-bullock.jpg"
  },
  {
@@ -3721,10 +3721,10 @@
     "op": "look"
    }
   ],
-  "text": "Ranged. He strikes up to two tiles away in a straight line and is not answered. Scout: when he enters, look at one hidden tile.",
   "quote": "Every Indian outbreak that I have ever known has resulted from broken promises and broken treaties by the government.",
   "quoted": "William F. Cody, 1879",
   "quoteSource": "attested",
+  "text": "Ranged. Buffalo Bill can also shoot an enemy two tiles away in a straight line, and that target cannot strike back. Scout. When you deploy him, look at one hidden tile.",
   "art": "/cards/buffalo-bill.jpg"
  },
  {
@@ -3747,10 +3747,10 @@
     "op": "firstWound"
    }
   ],
-  "text": "Survivor. The first damage dealt to him is ignored.",
   "quote": "Will be kindly cared for and his life preserved to the utmost limit.",
   "quoted": "General Orders No. 7, 7th Cavalry, 1878, of the horse Comanche",
   "quoteSource": "attested",
+  "text": "Survivor. The first time Comanche would take damage or lose Power, he takes none.",
   "art": "/cards/comanche-horse.jpg"
  },
  {
@@ -3769,10 +3769,10 @@
   "cost": 3,
   "power": 3,
   "mark": "9th Cavalry",
-  "text": "Fast. He strikes first, and a killing blow is not answered.",
   "quote": "Gallantry on scout after Indians.",
   "quoted": "Medal of Honor citation, 1870",
   "quoteSource": "attested",
+  "text": "Fast. Sgt. Stance gets the jump: he strikes first in melee, and an enemy he kills cannot strike back.",
   "art": "/cards/emanuel-stance.jpg"
  },
  {
@@ -3798,10 +3798,10 @@
     "op": "look"
    }
   ],
-  "text": "Scout. When he enters, look at one hidden tile. If his first move in a turn is a climb, it does not spend his move.",
   "quote": "Chief of scouts in Arizona for most of twenty years. He carried more lead in him than most men fired.",
   "quoted": "Card note",
   "quoteSource": "note",
+  "text": "Chief of Scouts. When you deploy Al Sieber, look at one hidden tile. Climber. If his first move in a turn is a climb, it does not spend his move.",
   "art": "/cards/al-sieber.jpg"
  },
  {
@@ -3825,10 +3825,10 @@
     "n": 1
    }
   ],
-  "text": "Two Medals. When he destroys a unit, draw 1.",
   "quote": "Two Medals of Honor in the war, both for taking a flag. He died a few yards from his brother.",
   "quoted": "Card note",
   "quoteSource": "note",
+  "text": "Two Medals. When Tom Custer destroys a unit, draw 1.",
   "art": "/cards/tom-custer.jpg"
  },
  {
@@ -3856,10 +3856,10 @@
     "n": 1
    }
   ],
-  "text": "Topographer. When he enters, look at one hidden tile. When he is destroyed, draw 1.",
   "quote": "Peace, n. In international affairs, a period of cheating between two periods of fighting.",
   "quoted": "Ambrose Bierce, The Devil’s Dictionary",
   "quoteSource": "attested",
+  "text": "Surveyor. When you deploy Ambrose Bierce, look at one hidden tile. When he is destroyed, draw 1.",
   "art": "/cards/ambrose-bierce.jpg"
  },
  {
@@ -3887,10 +3887,10 @@
     "once": "turn"
    }
   ],
-  "text": "Wire. Once each turn, when you play a device, gain 1 money.",
   "quote": "What hath God wrought.",
   "quoted": "First long-distance telegraph message, 1844",
   "quoteSource": "attested",
+  "text": "On the Wire. Once each turn, when you play a device, gain 1 money.",
   "art": "/cards/telegrapher.jpg"
  },
  {
@@ -3914,10 +3914,10 @@
     "n": 1
    }
   ],
-  "text": "Supply. When he enters, gain 1 money.",
   "quote": "A mule will work for you ten years for the chance to kick you once.",
   "quoted": "Teamster’s proverb",
   "quoteSource": "folk",
+  "text": "Supply. When you deploy the Mule Skinner, gain 1 money.",
   "art": "/cards/mule-skinner.jpg"
  },
  {
@@ -3936,10 +3936,10 @@
   "cost": 4,
   "power": 4,
   "mark": "10th Cavalry",
-  "text": "Command. Your units next to him deal 1 extra damage when they strike.",
   "quote": "A music teacher who disliked horses, he led the longest cavalry raid of the war and then the 10th Cavalry.",
   "quoted": "Card note",
   "quoteSource": "note",
+  "text": "Command. Grierson rallies the line: your other units next to him deal 1 extra damage when they strike.",
   "art": "/cards/grierson.jpg"
  },
  {
@@ -3960,10 +3960,10 @@
   "cost": 3,
   "power": 2,
   "mark": "Artillery",
-  "text": "Ranged. It strikes up to two tiles away in a straight line and is not answered. It cannot move or strike the turn it enters.",
   "quote": "Elevation two. Wait for the smoke.",
   "quoted": "Gun drill (invented)",
   "quoteSource": "invented",
+  "text": "Ranged. The Gun Crew can also shoot an enemy two tiles away in a straight line, and that target cannot strike back. It cannot move or strike the turn you deploy it.",
   "art": "/cards/gun-crew.jpg"
  },
  {
@@ -3991,10 +3991,10 @@
     "op": "exhaustEnemy"
    }
   ],
-  "text": "Cryptid. She may enter on any empty tile outside the rival’s half. When she enters, exhaust an enemy unit.",
   "quote": "She rides out of the river fog at Fort Laramie and never leaves a track.",
   "quoted": "Fort Laramie ghost story",
   "quoteSource": "folk",
+  "text": "Cryptid. Winged. You may deploy the Lady in Green on any empty tile outside the rival’s half. Chill. When you deploy her, choose an enemy unit: it cannot move or strike on its next turn.",
   "art": "/cards/lady-in-green.jpg"
  },
  {
@@ -4013,10 +4013,10 @@
   "cost": 4,
   "power": 4,
   "mark": "Hunkpapa Lakota",
-  "text": "Fast. He strikes first, and a killing blow is not answered.",
   "quote": "War leader beside Sitting Bull at the Greasy Grass. Ten years later he walked the field again for the anniversary.",
   "quoted": "Card note",
   "quoteSource": "note",
+  "text": "Fast. Gall gets the jump: he strikes first in melee, and an enemy he kills cannot strike back.",
   "art": "/cards/gall.jpg"
  },
  {
@@ -4039,10 +4039,10 @@
     "op": "lastShot"
    }
   ],
-  "text": "Last Shot. When he is destroyed, he strikes one enemy next to him for his printed Power.",
   "quote": "Named for a fight in the rain, when the paint on his face ran and he kept fighting.",
   "quoted": "Card note",
   "quoteSource": "note",
+  "text": "Last Shot. When Rain-in-the-Face is destroyed, he fires at an enemy unit next to him, dealing damage equal to his printed Power.",
   "art": "/cards/rain-in-the-face.jpg"
  },
  {
@@ -4068,10 +4068,10 @@
     "n": 1
    }
   ],
-  "text": "Fast. When she destroys a unit, draw 1.",
   "quote": "Her brother died at the Rosebud. She rode into the Greasy Grass a week later to answer for him.",
   "quoted": "Card note",
   "quoteSource": "note",
+  "text": "Fast. Moving Robe Woman gets the jump: she strikes first in melee, and an enemy she kills cannot strike back. Avenger. When she destroys a unit, draw 1.",
   "art": "/cards/moving-robe.jpg"
  },
  {
@@ -4090,10 +4090,10 @@
   "cost": 3,
   "power": 3,
   "mark": "Northern Cheyenne",
-  "text": "Command. Your units next to him deal 1 extra damage when they strike.",
   "quote": "The shooting was quick, quick. Pop—pop—pop very fast.",
   "quoted": "Two Moons to Hamlin Garland, 1898",
   "quoteSource": "attested",
+  "text": "Command. Two Moons rallies the line: your other units next to him deal 1 extra damage when they strike.",
   "art": "/cards/two-moons.jpg"
  },
  {
@@ -4116,10 +4116,10 @@
     "op": "lookAll"
    }
   ],
-  "text": "Enemy-Sense. When she enters, look at every hidden tile.",
   "quote": "Lozen is my right hand. Strong as a man, braver than most, and cunning in strategy. Lozen is a shield to her people.",
   "quoted": "Victorio, of his sister, as remembered by the Chiricahua",
   "quoteSource": "attributed",
+  "text": "Enemy-Sense. When you deploy Lozen, look at every hidden tile.",
   "art": "/cards/lozen.jpg"
  },
  {
@@ -4138,10 +4138,10 @@
   "cost": 4,
   "power": 4,
   "mark": "Chihenne Apache",
-  "text": "High Ground. His strikes from higher ground deal 2 extra damage instead of 1.",
   "quote": "He held the Black Range against two armies for a year, and was never taken.",
   "quoted": "Card note",
   "quoteSource": "note",
+  "text": "High Ground. Victorio deals 2 extra damage, not 1, when he strikes from higher ground.",
   "art": "/cards/victorio.jpg"
  },
  {
@@ -4170,10 +4170,10 @@
     "n": 1
    }
   ],
-  "text": "Orator. When he enters, gain 1 money and the rival loses 1.",
   "quote": "I love the land and the buffalo and will not part with it.",
   "quoted": "Satanta at Medicine Lodge Creek, 1867",
   "quoteSource": "attested",
+  "text": "Orator. When you deploy Satanta, gain 1 money and the rival loses 1 money.",
   "art": "/cards/satanta.jpg"
  },
  {
@@ -4192,10 +4192,10 @@
   "cost": 3,
   "power": 4,
   "mark": "Ponca",
-  "text": "Tough. Every blow against him deals 1 less damage.",
   "quote": "That hand is not the color of yours, but if I prick it, the blood will flow, and I shall feel pain.",
   "quoted": "Standing Bear in court, Omaha, 1879",
   "quoteSource": "attested",
+  "text": "Tough. Standing Bear is hard as rawhide: whenever he takes damage, he takes 1 less.",
   "art": "/cards/standing-bear.jpg"
  },
  {
@@ -4219,10 +4219,10 @@
     "n": 1
    }
   ],
-  "text": "Rescue. When she enters, you may move another of your units one tile.",
   "quote": "The Battle Where the Girl Saved Her Brother.",
   "quoted": "Cheyenne name for the fight on the Rosebud, 1876",
   "quoteSource": "attested",
+  "text": "Rescue. When you deploy Buffalo Calf Road Woman, you may move another of your units one tile.",
   "art": "/cards/buffalo-calf-road.jpg"
  },
  {
@@ -4241,10 +4241,10 @@
   "cost": 4,
   "power": 4,
   "mark": "Chokonen Apache",
-  "text": "Hold. Enemy units next to him cannot move. They may still strike.",
   "quote": "You must speak straight so that your words may go as sunlight into our hearts.",
   "quoted": "Cochise to Gen. O. O. Howard, 1872",
   "quoteSource": "attributed",
+  "text": "Hold. Cochise pins enemies down: enemy units next to him cannot move, though they can still strike.",
   "art": "/cards/cochise.jpg"
  },
  {
@@ -4271,10 +4271,10 @@
     "n": 1
    }
   ],
-  "text": "Fast. Run. He may move one extra tile each turn.",
   "quote": "Run them until the dust gives out, then run them some more.",
   "quoted": "Horse-camp saying (invented)",
   "quoteSource": "invented",
+  "text": "Fast. The Mustang Runner gets the jump: he strikes first in melee, and an enemy he kills cannot strike back. Open Range. He may move one extra tile each turn.",
   "art": "/cards/mustang-runner.jpg"
  },
  {
@@ -4299,10 +4299,10 @@
     "m": 1
    }
   ],
-  "text": "Counts Coup. When he destroys a unit, draw 1 and gain 1 money.",
   "quote": "Nephew of Sitting Bull. He kept count of his coups all his life and could name every one.",
   "quoted": "Card note",
   "quoteSource": "note",
+  "text": "Counts Coup. When White Bull destroys a unit, draw 1 and gain 1 money.",
   "art": "/cards/white-bull.jpg"
  },
  {
@@ -4328,10 +4328,10 @@
     "op": "rideOn"
    }
   ],
-  "text": "Fast. After he strikes and survives, he may move one tile.",
   "quote": "We preferred hunting to a life of idleness on the reservation, where we were driven against our will.",
   "quoted": "Attributed to Crazy Horse, 1877",
   "quoteSource": "attributed",
+  "text": "Fast. Crazy Horse gets the jump: he strikes first in melee, and an enemy he kills cannot strike back. Hit and Run. After he strikes and survives, he may move one tile.",
   "art": "/cards/crazy-horse.jpg"
  },
  {
@@ -4351,10 +4351,10 @@
   "cost": 3,
   "power": 3,
   "mark": "Oglala Lakota",
-  "text": "Harbor. While he stands, enemy tricks can target only him, not your other units.",
   "quote": "There was a woman with an infant in her arms who was killed as she almost touched the flag of truce.",
   "quoted": "American Horse, testimony on Wounded Knee, Washington, February 1891",
   "quoteSource": "attested",
+  "text": "Harbor. American Horse draws enemy fire: while he is on the board, enemy tricks cannot target your other units.",
   "art": "/cards/american-horse.jpg"
  },
  {
@@ -4373,10 +4373,10 @@
   "cost": 3,
   "power": 4,
   "mark": "Oglala Lakota",
-  "text": "Hold. Enemy units next to him cannot move. They may still strike.",
   "quote": "The name means his enemies feared even his horses.",
   "quoted": "Card note",
   "quoteSource": "note",
+  "text": "Hold. Young Man Afraid pins enemies down: enemy units next to him cannot move, though they can still strike.",
   "art": "/cards/young-man-afraid.jpg"
  },
  {
@@ -4399,10 +4399,10 @@
     "op": "breakAway"
    }
   ],
-  "text": "Decoy. The first time he would be destroyed, he survives at 1 Power and slips to a nearby empty tile.",
   "quote": "He led the decoys at Fort Phil Kearny. Eighty soldiers followed them over the ridge.",
   "quoted": "Card note",
   "quoteSource": "note",
+  "text": "Decoy. The first time damage would destroy High Backbone, he survives at 1 Power and slips to a nearby empty tile.",
   "art": "/cards/high-backbone.jpg"
  },
  {
@@ -4425,10 +4425,10 @@
     "op": "firstWound"
    }
   ],
-  "text": "War Bonnet. The first damage dealt to him is ignored.",
   "quote": "His bonnet kept him through every fight until Beecher Island.",
   "quoted": "Card note",
   "quoteSource": "note",
+  "text": "War Bonnet. The first time Roman Nose would take damage or lose Power, he takes none.",
   "art": "/cards/roman-nose.jpg"
  },
  {
@@ -4457,10 +4457,10 @@
     "op": "look"
    }
   ],
-  "text": "Healer. When he enters, one of your units regains up to 2 lost Power, and you look at one hidden tile.",
   "quote": "The nation’s hoop is broken and scattered. There is no center any longer.",
   "quoted": "Black Elk Speaks (1932), as told to John G. Neihardt",
   "quoteSource": "attested",
+  "text": "Healer. When you deploy Black Elk, one of your units regains up to 2 lost Power, and you look at one hidden tile.",
   "art": "/cards/black-elk.jpg"
  },
  {
@@ -4483,10 +4483,10 @@
     "op": "exhaustEnemy"
    }
   ],
-  "text": "Grip. When he enters, exhaust an enemy unit.",
   "quote": "Small, hard, and quick to take hold of a man’s arm. Every camp knew him by it.",
   "quoted": "Card note",
   "quoteSource": "note",
+  "text": "Strong Grip. When you deploy Little Big Man, choose an enemy unit: it cannot move or strike on its next turn.",
   "art": "/cards/little-big-man.jpg"
  },
  {
@@ -4506,10 +4506,10 @@
   "cost": 4,
   "power": 5,
   "mark": "Cheyenne Dog Soldiers",
-  "text": "Hold. Enemy units next to him cannot move. They may still strike.",
   "quote": "Dog Soldier chief. At Summit Springs he held the ravine so the families could get clear.",
   "quoted": "Card note",
   "quoteSource": "note",
+  "text": "Hold. Tall Bull pins enemies down: enemy units next to him cannot move, though they can still strike.",
   "art": "/cards/tall-bull.jpg"
  },
  {
@@ -4528,10 +4528,10 @@
   "cost": 2,
   "power": 3,
   "mark": "Cheyenne Dog Soldiers",
-  "text": "Hold. Enemy units next to him cannot move. They may still strike.",
   "quote": "A sash pinned to the earth. He does not leave until a friend pulls the pin.",
   "quoted": "Card note",
   "quoteSource": "note",
+  "text": "Hold. The Dog Soldier pins enemies down: enemy units next to him cannot move, though they can still strike.",
   "art": "/cards/dog-soldier.jpg"
  },
  {
@@ -4555,10 +4555,10 @@
     "n": 1
    }
   ],
-  "text": "The Way Home. At the start of your turn, gain 1 money.",
   "quote": "Called Dull Knife by the Lakota. He led his people out of Fort Robinson in the January snow, going home.",
   "quoted": "Card note",
   "quoteSource": "note",
+  "text": "The Way Home. At the start of your turn, gain 1 money.",
   "art": "/cards/dull-knife.jpg"
  },
  {
@@ -4582,10 +4582,10 @@
     "n": 1
    }
   ],
-  "text": "Long Walk. He may move one extra tile each turn.",
   "quote": "Sweet Medicine chief. He brought his band north fifteen hundred miles with three armies looking for him.",
   "quoted": "Card note",
   "quoteSource": "note",
+  "text": "Long Walk. Little Wolf may move one extra tile each turn.",
   "art": "/cards/little-wolf.jpg"
  },
  {
@@ -4612,10 +4612,10 @@
     "op": "look"
    }
   ],
-  "text": "Watch. When it enters, look at one hidden tile. At the start of your turn, look at the hidden tile nearest your units.",
   "quote": "The wind turns before the herd does. Watch the wind.",
   "quoted": "Lodge saying (invented)",
   "quoteSource": "invented",
+  "text": "Weather Eye. When you deploy the Weather Watcher, look at one hidden tile. At the start of your turn, look at the hidden tile nearest your units.",
   "art": "/cards/weather-watcher.jpg"
  },
  {
@@ -4634,10 +4634,10 @@
   "cost": 2,
   "power": 3,
   "mark": "The Lodge",
-  "text": "Harbor. While he stands, enemy tricks can target only him, not your other units.",
   "quote": "The door faces east. Whatever comes in, comes in where I can see it.",
   "quoted": "Lodge saying (invented)",
   "quoteSource": "invented",
+  "text": "Harbor. The Lodge Keeper draws enemy fire: while he is on the board, enemy tricks cannot target your other units.",
   "art": "/cards/lodge-keeper.jpg"
  },
  {
@@ -4658,10 +4658,10 @@
   "cost": 2,
   "power": 2,
   "mark": "The Height",
-  "text": "Fast. If his first move in a turn is a climb, it does not spend his move.",
   "quote": "Up is always shorter than around.",
   "quoted": "Ridge saying (invented)",
   "quoteSource": "invented",
+  "text": "Fast. The Ridge Runner gets the jump: he strikes first in melee, and an enemy he kills cannot strike back. Climber. If his first move in a turn is a climb, it does not spend his move.",
   "art": "/cards/ridge-runner.jpg"
  },
  {
@@ -4690,10 +4690,10 @@
     "n": 1
    }
   ],
-  "text": "Provider. When he enters, gain 1 money and draw 1.",
   "quote": "Arapaho chief. He bargained his people onto the Wind River when no one else would make room.",
   "quoted": "Card note",
   "quoteSource": "note",
+  "text": "Provider. When you deploy Black Coal, gain 1 money and draw 1.",
   "art": "/cards/black-coal.jpg"
  },
  {
@@ -4717,10 +4717,10 @@
     "n": 1
    }
   ],
-  "text": "Hail. When it enters, deal 1 damage to an enemy unit.",
   "quote": "The sky over the ridge went green, then white, then loud.",
   "quoted": "Lodge story (invented)",
   "quoteSource": "invented",
+  "text": "Hailstorm. When you deploy the Hail Caller, deal 1 damage to an enemy unit.",
   "art": "/cards/hail-caller.jpg"
  }
 ]
