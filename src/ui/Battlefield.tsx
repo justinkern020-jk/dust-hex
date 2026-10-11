@@ -109,7 +109,7 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
   }, []);
 
   const after = useCallback((next: Match) => {
-    soundEvents(next.events, ME);
+    soundEvents(next.events, ME, next);
     const fresh: { id: number; uid: string; text: string }[] = [];
     for (const e of next.events) if (e.e === 'damage' && e.n > 0) fresh.push({ id: hitId.current++, uid: e.uid, text: `-${e.n}` });
     if (fresh.length) {

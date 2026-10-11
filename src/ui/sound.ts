@@ -1,5 +1,5 @@
-import type { GameEvent, Side } from '../game/types';
-import { card } from '../game/cards';
+import type { FactionId, GameEvent, Match, Side } from '../game/types';
+import { card, maybeCard } from '../game/cards';
 
 import { SETTINGS_KEY as KEY, migrateLegacySaves } from './storage';
 
@@ -64,6 +64,7 @@ export function voice(kind: 'power' | 'foe' | 'victory' | 'defeat') {
 
 let music: HTMLAudioElement | null = null;
 let musicSrc = '';
+const MUSIC_VOL = 0.22;
 export function playMusic(track: 'frontier-horn' | 'ghost-town') {
   if (!current.music || typeof Audio === 'undefined') return;
   const src = `/assets/audio/music/${track}.mp3`;
@@ -75,7 +76,7 @@ export function playMusic(track: 'frontier-horn' | 'ghost-town') {
   music = new Audio(src);
   musicSrc = src;
   music.loop = true;
-  music.volume = 0.22;
+  music.volume = duckUntil > Date.now() ? MUSIC_VOL * 0.3 : MUSIC_VOL;
   void music.play().catch(() => undefined);
 }
 export function stopMusic() {
@@ -86,14 +87,62 @@ export function stopMusic() {
   }
 }
 
-/** Sounds for what just happened on the field. */
-export function soundEvents(events: GameEvent[], me: Side = 'blue') {
+// ------------------------------------------------------------------ faction cues
+/** Short musical cues that replace the generic LEAD / deploy sound for certain factions. */
+export type Cue = 'outlaw-lead' | 'nations-lead' | 'lawmen-lead' | 'army-leader-deploy';
+export const CUES: Record<Cue, { file: string; ms: number }> = {
+  'outlaw-lead': { file: 'rose-of-alabama', ms: 6500 },
+  'nations-lead': { file: 'war-drums', ms: 6000 },
+  'lawmen-lead': { file: 'lawmen-whistle', ms: 6200 },
+  'army-leader-deploy': { file: 'army-snare-roll', ms: 3300 },
+};
+
+/** Which cue (if any) a side's LEAD power plays. */
+export function leadCue(f: FactionId | undefined): Cue | null {
+  if (f === 'gang' || f === 'choir') return 'outlaw-lead';
+  if (f === 'grass' || f === 'lodge') return 'nations-lead';
+  if (f === 'star') return 'lawmen-lead';
+  return null;
+}
+
+let duckUntil = 0;
+let duckTimer: ReturnType<typeof setTimeout> | null = null;
+let cueBusyUntil = 0;
+/** Plays a faction cue (respects the sound setting) and ducks the music under it. Returns false when muted or busy. */
+export function playCue(c: Cue, vol = 0.6): boolean {
+  if (!current.sound) return false;
+  const now = Date.now();
+  if (now < cueBusyUntil) return false; // never stack two cues
+  const { file, ms } = CUES[c];
+  cueBusyUntil = now + ms * 0.8;
+  play(`/assets/audio/sfx/west/cues/${file}.mp3`, vol);
+  duckUntil = now + ms;
+  if (music) music.volume = MUSIC_VOL * 0.3;
+  if (duckTimer) clearTimeout(duckTimer);
+  duckTimer = setTimeout(() => {
+    duckTimer = null;
+    if (music && Date.now() >= duckUntil) music.volume = MUSIC_VOL;
+  }, ms);
+  return true;
+}
+
+function sideFaction(m: Match | undefined, side: Side): FactionId | undefined {
+  const id = m?.leader?.[side];
+  return id ? maybeCard(id)?.faction : undefined;
+}
+
+/** Sounds for what just happened on the field. Pass the match so faction cues can be chosen. */
+export function soundEvents(events: GameEvent[], me: Side = 'blue', m?: Match) {
   let shots = 0;
   for (const e of events) {
     switch (e.e) {
-      case 'deploy':
+      case 'deploy': {
+        const u = m?.units[e.uid];
+        const c = u ? maybeCard(u.cardId) : undefined;
+        if (c?.kind === 'leader' && c.faction === 'army' && playCue('army-leader-deploy', 0.6)) break;
         sfx('enter', 0.45);
         break;
+      }
       case 'move':
         sfx(`step-${pickN(4)}`, 0.35);
         break;
@@ -111,10 +160,13 @@ export function soundEvents(events: GameEvent[], me: Side = 'blue') {
         sfx(k === 'device' ? 'cylinder' : k === 'item' ? 'cock' : 'bell', 0.45);
         break;
       }
-      case 'lead':
-        sfx('leader', 0.55);
+      case 'lead': {
+        const cue = leadCue(sideFaction(m, e.side));
+        // A faction cue replaces the generic LEAD sting; the spoken line still plays (voice setting).
+        if (!(cue && playCue(cue, 0.6))) sfx('leader', 0.55);
         voice(e.side === me ? 'power' : 'foe');
         break;
+      }
       case 'turn':
         if (e.side === me) sfx('spur', 0.35);
         break;
