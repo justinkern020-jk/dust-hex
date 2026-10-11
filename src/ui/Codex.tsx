@@ -16,7 +16,7 @@ export function Codex({ onBack }: { onBack: () => void }) {
     const rest = cs.filter((c) => !(c.kind === 'leader' || c.kind === 'unit'));
     return [
       { name: 'Characters', cards: chars },
-      { name: 'Rites, items, devices and traps', cards: rest },
+      { name: 'Tricks, items, devices and traps', cards: rest },
     ];
   }, [tab]);
   return (
@@ -26,12 +26,12 @@ export function Codex({ onBack }: { onBack: () => void }) {
           Back to the porch
         </button>
         <div>
-          <p className="plate-kicker">A book of what walks the range</p>
+          <p className="plate-kicker dh-codex-kicker">A book of what walks the range</p>
           <h1 className="codex-title">The Codex</h1>
           <p className="codex-count" data-testid="codex-count">
             {CARDS.length} pages · six sides
           </p>
-          <p className="codex-count" data-testid="codex-rule">Dominance is scored for both sides at the end of each round, so going first banks no lead.</p>
+          <p className="codex-count" data-testid="codex-rule">Both sides score Claims at the end of each round, so going first banks no lead.</p>
         </div>
       </header>
       <nav className="codex-tabs" role="tablist" aria-label="Side">

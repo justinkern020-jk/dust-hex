@@ -104,8 +104,8 @@ export function isSpent(u: Unit) {
 /** Can an enemy rite name this unit? Returns a reason when it cannot. */
 export function riteBlock(m: Match, caster: Side, u: Unit): string | null {
   if (u.side === caster) return null;
-  if (hasKw(u, 'untargetable')) return `${nameOf(u)} cannot be named by rites.`;
-  if ((u.wardUntil ?? 0) >= m.turn) return `${nameOf(u)} is warded from rites.`;
+  if (hasKw(u, 'untargetable')) return `${nameOf(u)} cannot be named by tricks.`;
+  if ((u.wardUntil ?? 0) >= m.turn) return `${nameOf(u)} is warded from tricks.`;
   if (hasKw(u, 'winged') && u.enteredTurn === m.turn) return `${nameOf(u)} cannot be named the turn it enters.`;
   const p = posOf(m, u.uid);
   if (p) {
@@ -1098,7 +1098,7 @@ export function doStrike(m: Match, uid: string, r: number, c: number) {
   if ((d.noStrikeUntil ?? 0) >= m.turn) noAnswer = true;
   if (derr) removeGear(m, a, derr.gid, 'exile');
 
-  // Salt Oath: striking the warded leader costs 2.
+  // Salt Line: striking the warded leader costs 2.
   if (d.leader && (m.saltOath[d.side] ?? 0) >= m.turn) {
     log(m, `The salt circle burns ${aName} for 2.`);
     damage(m, a.uid, 2, { raw: true });
@@ -1152,7 +1152,7 @@ export function doStrike(m: Match, uid: string, r: number, c: number) {
       removeGear(m, alive, grave.gid, 'exile');
       alive.wardUntil = nextTurnOf(m, alive.side) - 0;
       alive.wardUntil = m.turn + 1;
-      log(m, `Grave Round is spent. Rites cannot name ${aName} until your next turn.`);
+      log(m, `Grave Round is spent. Tricks cannot name ${aName} until your next turn.`);
     } else {
       removeGear(m, alive, grave.gid, 'exile');
     }
@@ -1182,7 +1182,7 @@ export function doStrike(m: Match, uid: string, r: number, c: number) {
 
 // ------------------------------------------------------------------ win
 
-export function win(m: Match, side: Side, kind: 'dominance' | 'stronghold' | 'yield') {
+export function win(m: Match, side: Side, kind: 'claims' | 'stronghold' | 'yield') {
   if (m.winner) return;
   m.winner = side;
   m.winKind = kind;

@@ -44,7 +44,7 @@ describe('first-player rule (shipped: dominance scores at the end of each round)
     expect(m.winner).toBeNull();
     m = endTurn(m);
     expect(m.winner).toBe('blue');
-    expect(m.winKind).toBe('dominance');
+    expect(m.winKind).toBe('claims');
   });
   it('the second player can win at the end of the round', () => {
     let m = field();

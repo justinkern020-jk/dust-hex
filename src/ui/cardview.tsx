@@ -5,21 +5,21 @@ import { faction } from '../game/cards';
 export const KIND_LABEL: Record<string, string> = {
   unit: 'Unit',
   leader: 'Leader',
-  rite: 'Rite',
+  rite: 'Trick',
   item: 'Item',
   device: 'Device',
   trap: 'Trap',
 };
 
-const KW_TEXT: Record<string, [string, string]> = {
+export const KW_TEXT: Record<string, [string, string]> = {
   fast: ['Fast', 'Strikes first in melee. A killing blow is not answered.'],
   slow: ['Slow', 'Strikes last in melee.'],
   tough: ['Tough', 'Every blow against it deals 1 less damage. Power it simply loses is not reduced.'],
   ranged: ['Ranged', 'Strikes 2 tiles away in a straight line, never on a diagonal. The target does not answer.'],
   delay: ['Delay', 'Cannot move or strike the turn it enters.'],
   cryptid: ['Cryptid', 'A sighting from this side’s bestiary.'],
-  harbor: ['Harbor', 'While it stands, enemy rites can name no other unit on its side.'],
-  untargetable: ['Untargetable', 'Enemy rites cannot name it.'],
+  harbor: ['Harbor', 'While it stands, enemy tricks can name no other unit on its side.'],
+  untargetable: ['Untargetable', 'Enemy tricks cannot name it.'],
   noRangedTarget: ['Veiled', 'Ranged strikes cannot name it.'],
   noAnswer: ['Unanswered', 'Units it strikes do not strike back.'],
   evenGround: ['Even ground', 'While it stands, ranged strikes cannot name units on its side.'],

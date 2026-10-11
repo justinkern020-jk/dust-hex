@@ -5,7 +5,8 @@ import { MAPS, actError, applyAction, bankFor, canAfford, deployTiles, holdings,
 import { chooseAction, choosePending, type Mind } from '../game/ai';
 import { isSpent } from '../game/rules';
 import { posOf, unitAt } from '../game/core';
-import { CardArt, CardPeek } from './cardview';
+import { CardArt, CardPeek, KIND_LABEL } from './cardview';
+import { classifyGesture, dropAction, scrollToSlider, sliderToScroll, wheelToScroll, type HandSource } from '../game/drop';
 import { MINDS } from './Porch';
 import { WeatherLayer, pickWeather } from './Weather';
 import { playMusic, sfx, soundEvents } from './sound';
@@ -27,16 +28,16 @@ type Sel =
   | { k: 'lead'; spec?: TargetSpec }
   | null;
 
-const PRIMER = [
-  'Each side owns one stronghold. It banks 2 money every turn, you can always muster a unit there, and it counts as a claim.',
+export const PRIMER = [
+  'Each side owns one stronghold. It banks 2 money every turn, you can always deploy a unit there, and it counts as a claim.',
   'Gates you hold, and your stronghold, are the only places a unit can enter. A claim you take stays yours and banks its money.',
-  'Both sides score dominance together at the end of each round, 1 per claim held (your stronghold counts), so going first banks no lead. Reach the number beside the score to win.',
+  'At the end of each round both sides add 1 to their Claims for every claim they hold (your stronghold counts), so going first banks no lead. Reach the number beside the score to win.',
   'A card costs the one number printed on it. If the bank can pay that number, you may play it.',
   'Each unit either moves or strikes once a turn. Melee strikes are answered; fast lands first and a killing stroke is not answered. Power is health and strength as one number: damage lowers it, and a unit at 0 is destroyed.',
   'Ranged units reach two tiles in a straight line, never on a diagonal, and are not answered. High ground adds 1. A unit striking up a ridge in melee misses one blow in three.',
   'Take the enemy stronghold to end the fight at once. You may yield the ground if the hour turns against you.',
   'The range is haunted. Hidden deaths — a rattler, a shaft, a deadfall — are not marked until someone finds them.',
-  'Your leader waits in the tray. Muster them like a unit. Once a match, Lead calls on their power.',
+  'Your leader waits in the tray. Deploy them like a unit. Once a match, Lead calls on their power.',
 ];
 const SEEN = 'dusthex.seenPrimer';
 
@@ -85,6 +86,12 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
   const [peek, setPeek] = useState<{ c: Card; power?: number } | null>(null);
   const [hits, setHits] = useState<{ id: number; uid: string; text: string }[]>([]);
   const [yieldAsk, setYieldAsk] = useState(false);
+  const [drag, setDrag] = useState<{ src: HandSource; x: number; y: number; over: string | null } | null>(null);
+  const [rail, setRail] = useState({ overflow: false, atStart: true, atEnd: true, value: 0 });
+  const rowRef = useRef<HTMLDivElement | null>(null);
+  // While a card is dragged the banner slot keeps its height, so the board never jumps under the finger.
+  const slotRef = useRef<HTMLDivElement | null>(null);
+  const slotH = useRef(0);
   const [primer, setPrimer] = useState(() => {
     try {
       return localStorage.getItem(SEEN) !== '1';
@@ -289,6 +296,159 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
     setM(startMatch({ ...opts, deal: undefined, money: undefined }, map));
   };
 
+  // ---- dragging from the hand and scrolling it
+  const gesture = useRef<{ id: number; src: HandSource; x0: number; y0: number; mode: 'pending' | 'drag' | 'scroll' | 'none'; scroll0: number; touch: boolean; hold: number } | null>(null);
+  const swallowClick = useRef(false);
+  // Window listeners must be the same functions to add and remove; they call the latest handlers.
+  const live = useRef({ move: (_e: PointerEvent) => {}, up: (_e: PointerEvent) => {}, cancel: () => {} });
+  const stable = useMemo(
+    () => ({ move: (e: PointerEvent) => live.current.move(e), up: (e: PointerEvent) => live.current.up(e), cancel: () => live.current.cancel() }),
+    [],
+  );
+  const canDrag = (src: HandSource) => {
+    const cur = mRef.current;
+    if (cur.winner || cur.side !== ME || cur.pending.length) return false;
+    return src === 'leader' ? cur.leaderAt[ME] === 'tray' && canAfford(cur, ME, cur.leader[ME]) : canAfford(cur, ME, cur.hand[ME][src]);
+  };
+  const tileAt = (x: number, y: number): [number, number] | null => {
+    const el = document.elementFromPoint(x, y)?.closest('[data-tile-r]') as HTMLElement | null;
+    return el ? [Number(el.dataset.tileR), Number(el.dataset.tileC)] : null;
+  };
+  const endGesture = () => {
+    const g = gesture.current;
+    if (g) window.clearTimeout(g.hold);
+    gesture.current = null;
+    window.removeEventListener('pointermove', stable.move);
+    window.removeEventListener('pointerup', stable.up);
+    window.removeEventListener('pointercancel', stable.cancel);
+  };
+  function onGestureMove(e: PointerEvent) {
+    const g = gesture.current;
+    if (!g || e.pointerId !== g.id) return;
+    const dx = e.clientX - g.x0;
+    const dy = e.clientY - g.y0;
+    if (g.mode === 'pending') {
+      const k = classifyGesture(dx, dy);
+      if (k === 'pending') return;
+      window.clearTimeout(g.hold);
+      swallowClick.current = true;
+      if (k === 'drag' && canDrag(g.src)) {
+        g.mode = 'drag';
+        slotH.current = slotRef.current?.offsetHeight ?? 0;
+        setSel(g.src === 'leader' ? { k: 'leader' } : { k: 'hand', i: g.src });
+        setToast(null);
+      } else if (k === 'scroll' && !g.touch) {
+        g.mode = 'scroll';
+        g.scroll0 = rowRef.current?.scrollLeft ?? 0;
+      } else {
+        g.mode = 'none';
+      }
+    }
+    if (g.mode === 'drag') {
+      e.preventDefault();
+      const t = tileAt(e.clientX, e.clientY);
+      setDrag({ src: g.src, x: e.clientX, y: e.clientY, over: t ? `${t[0]},${t[1]}` : null });
+    } else if (g.mode === 'scroll' && rowRef.current) {
+      rowRef.current.scrollLeft = g.scroll0 - dx;
+    }
+  }
+  function onGestureUp(e: PointerEvent) {
+    const g = gesture.current;
+    if (!g || e.pointerId !== g.id) return;
+    if (g.mode === 'drag') {
+      const t = tileAt(e.clientX, e.clientY);
+      const a = t ? dropAction(mRef.current, ME, g.src, t[0], t[1]) : null;
+      if (a) act(a);
+      else if (t) setToast('That tile is not lit for this card. Drop it on a lit tile.');
+      setDrag(null);
+    }
+    endGesture();
+    window.setTimeout(() => (swallowClick.current = false), 0);
+  }
+  function onGestureCancel() {
+    // The browser took over (a native horizontal swipe of the hand).
+    setDrag(null);
+    endGesture();
+    swallowClick.current = false;
+  }
+  live.current = { move: onGestureMove, up: onGestureUp, cancel: onGestureCancel };
+  const startGesture = (src: HandSource, c: Card) => (e: React.PointerEvent) => {
+    if (e.button !== 0 || gesture.current) return;
+    const touch = e.pointerType !== 'mouse';
+    swallowClick.current = false;
+    gesture.current = {
+      id: e.pointerId,
+      src,
+      x0: e.clientX,
+      y0: e.clientY,
+      mode: 'pending',
+      scroll0: 0,
+      touch,
+      // Press and hold reads the card, for phones without a double-click.
+      hold: touch
+        ? window.setTimeout(() => {
+            if (gesture.current?.mode !== 'pending') return;
+            swallowClick.current = true;
+            setPeek({ c });
+            endGesture();
+            window.setTimeout(() => (swallowClick.current = false), 400);
+          }, 550)
+        : 0,
+    };
+    window.addEventListener('pointermove', stable.move, { passive: false });
+    window.addEventListener('pointerup', stable.up);
+    window.addEventListener('pointercancel', stable.cancel);
+  };
+  useEffect(() => () => endGesture(), []); // eslint-disable-line react-hooks/exhaustive-deps
+  const tapGuard = (fn: () => void) => () => {
+    if (swallowClick.current) {
+      swallowClick.current = false;
+      return;
+    }
+    fn();
+  };
+
+  // The hand's slider, arrows and wheel.
+  const measureRail = useCallback(() => {
+    const el = rowRef.current;
+    if (!el) return;
+    const overflow = el.scrollWidth - el.clientWidth > 4;
+    const next = {
+      overflow,
+      atStart: el.scrollLeft <= 2,
+      atEnd: el.scrollLeft >= el.scrollWidth - el.clientWidth - 2,
+      value: scrollToSlider(el.scrollLeft, el.scrollWidth, el.clientWidth),
+    };
+    setRail((r) => (r.overflow === next.overflow && r.atStart === next.atStart && r.atEnd === next.atEnd && r.value === next.value ? r : next));
+  }, []);
+  useEffect(() => {
+    const el = rowRef.current;
+    if (!el) return;
+    measureRail();
+    const onWheel = (e: WheelEvent) => {
+      if (el.scrollWidth - el.clientWidth <= 4) return;
+      const d = wheelToScroll(e.deltaX, e.deltaY, e.deltaMode);
+      const max = el.scrollWidth - el.clientWidth;
+      if ((d < 0 && el.scrollLeft <= 0) || (d > 0 && el.scrollLeft >= max)) return;
+      e.preventDefault();
+      el.scrollLeft += d;
+    };
+    el.addEventListener('wheel', onWheel, { passive: false });
+    el.addEventListener('scroll', measureRail, { passive: true });
+    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(measureRail) : null;
+    ro?.observe(el);
+    return () => {
+      el.removeEventListener('wheel', onWheel);
+      el.removeEventListener('scroll', measureRail);
+      ro?.disconnect();
+    };
+  }, [measureRail]);
+  useEffect(() => measureRail(), [m.hand, m.leaderAt, measureRail]);
+  const nudgeHand = (dir: 1 | -1) => {
+    const el = rowRef.current;
+    if (el) el.scrollBy({ left: dir * Math.max(120, el.clientWidth * 0.8), behavior: 'smooth' });
+  };
+
   // ---- render helpers
   const selUnit = sel?.k === 'unit' ? m.units[sel.uid] : undefined;
   const handCard = sel?.k === 'hand' ? card(m.hand[ME][sel.i]) : undefined;
@@ -353,7 +513,7 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
           {handCard.kind === 'unit'
             ? handCard.hide
               ? 'hide it on a lit tile.'
-              : 'muster on a lit tile.'
+              : 'drag it to a lit tile, or tap one.'
             : needs
               ? lit.options.length
                 ? 'name a lit target.'
@@ -378,7 +538,7 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
     } else if (sel.k === 'leader') {
       banner = (
         <div className="aim-banner" data-testid="aim-banner">
-          <strong>{leaderCard.name}</strong> · muster on a lit tile. {cancel}
+          <strong>{leaderCard.name}</strong> · drag it to a lit tile, or tap one. {cancel}
         </div>
       );
     } else if (sel.k === 'act' || sel.k === 'lead') {
@@ -412,29 +572,33 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
   const scoreChip = (side: Side) => {
     const f = faction(side === 'blue' ? opts.blue : opts.red);
     return (
-      <dl className={`score-chip ${side === ME ? 'is-ally' : 'is-enemy'}`} id={side === 'blue' ? 'score-azure' : 'score-crimson'}>
+      <dl className={`score-chip dh-chip ${side === ME ? 'is-ally' : 'is-enemy'}`} id={side === 'blue' ? 'score-azure' : 'score-crimson'}>
         <dt>
-          {side === ME ? 'Your side' : 'The rival'} · {f.short}
+          <span className="dh-chip-who">{side === ME ? 'You' : 'Rival'}</span>
+          <span className="dh-chip-faction">{f.short}</span>
           {side !== ME && (
             <span className="bf-mind" id="ai-mind">
               {MINDS.find((x) => x.id === opts.mind)?.label}
             </span>
           )}
         </dt>
-        <dd>
-          <span className="score-resource-jewel" role="img" aria-label="Money" />
-          <strong className="score-loyalty" data-testid={`money-${side}`}>
-            {m.money[side]}
-          </strong>
-          <span>money</span>
-          <em data-testid={`dom-${side}`}>
-            {m.dom[side]}
-            <span className="score-cap">/ {m.goal}</span>
-          </em>
-          <span>dom</span>
+        <dd className="dh-chip-stats">
+          <span className="dh-stat" title="Money in the bank">
+            <span className="score-resource-jewel" role="img" aria-label="Money" />
+            <strong className="score-loyalty" data-testid={`money-${side}`}>
+              {m.money[side]}
+            </strong>
+          </span>
+          <span className="dh-stat dh-stat-claims" title="Claims score: first to the mark wins">
+            <span className="dh-stat-label">Claims</span>
+            <em data-testid={`dom-${side}`}>
+              {m.dom[side]}
+              <span className="score-cap">/ {m.goal}</span>
+            </em>
+          </span>
         </dd>
         <p className="bf-hold">
-          Holding <b>{holdings(m, side)}</b> · next bank +<b>{bankFor(m, side)}</b>
+          Holding <b>{holdings(m, side)}</b> · bank +<b>{bankFor(m, side)}</b>
         </p>
       </dl>
     );
@@ -516,12 +680,12 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
       </nav>
     <section className="battlefield" id="battlefield" data-testid="battlefield" data-turn={m.turn} data-side={m.side}>
       <header className="bf-hud">
-        <div className="bf-scores" aria-label="Money and dominance">
+        <div className="bf-scores" aria-label="Money and Claims">
           {scoreChip('blue')}
           <div className="bf-turn">
             <span className="bf-turn-label">Turn</span>
             <strong data-testid="turn-number">{m.turn}</strong>
-            <span className={`bf-side is-${m.side}`}>{m.side === ME ? 'Your side' : 'The rival'}</span>
+            <span className={`bf-side is-${m.side}`}>{m.side === ME ? 'Yours' : 'Rival'}</span>
           </div>
           {scoreChip('red')}
         </div>
@@ -553,7 +717,7 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
               Lead
             </button>
           )}
-          <button type="button" className="brass-btn brass-btn-solid" id="end-rite" data-testid="end-turn" disabled={!myTurn} onClick={() => act({ t: 'end' })}>
+          <button type="button" className="brass-btn brass-btn-solid" id="end-turn" data-testid="end-turn" disabled={!myTurn} onClick={() => act({ t: 'end' })}>
             End turn
           </button>
           <button
@@ -603,9 +767,9 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
           </select>
         </div>
       </header>
-      <div className="bf-banner-slot" aria-live="polite">
-        {banner}
-        {toast && (
+      <div className="bf-banner-slot" aria-live="polite" ref={slotRef} style={drag ? { height: slotH.current, overflow: 'hidden' } : undefined}>
+        {!drag && banner}
+        {!drag && toast && (
           <p className="dh-toast" data-testid="toast">
             {toast}
           </p>
@@ -614,7 +778,7 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
       <div className="bf-stage" style={{ position: 'relative' }}>
         <div className="bf-board-socket">
           <img className="bf-board-socket-frame" src="/assets/images/bf_board_frame.png" alt="" aria-hidden draggable={false} />
-          <div className={`board-wrap${map.mood === 'bright' ? ' mood-bright' : ''}`} style={{ backgroundImage: `url(/assets/maps/${map.id}.jpg), url(/assets/maps/${map.id === 'big-empty' ? 'outer-seal' : 'ashen-cross'}.jpg)` }}>
+          <div className={`board-wrap${map.mood === 'bright' ? ' mood-bright' : ''}`} style={{ backgroundImage: `url(/assets/maps/${map.id}.jpg), url(/assets/maps/${map.id === 'big-empty' ? 'outer-fence' : 'gallows-mesa'}.jpg)` }}>
             <div className={`board-grid${m.w > 5 ? ' is-big' : ''}`} role="grid" data-testid="board" style={{ gridTemplateColumns: `repeat(${m.w}, minmax(0, 1fr))`, gridTemplateRows: `repeat(${m.h}, minmax(0, 1fr))` }}>
               {m.tiles.map((row, r) =>
                 row.map((t, c) => {
@@ -644,6 +808,7 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
                         lit.strikes.has(k) ? 'legal-strike' : '',
                         selUnit && posOf(m, selUnit.uid)?.r === r && posOf(m, selUnit.uid)?.c === c ? 'stone-origin' : '',
                         u ? 'has-unit' : '',
+                        drag?.over === k ? (lit.tiles.has(k) ? 'dh-drop-ok' : 'dh-drop-no') : '',
                       ]
                         .filter(Boolean)
                         .join(' ')}
@@ -715,11 +880,11 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
       <ul className="board-key">
         <li>
           <i className="legend-mark legend-gate" />
-          Step on a circle to claim it · claims score dominance each round
+          Step on a circle to claim it · each claim adds to your Claims every round
         </li>
         <li>
           <i className="legend-mark legend-stronghold" />
-          Stronghold · banks 2 · always musters
+          Stronghold · banks 2 · always deploys
         </li>
         <li>
           <i className="legend-mark legend-resource" />
@@ -739,27 +904,36 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
       <div className="hand-rail">
         <p className="hand-kicker">
           <span className="deck-pile" id="deck-pile" title="Cards left in your deck">
-            <span className="ow-card-back deck-pile-back" />
+            <span className="dh-card-back deck-pile-back" />
             <span className="deck-pile-count" data-testid="deck-count">
               {m.deck[ME].length}
             </span>
           </span>
-          Your hand · tap a card, then a lit tile · tap a coin to move or strike · double-tap to read
+          <span className="dh-kicker-text">
+            <strong>Your hand</strong>
+            <span className="dh-kicker-help">Drag a card up to a lit tile, or tap the card then the tile. Hold or double-click to read.</span>
+          </span>
         </p>
-        <div className="hand-scroller" data-testid="hand-scroller">
+        <div className={`hand-scroller dh-scroller${rail.overflow ? ' is-overflowing' : ''}${rail.atStart ? ' at-start' : ''}${rail.atEnd ? ' at-end' : ''}`} data-testid="hand-scroller">
+          {rail.overflow && (
+            <button type="button" className="dh-hand-arrow is-prev" data-testid="hand-prev" aria-label="Scroll hand left" disabled={rail.atStart} onClick={() => nudgeHand(-1)}>
+              ‹
+            </button>
+          )}
           <div className="hand-scroller-view">
-            <div className="hand-row hand-row-slide">
+            <div className="hand-row hand-row-slide" ref={rowRef} data-testid="hand-row">
               {m.leaderAt[ME] === 'tray' && (
                 <button
                   type="button"
                   className={`hand-card kind-hero hand-leader ${sel?.k === 'leader' ? 'is-selected' : ''} ${myTurn && canAfford(m, ME, leaderCard.id) ? 'is-draggable' : 'is-disabled'}`}
                   id="hand-leader"
                   data-testid="hand-leader"
-                  onClick={() => {
+                  onPointerDown={startGesture('leader', leaderCard)}
+                  onClick={tapGuard(() => {
                     if (!myTurn) return setPeek({ c: leaderCard });
                     if (!canAfford(m, ME, leaderCard.id)) return setToast(`${leaderCard.name} costs ${leaderCard.cost}. You have ${m.money[ME]}.`);
                     setSel(sel?.k === 'leader' ? null : { k: 'leader' });
-                  }}
+                  })}
                   onContextMenu={(e) => {
                     e.preventDefault();
                     setPeek({ c: leaderCard });
@@ -784,7 +958,8 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
                     className={`hand-card ${kindCls} ${sel?.k === 'hand' && sel.i === i ? 'is-selected' : ''} ${myTurn && afford ? 'is-draggable' : 'is-disabled'}`}
                     data-testid={`hand-${i}`}
                     data-card={id}
-                    onClick={() => onHand(i)}
+                    onPointerDown={startGesture(i, c)}
+                    onClick={tapGuard(() => onHand(i))}
                     onContextMenu={(e) => {
                       e.preventDefault();
                       setPeek({ c });
@@ -801,15 +976,48 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
                       </span>
                     )}
                     <span className="hand-card-name">{c.name}</span>
-                    <span className="hand-card-kind">{c.kind}</span>
+                    <span className="hand-card-kind">{KIND_LABEL[c.kind] ?? c.kind}</span>
                     {c.power != null && c.kind === 'unit' && <span className="hand-card-pip hand-card-power">{c.power}</span>}
                   </button>
                 );
               })}
             </div>
           </div>
+          {rail.overflow && (
+            <button type="button" className="dh-hand-arrow is-next" data-testid="hand-next" aria-label="Scroll hand right" disabled={rail.atEnd} onClick={() => nudgeHand(1)}>
+              ›
+            </button>
+          )}
         </div>
+        {rail.overflow && (
+          <input
+            type="range"
+            className="dh-hand-slider"
+            data-testid="hand-slider"
+            aria-label="Scroll your hand"
+            min={0}
+            max={1000}
+            value={rail.value}
+            onChange={(e) => {
+              const el = rowRef.current;
+              if (el) el.scrollLeft = sliderToScroll(Number(e.target.value), el.scrollWidth, el.clientWidth);
+            }}
+          />
+        )}
       </div>
+      {drag && (
+        <div className="dh-ghost" style={{ left: drag.x, top: drag.y }} aria-hidden data-testid="drag-ghost">
+          {(() => {
+            const c = drag.src === 'leader' ? leaderCard : card(hand[drag.src] ?? 'jesse');
+            return (
+              <span className="dh-ghost-card">
+                <CardArt c={c} />
+                <span>{c.name}</span>
+              </span>
+            );
+          })()}
+        </div>
+      )}
       <aside className="bf-log">
         <h3>Chronicle</h3>
         <ol data-testid="chronicle">
@@ -822,13 +1030,13 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
       {m.winner && (
         <div className={`match-veil ${m.winner === ME ? 'is-victory' : 'is-defeat'}`} role="dialog" data-testid="match-over" data-winner={m.winner}>
           <div className="match-plate">
-            <p className="match-kicker">{m.winKind === 'dominance' ? 'Dominance' : m.winKind === 'stronghold' ? 'Stronghold' : 'Yield'}</p>
+            <p className="match-kicker">{m.winKind === 'claims' ? 'Claims' : m.winKind === 'stronghold' ? 'Stronghold' : 'Yield'}</p>
             <h2>{m.winner === ME ? 'Victory' : 'Defeat'}</h2>
             <p className="match-reason">
-              {m.winKind === 'dominance'
+              {m.winKind === 'claims'
                 ? m.winner === ME
-                  ? 'Your claims carried the range.'
-                  : 'The rival’s claims carried the range.'
+                  ? 'You win on Claims. Your hold on the range carried it.'
+                  : 'The rival wins on Claims. Their hold on the range carried it.'
                 : m.winKind === 'stronghold'
                   ? m.winner === ME
                     ? 'You took the rival’s stronghold.'
@@ -838,11 +1046,11 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
                     : 'You yielded the ground.'}
             </p>
             <p className="match-score">
-              Your side {m.dom.blue} / {m.goal} · The rival {m.dom.red} / {m.goal} · Turn {m.turn}
+              Claims · You {m.dom.blue} / {m.goal} · Rival {m.dom.red} / {m.goal} · Turn {m.turn}
             </p>
             <div className="match-actions">
-              <button type="button" className="brass-btn brass-btn-solid" data-testid="new-sitting" onClick={() => restart()}>
-                New sitting
+              <button type="button" className="brass-btn brass-btn-solid" data-testid="new-match" onClick={() => restart()}>
+                New match
               </button>
               <button type="button" className="brass-btn brass-btn-ghost" onClick={onLeave}>
                 Back to the porch

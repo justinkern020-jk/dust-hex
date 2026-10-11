@@ -29,7 +29,7 @@ describe('audit 2a: deployed units stay on the board (the deploy race)', () => {
   it('the AI musters and its units stay (40 seeds)', () => {
     for (let s = 1; s <= 40; s++) {
       const f = FACTIONS[s % 6].id;
-      let m = newMatch({ blue: FACTIONS[(s + 1) % 6].id, red: f, seed: s, mapId: 'leaden-court' });
+      let m = newMatch({ blue: FACTIONS[(s + 1) % 6].id, red: f, seed: s, mapId: 'boot-hill' });
       m = run(m, { t: 'end' });
       const before = Object.values(m.units).filter((u) => u.side === 'red').length;
       m = playTurn(m, 'expert', () => 0.5);
@@ -141,7 +141,7 @@ describe('audit 4: other major problems', () => {
     expect(f.pending[0].options.length).toBeGreaterThan(1);
   });
   it('4.7 the AI deploys in every scripted opening (6 factions x 3 maps)', () => {
-    for (const map of ['leaden-court', 'ashen-cross', 'twin-vaults'])
+    for (const map of ['boot-hill', 'gallows-mesa', 'twin-claims'])
       for (const f of FACTIONS) {
         let m = newMatch({ blue: 'gang', red: f.id, seed: 3, mapId: map });
         m = run(m, { t: 'end' });

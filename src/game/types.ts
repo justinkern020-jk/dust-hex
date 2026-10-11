@@ -279,7 +279,7 @@ export interface Match {
   tray: Record<Side, TrayDevice[]>;
   /** Cold Ring tiles. */
   rings: { r: number; c: number; until: number }[];
-  /** Salt Oath and similar side-wide wards: side -> until turn. */
+  /** Salt Line and similar side-wide wards: side -> until turn. */
   saltOath: Record<Side, number>;
   /** Ledger lives on the leader plate. */
   ledger: Record<Side, boolean>;
@@ -298,7 +298,7 @@ export interface Match {
   /** Events since the last action (UI sound / animation). */
   events: GameEvent[];
   winner: Side | null;
-  winKind: 'dominance' | 'stronghold' | 'yield' | null;
+  winKind: 'claims' | 'stronghold' | 'yield' | null;
 }
 
 export type GameEvent =

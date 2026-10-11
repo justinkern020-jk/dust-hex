@@ -1,7 +1,8 @@
 import type { GameEvent, Side } from '../game/types';
 import { card } from '../game/cards';
 
-const KEY = 'dusthex.settings.v1';
+import { SETTINGS_KEY as KEY, migrateLegacySaves } from './storage';
+
 export interface Settings {
   sound: boolean;
   music: boolean;
@@ -11,6 +12,7 @@ export interface Settings {
 const DEFAULTS: Settings = { sound: true, music: true, voice: true, weather: true };
 
 export function loadSettings(): Settings {
+  migrateLegacySaves();
   try {
     const raw = JSON.parse(localStorage.getItem(KEY) ?? '{}');
     const out = { ...DEFAULTS };

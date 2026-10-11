@@ -20,7 +20,7 @@ export const FACTIONS: { id: FactionId; name: string; short: string; banner: str
   { id: 'star', name: 'The Silver Star', short: 'Star', banner: 'Lawmen', tone: 'law', line: 'Bass Reeves and the warrants that still work after dark.' },
   { id: 'army', name: 'The Department of the West', short: 'Army', banner: 'The army', tone: 'army', line: 'Crook’s column. Cavalry, rail guns, and the machines.' },
   { id: 'grass', name: 'The High Grass Nation', short: 'Grass', banner: 'Nations', tone: 'nation', line: 'Sitting Bull and the riders of the grass.' },
-  { id: 'lodge', name: 'The Thunder Lodge', short: 'Lodge', banner: 'Nations', tone: 'nation', line: 'Red Cloud and the spirit lodge. Not the bestiary.' },
+  { id: 'lodge', name: 'The Thunder Lodge', short: 'Lodge', banner: 'Nations', tone: 'nation', line: 'Red Cloud’s warriors and the storm on the plains.' },
 ];
 
 export function faction(id: FactionId) {

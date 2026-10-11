@@ -5,7 +5,7 @@ import { BASE, LEADERS } from './spec-base.mjs';
 import { NEW } from './spec-new.mjs';
 import { TEXT, LEAD_TEXT } from './spec-text.mjs';
 
-/** Strip the last Occult Wars terms from printed text. */
+/** Strip the last borrowed terms from printed text. */
 function westWords(t) {
   return t
     .replace(/\b(\d+) Resources?\b/g, '$1 money')
@@ -70,6 +70,25 @@ for (const n of NEW) {
 for (const c of out) {
   if (TEXT[c.id]) c.text = TEXT[c.id];
   if (LEAD_TEXT[c.id]) c.lead = { ...c.lead, text: LEAD_TEXT[c.id] };
+}
+// Player-facing vocabulary: the card kind is a Trick, units deploy, no oaths.
+const NAME = { 'salt-oath': 'Salt Line' };
+const TAG = { Rite: 'Trick', 'Slow Muster': 'Slow Deploy' };
+const words = (t) =>
+  t
+    .replace(/\bRites\b/g, 'Tricks')
+    .replace(/\brites\b/g, 'tricks')
+    .replace(/\bRite\b/g, 'Trick')
+    .replace(/\brite\b/g, 'trick')
+    .replace(/\bMusters\b/g, 'Deploys')
+    .replace(/\bmusters\b/g, 'deploys')
+    .replace(/\bMuster\b/g, 'Deploy')
+    .replace(/\bmuster\b/g, 'deploy');
+for (const c of out) {
+  if (NAME[c.id]) c.name = NAME[c.id];
+  c.text = words(c.text);
+  if (c.lead) c.lead = { ...c.lead, text: words(c.lead.text), ...(c.lead.label ? { label: words(c.lead.label) } : {}) };
+  c.tags = (c.tags ?? []).map((t) => TAG[t] ?? t);
 }
 for (const id of [...Object.keys(TEXT), ...Object.keys(LEAD_TEXT)]) if (!out.some((c) => c.id === id)) throw new Error(`text for unknown card ${id}`);
 for (const [f, id] of Object.entries(LEADERS)) {

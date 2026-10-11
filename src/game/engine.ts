@@ -73,8 +73,29 @@ export const DEFAULT_RULES: Rules = { roundScore: true };
 import { abilitiesOf } from './core';
 
 export const MAPS = mapsRaw as MapDef[];
+/** Old map ids from before the rename, kept so saved links still open the same ground. */
+export const LEGACY_MAP_IDS: Record<string, string> = {
+  'leaden-court': 'boot-hill',
+  'ashen-cross': 'gallows-mesa',
+  'twin-vaults': 'twin-claims',
+  'outer-seal': 'outer-fence',
+  'blackout-yard': 'blackout-corral',
+  'culvert-court': 'dry-culvert',
+  'nile-court': 'river-bend',
+  'saturn-cross': 'ring-mesa',
+  'rose-crypt': 'rose-shaft',
+  'silk-pass': 'high-pass',
+  'noon-orchard': 'cottonwoods',
+  'white-road': 'chalk-road',
+};
+export function resolveMapId(id: string | null | undefined): string | null {
+  if (!id) return null;
+  const v = LEGACY_MAP_IDS[id] ?? id;
+  return MAPS.some((m) => m.id === v) ? v : null;
+}
 export function mapById(id: string): MapDef {
-  return MAPS.find((m) => m.id === id) ?? MAPS[1];
+  const v = resolveMapId(id);
+  return MAPS.find((m) => m.id === v) ?? MAPS[1];
 }
 
 export interface NewMatchOpts {
@@ -97,7 +118,7 @@ function shuffle(m: Match, xs: string[]) {
 }
 
 export function newMatch(o: NewMatchOpts): Match {
-  const map = mapById(o.mapId ?? 'ashen-cross');
+  const map = mapById(o.mapId ?? 'gallows-mesa');
   const tiles = map.tiles.map((row) => row.map((t) => ({ ...t, trap: undefined })));
   const h = tiles.length;
   const w = tiles[0].length;
@@ -291,10 +312,10 @@ export function actError(m: Match, side: Side, a: { uid?: string; gid?: string; 
 function score(m: Match, s: Side) {
   const gain = holdings(m, s);
   m.dom[s] += gain;
-  log(m, `${sideName(s)} hold${s === 'blue' ? '' : 's'} ${gain}. Dominance ${m.dom[s]} / ${m.goal}.`);
+  log(m, `${sideName(s)} score${s === 'blue' ? '' : 's'} ${gain} for claims held. Claims ${m.dom[s]} / ${m.goal}.`);
 }
 
-/** Score dominance and settle a dominance win, per the rules in force. True if the match ended. */
+/** Score claims and settle a claims win, per the rules in force. True if the match ended. */
 function scoreAndSettle(m: Match): boolean {
   const R = m.rules ?? {};
   const s = m.side;
@@ -303,7 +324,7 @@ function scoreAndSettle(m: Match): boolean {
     if (!roundEnd) return false;
     score(m, 'blue');
     if (!R.mirrorClock && m.dom.blue >= m.goal) {
-      win(m, 'blue', 'dominance');
+      win(m, 'blue', 'claims');
       return true;
     }
     score(m, 'red');
@@ -319,11 +340,11 @@ function scoreAndSettle(m: Match): boolean {
       log(m, `Dead level at ${blue}. The fight goes on until one side leads at the end of a round.`);
       return false;
     }
-    win(m, blue > red ? 'blue' : 'red', 'dominance');
+    win(m, blue > red ? 'blue' : 'red', 'claims');
     return true;
   }
   if (m.dom[s] >= m.goal) {
-    win(m, s, 'dominance');
+    win(m, s, 'claims');
     return true;
   }
   return false;
@@ -1045,7 +1066,7 @@ function step(m: Match, a: Action): string | null {
       if (c.kind !== 'unit' && c.kind !== 'leader') return 'Not a unit.';
       const cost = playCost(m, side, c);
       if (m.money[side] < cost) return `Not enough money (need ${cost}).`;
-      if (m.rules?.firstOneDeploy && m.turn === 1 && (m.musters ?? 0) >= 1) return 'The first player musters only one unit on the opening turn.';
+      if (m.rules?.firstOneDeploy && m.turn === 1 && (m.musters ?? 0) >= 1) return 'The first player deploys only one unit on the opening turn.';
       if (!deployTiles(m, side, cardId).some(([r, cc]) => r === a.r && cc === a.c)) return c.hide ? 'Hide it on an empty tile.' : c.kw.includes('winged') ? 'It needs an empty tile.' : 'Deploy on your stronghold or a door you hold.';
       m.money[side] -= cost;
       m.musters = (m.musters ?? 0) + 1;
@@ -1062,7 +1083,7 @@ function step(m: Match, a: Action): string | null {
       m.units[u.uid] = u;
       m.board[a.r][a.c] = u.uid;
       m.events.push({ e: 'deploy', uid: u.uid, side });
-      log(m, `${side === 'blue' ? 'You muster' : 'The rival musters'} ${c.name}.`);
+      log(m, `${side === 'blue' ? 'You deploy' : 'The rival deploys'} ${c.name}.`);
       if (trapAt(m, a.r, a.c) || tileAt(m, a.r, a.c)!.k !== 'gate') {
         // Winged arrivals can land on open ground: claim it like a step.
         const t = tileAt(m, a.r, a.c)!;
@@ -1089,7 +1110,7 @@ function step(m: Match, a: Action): string | null {
       const id = m.hand[side][a.i];
       if (!id) return 'No such card.';
       const c = card(id);
-      if (c.kind === 'unit' || c.kind === 'leader') return 'Muster units onto the field.';
+      if (c.kind === 'unit' || c.kind === 'leader') return 'Deploy units onto a lit tile.';
       const cost = playCost(m, side, c);
       if (m.money[side] < cost) return `Not enough money (need ${cost}).`;
       const rite = c.kind === 'rite';
@@ -1144,7 +1165,7 @@ function step(m: Match, a: Action): string | null {
     case 'lead': {
       if (m.leadUsed[side]) return 'Your leader has already led this match.';
       const c = card(m.leader[side]);
-      if (!c.lead) return 'This leader has no working.';
+      if (!c.lead) return 'This leader has no Lead power.';
       const te = targetError(m, side, c.lead.target, a.target, false);
       if (te) return te;
       m.leadUsed[side] = true;

@@ -179,7 +179,7 @@ describe('turns', () => {
     m = endTurn(m);
     m = endTurn(m); // scored at the end of the round
     expect(m.winner).toBe('blue');
-    expect(m.winKind).toBe('dominance');
+    expect(m.winKind).toBe('claims');
   });
   it('a pending choice blocks other actions', () => {
     let m = field();

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { FACTIONS } from './game/cards';
-import { MAPS } from './game/engine';
+import { MAPS, resolveMapId } from './game/engine';
 import type { FactionId } from './game/types';
 import type { Mind } from './game/ai';
 import { Porch } from './ui/Porch';
@@ -12,20 +12,20 @@ type Screen = { s: 'porch' } | { s: 'codex' } | { s: 'battle'; opts: BattleOpts;
 const MIND_KEY = 'dusthex.mind';
 
 function initialScreen(): Screen {
-  // Deep links for testing and sharing: ?side=gang&rival=lodge&map=ashen-cross&mind=expert
+  // Deep links for testing and sharing: ?side=gang&rival=lodge&map=gallows-mesa&mind=expert
   try {
     const q = new URLSearchParams(window.location.search);
     if (q.get('codex') != null) return { s: 'codex' };
     const side = q.get('side') as FactionId | null;
     if (side && FACTIONS.some((f) => f.id === side)) {
       const rival = (q.get('rival') as FactionId | null) ?? FACTIONS.find((f) => f.id !== side)!.id;
-      const map = q.get('map') ?? 'ashen-cross';
+      const map = resolveMapId(q.get('map')) ?? 'gallows-mesa';
       const mind = (q.get('mind') as Mind | null) ?? 'expert';
       // Testing aids (opening hand, money) exist only in dev builds.
       const dev = import.meta.env.DEV;
       const deal = dev ? q.get('deal')?.split(',').filter(Boolean) : undefined;
       const money = dev && q.get('money') != null ? Number(q.get('money')) : undefined;
-      return { s: 'battle', opts: { blue: side, red: rival, mapId: MAPS.some((x) => x.id === map) ? map : 'ashen-cross', mind, deal, money }, key: 1 };
+      return { s: 'battle', opts: { blue: side, red: rival, mapId: map, mind, deal, money }, key: 1 };
     }
   } catch {
     /* ignore */

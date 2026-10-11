@@ -7,7 +7,7 @@ import { field, put } from './testkit';
 describe('rival mind', () => {
   it('musters on its first turn', () => {
     for (const f of FACTIONS) {
-      let m = newMatch({ blue: 'gang', red: f.id, seed: 11, mapId: 'ashen-cross' });
+      let m = newMatch({ blue: 'gang', red: f.id, seed: 11, mapId: 'gallows-mesa' });
       m = playTurn(m, 'expert');
       m = playTurn(m, 'expert');
       expect(Object.values(m.units).some((u) => u.side === 'red')).toBe(true);
@@ -24,7 +24,7 @@ describe('rival mind', () => {
     let seed = 1;
     for (const b of FACTIONS) {
       const red = FACTIONS[(FACTIONS.indexOf(b) + 2) % FACTIONS.length];
-      let m = newMatch({ blue: b.id, red: red.id, seed: seed++, mapId: 'ashen-cross' });
+      let m = newMatch({ blue: b.id, red: red.id, seed: seed++, mapId: 'gallows-mesa' });
       let rnd = seed * 9301;
       const r = () => ((rnd = (rnd * 9301 + 49297) % 233280) / 233280);
       for (let t = 0; t < 120 && !m.winner; t++) m = playTurn(m, 'experienced', r);

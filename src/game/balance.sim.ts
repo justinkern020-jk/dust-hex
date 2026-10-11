@@ -17,7 +17,7 @@ it('balance', () => {
   const seed0 = Number(process.env.SEED ?? 11);
   let seed = seed0;
   const rounds = Number(process.env.SEEDS ?? 1);
-  const maps = (process.env.MAPS ?? 'leaden-court,ashen-cross,twin-vaults').split(',');
+  const maps = (process.env.MAPS ?? 'boot-hill,gallows-mesa,twin-claims').split(',');
   let turns = 0, n = 0, blueW = 0, redW = 0, none = 0;
   for (let k = 0; k < rounds; k++)
     for (const map of maps) for (const b of FACTIONS) for (const r of FACTIONS) {

@@ -11,7 +11,7 @@ import { posOf } from './core';
  * row 4: s  g(b) S(b) g(b) s
  */
 export function field(opts: { blue?: FactionId; red?: FactionId; seed?: number } = {}): Match {
-  const m = newMatch({ mapId: 'twin-vaults', blue: opts.blue ?? 'star', red: opts.red ?? 'gang', seed: opts.seed ?? 7 });
+  const m = newMatch({ mapId: 'twin-claims', blue: opts.blue ?? 'star', red: opts.red ?? 'gang', seed: opts.seed ?? 7 });
   const t = (k: Tile['k'], home?: Side, sym?: 1 | 2): Tile => ({ k, ...(home ? { home } : {}), ...(sym ? { sym } : {}) });
   m.tiles = [
     [t('street'), t('gate', 'red'), t('stronghold', 'red'), t('gate', 'red'), t('street')],

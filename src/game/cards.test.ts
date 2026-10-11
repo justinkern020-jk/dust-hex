@@ -636,7 +636,7 @@ describe('Silver Star', () => {
     m = endTurn(m);
     expect(tryRun(m, { t: 'move', uid: e.uid, r: 1, c: 1 }).error).toMatch(/held/);
   });
-  it('Salt Oath: striking your leader costs the striker 2', () => {
+  it('Salt Line: striking your leader costs the striker 2', () => {
     let m = field({ blue: 'star' });
     put(m, 'baca', 'blue', 2, 2, { leader: true });
     const a = put(m, 'cole', 'red', 1, 2);

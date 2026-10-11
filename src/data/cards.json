@@ -74,7 +74,7 @@
    "Harbor"
   ],
   "mark": "Indian Territory",
-  "text": "Harbor. While she stands, enemy rites can target only her, not your other units. Once a turn, when you play an Outlaw (Gang or Choir) card, gain 1 money.",
+  "text": "Harbor. While she stands, enemy tricks can target only her, not your other units. Once a turn, when you play an Outlaw (Gang or Choir) card, gain 1 money.",
   "quote": "I regard myself as a woman who has seen much of life.",
   "quoted": "Belle Starr, Fort Smith Elevator, as recorded in later Arkansas accounts of that interview",
   "art": "/cards/belle.jpg",
@@ -105,7 +105,7 @@
    "Deny"
   ],
   "mark": "Jackson County",
-  "text": "Deny. When the rival plays a rite, you may exhaust Cole Younger to cancel it. He has heard every lie they printed.",
+  "text": "Deny. When the rival plays a trick, you may exhaust Cole Younger to cancel it. He has heard every lie they printed.",
   "quote": "In the whole lot there could not be found six pages of truth.",
   "quoted": "Cole Younger, The Story of Cole Younger by Himself (1903)",
   "art": "/cards/cole.jpg",
@@ -130,7 +130,7 @@
    "Expend"
   ],
   "mark": "Item",
-  "text": "Attach to a unit you control. Its next strike deals 2 extra damage, then exile Grave Round. If that strike destroys a unit, enemy rites cannot target the bearer until your next turn.",
+  "text": "Attach to a unit you control. Its next strike deals 2 extra damage, then exile Grave Round. If that strike destroys a unit, enemy tricks cannot target the bearer until your next turn.",
   "quote": "The good people of this world are very far from being satisfied with each other, and my arms are the best peacemakers.",
   "quoted": "Samuel Colt, letter to Charles Manby, 18 May 1852",
   "art": "/cards/grave-round.jpg",
@@ -176,10 +176,10 @@
   "cost": 4,
   "kw": [],
   "tags": [
-   "Rite"
+   "Trick"
   ],
   "mark": "Supernatural",
-  "text": "Return a destroyed Outlaw unit from your discard to your hand. If your leader has fallen, you may muster him instead, exhausted. The dust on the road arrives before the horses.",
+  "text": "Return a destroyed Outlaw unit from your discard to your hand. If your leader has fallen, you may deploy him instead, exhausted. The dust on the road arrives before the horses.",
   "quote": "The dirty little coward that shot Mr. Howard has laid poor Jesse in his grave.",
   "quoted": "Traditional, “Jesse James,” sung after 1882",
   "art": "/cards/ride-back.jpg",
@@ -328,14 +328,14 @@
  },
  {
   "id": "salt-oath",
-  "name": "Salt Oath",
+  "name": "Salt Line",
   "faction": "star",
   "kind": "rite",
   "rarity": "rare",
   "cost": 3,
   "kw": [],
   "tags": [
-   "Rite",
+   "Trick",
    "Ward"
   ],
   "mark": "Supernatural",
@@ -525,7 +525,7 @@
   "cost": 3,
   "kw": [],
   "tags": [
-   "Rite",
+   "Trick",
    "High Ground"
   ],
   "mark": "Supernatural",
@@ -645,7 +645,7 @@
   "cost": 4,
   "kw": [],
   "tags": [
-   "Rite"
+   "Trick"
   ],
   "mark": "Supernatural",
   "text": "Deal 2 damage to each enemy unit. Your own units are not touched. The smoke hangs after the men are gone.",
@@ -723,7 +723,7 @@
    "Bank"
   ],
   "mark": "The Layout",
-  "text": "Bank. Once a turn, when you play a rite, item or device, draw 1. She cannot move or strike the turn she enters.",
+  "text": "Bank. Once a turn, when you play a trick, item or device, draw 1. She cannot move or strike the turn she enters.",
   "quote": "I have never known a day of perfect peace.",
   "quoted": "Frank James, interview, Kansas City Journal, 7 October 1882",
   "art": "/cards/faro-widow.jpg",
@@ -947,7 +947,7 @@
   "cost": 2,
   "kw": [],
   "tags": [
-   "Rite",
+   "Trick",
    "Reveal"
   ],
   "mark": "Supernatural",
@@ -1023,7 +1023,7 @@
   "cost": 3,
   "kw": [],
   "tags": [
-   "Rite",
+   "Trick",
    "Hold"
   ],
   "mark": "Supernatural",
@@ -1108,7 +1108,7 @@
   "cost": 3,
   "kw": [],
   "tags": [
-   "Rite"
+   "Trick"
   ],
   "mark": "Supernatural",
   "text": "Destroy an enemy unit with Power 2 or less. If there is none, draw 1 instead.",
@@ -1332,7 +1332,7 @@
   "cost": 3,
   "kw": [],
   "tags": [
-   "Rite"
+   "Trick"
   ],
   "mark": "Supernatural",
   "text": "Move one of your units up to two tiles. It cannot strike this turn.",
@@ -1461,7 +1461,7 @@
   "cost": 2,
   "kw": [],
   "tags": [
-   "Rite",
+   "Trick",
    "Hold"
   ],
   "mark": "Supernatural",
@@ -1494,7 +1494,7 @@
    "Harbor"
   ],
   "mark": "Winter",
-  "text": "Harbor. While it stands, enemy rites can target only it, not your other units. When it is destroyed, gain 2 money.",
+  "text": "Harbor. While it stands, enemy tricks can target only it, not your other units. When it is destroyed, gain 2 money.",
   "quote": "Camp-fires and hot suppers in the deserts would be impossible but for the friendly sage-brush.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/empty-lodge.jpg",
@@ -1826,7 +1826,7 @@
    "Device"
   ],
   "mark": "Device",
-  "text": "Place on an empty tile. Enemy rites cost 1 more while it stands. Units cannot move onto that tile.",
+  "text": "Place on an empty tile. Enemy tricks cost 1 more while it stands. Units cannot move onto that tile.",
   "quote": "We were spinning along through Kansas, and in the course of an hour and a half we were fairly abroad on the great Plains.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/cut-wire.jpg",
@@ -1877,7 +1877,7 @@
    "Ward"
   ],
   "mark": "Device",
-  "text": "Place on a tile. Your units on that tile cannot be targeted by enemy rites.",
+  "text": "Place on a tile. Your units on that tile cannot be targeted by enemy tricks.",
   "quote": "We took two or three blankets for protection against frosty weather in the mountains.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/sibley.jpg",
@@ -2369,7 +2369,7 @@
   "cost": 3,
   "kw": [],
   "tags": [
-   "Rite",
+   "Trick",
    "Bestiary"
   ],
   "mark": "Supernatural",
@@ -2451,7 +2451,7 @@
   "cost": 2,
   "kw": [],
   "tags": [
-   "Rite",
+   "Trick",
    "Bestiary"
   ],
   "mark": "Supernatural",
@@ -2475,7 +2475,7 @@
   "cost": 3,
   "kw": [],
   "tags": [
-   "Rite",
+   "Trick",
    "Bestiary"
   ],
   "mark": "Supernatural",
@@ -2499,11 +2499,11 @@
   "cost": 2,
   "kw": [],
   "tags": [
-   "Rite",
+   "Trick",
    "Bestiary"
   ],
   "mark": "Supernatural",
-  "text": "Exhaust a unit. Until your next turn it cannot strike, and the other side’s rites cannot target it.",
+  "text": "Exhaust a unit. Until your next turn it cannot strike, and the other side’s tricks cannot target it.",
   "quote": "One need not be a chamber to be haunted.",
   "quoted": "Emily Dickinson, Poems",
   "art": "/cards/haunted-chamber.jpg",
@@ -2536,7 +2536,7 @@
    "Bestiary"
   ],
   "mark": "The Ridge",
-  "text": "Cryptid. Rites and ranged strikes cannot target it. Units it strikes do not strike back.",
+  "text": "Cryptid. Tricks and ranged strikes cannot target it. Units it strikes do not strike back.",
   "quote": "It was as if something had passed along between me and them; but I could not see it.",
   "quoted": "Ambrose Bierce, The Damned Thing (1893)",
   "art": "/cards/damned-thing.jpg",
@@ -2551,7 +2551,7 @@
   "cost": 3,
   "kw": [],
   "tags": [
-   "Rite",
+   "Trick",
    "Bestiary"
   ],
   "mark": "Supernatural",
@@ -2704,7 +2704,7 @@
    "Bestiary"
   ],
   "mark": "The Barrens",
-  "text": "Cryptid. It may enter on any empty tile outside the rival’s half. Rites cannot target it the turn it enters.",
+  "text": "Cryptid. It may enter on any empty tile outside the rival’s half. Tricks cannot target it the turn it enters.",
   "quote": "Beware, for I am fearless and therefore powerful.",
   "quoted": "Mary Shelley, Frankenstein (1818)",
   "art": "/cards/leeds-devil.jpg",
@@ -2719,7 +2719,7 @@
   "cost": 3,
   "kw": [],
   "tags": [
-   "Rite",
+   "Trick",
    "Bestiary"
   ],
   "mark": "Supernatural",
@@ -2750,7 +2750,7 @@
   "cost": 3,
   "kw": [],
   "tags": [
-   "Rite",
+   "Trick",
    "Attach",
    "Bestiary"
   ],
@@ -3487,7 +3487,7 @@
   "power": 3,
   "mark": "The Night Church",
   "standin": "faro-widow",
-  "text": "Harbor. While she stands, enemy rites can target only her, not your other units.",
+  "text": "Harbor. While she stands, enemy tricks can target only her, not your other units.",
   "quote": "Sing the second verse slower. They are listening.",
   "quoted": "Choir rehearsal (invented)",
   "quoteSource": "invented",
@@ -4038,7 +4038,7 @@
   ],
   "tags": [
    "Ranged",
-   "Slow Muster"
+   "Slow Deploy"
   ],
   "isNew": true,
   "kind": "unit",
@@ -4471,7 +4471,7 @@
   "power": 3,
   "mark": "Oglala Lakota",
   "standin": "empty-lodge",
-  "text": "Harbor. While he stands, enemy rites can target only him, not your other units.",
+  "text": "Harbor. While he stands, enemy tricks can target only him, not your other units.",
   "quote": "There was a woman with an infant in her arms who was killed as she almost touched the flag of truce.",
   "quoted": "American Horse, testimony on Wounded Knee, Washington, February 1891",
   "quoteSource": "attested",
@@ -4776,7 +4776,7 @@
   "power": 3,
   "mark": "The Lodge",
   "standin": "empty-lodge",
-  "text": "Harbor. While he stands, enemy rites can target only him, not your other units.",
+  "text": "Harbor. While he stands, enemy tricks can target only him, not your other units.",
   "quote": "The door faces east. Whatever comes in, comes in where I can see it.",
   "quoted": "Lodge saying (invented)",
   "quoteSource": "invented",
