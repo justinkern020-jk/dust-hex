@@ -166,6 +166,7 @@ describe('turns', () => {
     let m = field();
     m.money.red = 0;
     const handRed = m.hand.red.length;
+    m.rules = {}; // per-turn scoring, the old rule
     m = endTurn(m);
     expect(m.dom.blue).toBe(3);
     expect(m.side).toBe('red');
@@ -176,6 +177,7 @@ describe('turns', () => {
     let m = field();
     m.dom.blue = 58;
     m = endTurn(m);
+    m = endTurn(m); // scored at the end of the round
     expect(m.winner).toBe('blue');
     expect(m.winKind).toBe('dominance');
   });

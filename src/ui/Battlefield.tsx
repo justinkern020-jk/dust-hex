@@ -13,7 +13,7 @@ import { playMusic, sfx, soundEvents } from './sound';
 const ME: Side = 'blue';
 const AI_DELAY = (() => {
   try {
-    return new URLSearchParams(window.location.search).get('fast') != null ? 40 : 520;
+    return import.meta.env.DEV && new URLSearchParams(window.location.search).get('fast') != null ? 40 : 520;
   } catch {
     return 520;
   }
@@ -30,7 +30,7 @@ type Sel =
 const PRIMER = [
   'Each side owns one stronghold. It banks 2 money every turn, you can always muster a unit there, and it counts as a claim.',
   'Gates you hold, and your stronghold, are the only places a unit can enter. A claim you take stays yours and banks its money.',
-  'At the end of your turn, score 1 dominance for every claim you hold; your stronghold counts. The number beside the score is the win.',
+  'Both sides score dominance together at the end of each round, 1 per claim held (your stronghold counts), so going first banks no lead. Reach the number beside the score to win.',
   'A card costs the one number printed on it. If the bank can pay that number, you may play it.',
   'Each unit either moves or strikes once a turn. Melee strikes are answered; fast lands first and a killing stroke is not answered. Power is vitality and damage as one number.',
   'Ranged units reach two tiles in a straight line, never on a diagonal, and are not answered. High ground adds 1. A unit striking up a ridge in melee misses one blow in three.',
@@ -70,6 +70,7 @@ export interface BattleOpts {
 
 function startMatch(o: BattleOpts, mapId: string): Match {
   const m = newMatch({ blue: o.blue, red: o.red, mapId, seed: (Date.now() & 0x7fffffff) || 7 });
+  if (!import.meta.env.DEV) return m;
   const deal = (o.deal ?? []).filter((id) => maybeCard(id) && maybeCard(id)!.kind !== 'leader');
   if (deal.length) m.hand.blue = [...deal, ...m.hand.blue].slice(0, 7);
   if (o.money != null) m.money.blue = Math.max(0, Math.min(14, o.money));
@@ -714,7 +715,7 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
       <ul className="board-key">
         <li>
           <i className="legend-mark legend-gate" />
-          Step on a circle to claim it · claims score dominance each turn
+          Step on a circle to claim it · claims score dominance each round
         </li>
         <li>
           <i className="legend-mark legend-stronghold" />

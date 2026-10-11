@@ -1031,6 +1031,7 @@ export function strikeBlock(m: Match, u: Unit): string | null {
 export function strikeError(m: Match, uid: string, r: number, c: number): string | null {
   const a = m.units[uid];
   if (!a || a.side !== m.side) return 'That unit will not heed you.';
+  if (m.rules?.firstNoStrike && m.turn === 1) return 'The first player cannot strike on the opening turn.';
   const b = strikeBlock(m, a);
   if (b) return b;
   const d = unitAt(m, r, c);

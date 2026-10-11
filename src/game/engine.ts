@@ -66,7 +66,10 @@ import {
   unitOption,
   win,
 } from './rules';
-import type { Action, Card, FactionId, MapDef, Match, Pending, PendingOption, Side, StepResult, Target, TargetSpec, Unit } from './types';
+import type { Action, Card, FactionId, MapDef, Match, Pending, PendingOption, Rules, Side, StepResult, Target, TargetSpec, Unit } from './types';
+
+/** Rules in force for new matches. Tests and the balance sim pass their own. */
+export const DEFAULT_RULES: Rules = { roundScore: true };
 import { abilitiesOf } from './core';
 
 export const MAPS = mapsRaw as MapDef[];
@@ -81,6 +84,7 @@ export interface NewMatchOpts {
   seed?: number;
   blueDeck?: string[];
   redDeck?: string[];
+  rules?: Rules;
 }
 
 function shuffle(m: Match, xs: string[]) {
@@ -99,6 +103,8 @@ export function newMatch(o: NewMatchOpts): Match {
   const w = tiles[0].length;
   const m: Match = {
     mapId: map.id,
+    rules: { ...(o.rules ?? DEFAULT_RULES) },
+    musters: 0,
     w,
     h,
     tiles,
@@ -144,7 +150,7 @@ export function newMatch(o: NewMatchOpts): Match {
   );
   m.deck.blue = shuffle(m, o.blueDeck ?? buildDeck(o.blue));
   m.deck.red = shuffle(m, o.redDeck ?? buildDeck(o.red));
-  draw(m, 'blue', 5);
+  draw(m, 'blue', m.rules?.firstShortHand ? 4 : 5);
   draw(m, 'red', 5);
   bank(m, 'blue', bankFor(m, 'blue'));
   log(m, `${map.name}. ${map.epithet}`);
@@ -282,15 +288,50 @@ export function actError(m: Match, side: Side, a: { uid?: string; gid?: string; 
 
 // ------------------------------------------------------------------ turn flow
 
-function endTurn(m: Match) {
-  const s = m.side;
+function score(m: Match, s: Side) {
   const gain = holdings(m, s);
   m.dom[s] += gain;
   log(m, `${sideName(s)} hold${s === 'blue' ? '' : 's'} ${gain}. Dominance ${m.dom[s]} / ${m.goal}.`);
+}
+
+/** Score dominance and settle a dominance win, per the rules in force. True if the match ended. */
+function scoreAndSettle(m: Match): boolean {
+  const R = m.rules ?? {};
+  const s = m.side;
+  const roundEnd = s === 'red';
+  if (R.roundScore) {
+    if (!roundEnd) return false;
+    score(m, 'blue');
+    if (!R.mirrorClock && m.dom.blue >= m.goal) {
+      win(m, 'blue', 'dominance');
+      return true;
+    }
+    score(m, 'red');
+  } else score(m, s);
+  if (R.mirrorClock || R.roundScore) {
+    if (!roundEnd) {
+      if (m.dom[s] >= m.goal) log(m, `${sideName(s)} reach${s === 'blue' ? '' : 'es'} the mark. The rival has one turn to answer.`);
+      return false;
+    }
+    const { blue, red } = m.dom;
+    if (blue < m.goal && red < m.goal) return false;
+    if (blue === red) {
+      log(m, `Dead level at ${blue}. The fight goes on until one side leads at the end of a round.`);
+      return false;
+    }
+    win(m, blue > red ? 'blue' : 'red', 'dominance');
+    return true;
+  }
   if (m.dom[s] >= m.goal) {
     win(m, s, 'dominance');
-    return;
+    return true;
   }
+  return false;
+}
+
+function endTurn(m: Match) {
+  const s = m.side;
+  if (scoreAndSettle(m)) return;
   for (const cf of m.coffins.filter((x) => x.side === s)) {
     const i = m.discard[s].indexOf(cf.cardId);
     if (i >= 0 && m.hand[s].length < HAND_CAP) {
@@ -305,6 +346,7 @@ function endTurn(m: Match) {
   m.side = n;
   m.turn += 1;
   m.played = { cards: 0, items: 0, devices: 0 };
+  m.musters = 0;
   openTurn(m);
 }
 
@@ -1005,8 +1047,10 @@ function step(m: Match, a: Action): string | null {
       if (c.kind !== 'unit' && c.kind !== 'leader') return 'Not a unit.';
       const cost = playCost(m, side, c);
       if (m.money[side] < cost) return `Not enough money (need ${cost}).`;
+      if (m.rules?.firstOneDeploy && m.turn === 1 && (m.musters ?? 0) >= 1) return 'The first player musters only one unit on the opening turn.';
       if (!deployTiles(m, side, cardId).some(([r, cc]) => r === a.r && cc === a.c)) return c.hide ? 'Hide it on an empty tile.' : c.kw.includes('winged') ? 'It needs an empty tile.' : 'Deploy on your stronghold or a door you hold.';
       m.money[side] -= cost;
+      m.musters = (m.musters ?? 0) + 1;
       if (isLeader) m.leaderAt[side] = 'board';
       else m.hand[side].splice(a.i as number, 1);
       if (c.hide) {

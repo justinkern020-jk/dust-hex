@@ -31,6 +31,7 @@ export function Codex({ onBack }: { onBack: () => void }) {
           <p className="codex-count" data-testid="codex-count">
             {CARDS.length} pages · six sides
           </p>
+          <p className="codex-count" data-testid="codex-rule">Dominance is scored for both sides at the end of each round, so going first banks no lead.</p>
         </div>
       </header>
       <nav className="codex-tabs" role="tablist" aria-label="Side">

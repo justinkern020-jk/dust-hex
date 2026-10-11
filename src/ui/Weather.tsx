@@ -6,7 +6,7 @@ const LABEL: Record<Weather, string> = { rain: 'Rain', fog: 'Fog', moonlight: 'M
 
 export function pickWeather(): Weather {
   try {
-    const q = new URLSearchParams(window.location.search).get('weather') as Weather | null;
+    const q = import.meta.env.DEV ? (new URLSearchParams(window.location.search).get('weather') as Weather | null) : null;
     if (q && WEATHERS.includes(q)) return q;
   } catch {
     /* ignore */

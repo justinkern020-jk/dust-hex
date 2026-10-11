@@ -232,8 +232,26 @@ export interface Pending {
 
 export type LeaderPlace = 'tray' | 'board' | 'aside' | 'fallen';
 
+/** Optional rules that answer the first-player edge (see dusthex_rebuild.md). */
+export interface Rules {
+  /** A: the first player opens with one card fewer. */
+  firstShortHand?: boolean;
+  /** B: dominance is scored for both sides at the end of each full round. */
+  roundScore?: boolean;
+  /** C: the first player cannot strike on turn 1. */
+  firstNoStrike?: boolean;
+  /** D: the first player may muster only one unit on turn 1. */
+  firstOneDeploy?: boolean;
+  /** E: a dominance win is only settled at the end of a full round; the leader then wins, a tie plays on. */
+  mirrorClock?: boolean;
+}
+
 export interface Match {
   mapId: string;
+  /** Rules in force (missing = none of the optional rules). */
+  rules?: Rules;
+  /** Units mustered this turn (for firstOneDeploy). */
+  musters?: number;
   w: number;
   h: number;
   tiles: Tile[][];
