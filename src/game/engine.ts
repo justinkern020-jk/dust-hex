@@ -236,7 +236,7 @@ export function deployTiles(m: Match, side: Side, cardId: string): [number, numb
     if (m.board[r][cc]) continue;
     if (c.kw.includes('winged')) {
       const t = tileAt(m, r, cc)!;
-      if (!(t.k === 'stronghold' && t.home !== side) && !trapAt(m, r, cc)) out.push([r, cc]);
+      if (t.k !== 'stronghold' && !trapAt(m, r, cc) && !tileDeviceAt(m, r, cc) && !onHalf(m, other(side), r, cc)) out.push([r, cc]);
       continue;
     }
     if (canDeployOn(m, side, r, cc)) out.push([r, cc]);

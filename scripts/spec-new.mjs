@@ -66,7 +66,7 @@ export const NEW = [
     ab: [{ on: 'kill', op: 'growOnKill', n: 1 }], text: 'Hungry. When he destroys a unit, he gains +1 Power for good and is fully mended.',
     quote: 'There was seven Democrats in Hinsdale County, and you ate five of them.', quoted: 'Apocryphal sentence of Judge M. B. Gerry, 1883', quoteSource: 'folk' }),
   u({ id: 'lechuza', name: 'La Lechuza', faction: 'choir', rarity: 'rare', cost: 3, power: 2, kw: ['cryptid', 'winged'], tags: ['Cryptid', 'Winged', 'Bestiary'], mark: 'The Border', standin: 'leeds-devil',
-    ab: [{ on: 'enter', op: 'snipe', n: 1 }], text: 'Cryptid. It may enter on any empty tile. When it enters, deal 1 Power to one enemy unit.',
+    ab: [{ on: 'enter', op: 'snipe', n: 1 }], text: 'Cryptid. It may enter on any empty tile outside the rival’s half. When it enters, deal 1 Power to one enemy unit.',
     quote: 'If the owl calls your name at the window, do not answer it.', quoted: 'Border warning (folk)', quoteSource: 'folk' }),
   u({ id: 'charley-parkhurst', name: 'One-Eyed Charley', faction: 'choir', rarity: 'uncommon', cost: 2, power: 2, kw: ['fast'], tags: ['Fast', 'Secret'], mark: 'Santa Cruz Road', standin: 'riderless',
     ab: [{ on: 'death', op: 'draw', n: 1 }], text: 'Fast. When Charley is destroyed, draw 1. The secret came out only at the laying-out.',
@@ -147,7 +147,7 @@ export const NEW = [
   u({ id: 'gun-crew', name: 'Mountain Gun Crew', faction: 'army', rarity: 'uncommon', cost: 3, power: 2, kw: ['ranged', 'delay'], tags: ['Ranged', 'Slow Muster'], mark: 'Artillery', standin: 'empty-guidon',
     text: 'Ranged. It does not move or strike the turn it enters.', quote: 'Elevation two. Wait for the smoke.', quoted: 'Gun drill (invented)', quoteSource: 'invented' }),
   u({ id: 'lady-in-green', name: 'The Lady in Green', faction: 'army', rarity: 'rare', cost: 4, power: 3, kw: ['cryptid', 'winged'], tags: ['Cryptid', 'Winged', 'Bestiary'], mark: 'Fort Laramie', standin: 'damned-thing',
-    ab: [{ on: 'enter', op: 'exhaustEnemy' }], text: 'Cryptid. She may enter on any empty tile. When she enters, exhaust an enemy unit.',
+    ab: [{ on: 'enter', op: 'exhaustEnemy' }], text: 'Cryptid. She may enter on any empty tile outside the rival’s half. When she enters, exhaust an enemy unit.',
     quote: 'She rides out of the river fog at Fort Laramie and never leaves a track.', quoted: 'Fort Laramie ghost story', quoteSource: 'folk' }),
 
   // ------------------------------------------------ High Grass Nation (+12)

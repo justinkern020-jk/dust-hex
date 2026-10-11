@@ -428,7 +428,7 @@ export function fire(m: Match, u: Unit, ab: Ability, ctx: FireCtx = {}) {
       return;
     case 'foeLoses': {
       const lost = loseMoney(m, foe, n);
-      log(m, `${name}: ${sideName(foe)} loses ${lost} money.`);
+      log(m, `${name}: ${foe === 'blue' ? 'you lose' : 'the rival loses'} ${lost} money.`);
       return;
     }
     case 'growOnKill':

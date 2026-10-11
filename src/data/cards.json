@@ -520,7 +520,7 @@
    "High Ground"
   ],
   "mark": "Supernatural",
-  "text": "Choose an allied unit on higher ground. It deals 2 Power to one enemy below it within two tiles, and that enemy cannot climb this turn.",
+  "text": "Choose an allied unit on higher ground. It deals 2 Power to one enemy below it within two tiles, and that enemy cannot climb on its next turn.",
   "quote": "The earth is the mother of all people, and all people should have equal rights upon it.",
   "quoted": "Hinmatóowyalahtq̓it (Chief Joseph), North American Review, April 1879",
   "art": "/cards/thunder-ridge.jpg",
@@ -2687,7 +2687,7 @@
    "Bestiary"
   ],
   "mark": "The Barrens",
-  "text": "Cryptid. It may enter on any empty tile. Rites cannot target it the turn it enters.",
+  "text": "Cryptid. It may enter on any empty tile outside the rival’s half. Rites cannot target it the turn it enters.",
   "quote": "Beware, for I am fearless and therefore powerful.",
   "quoted": "Mary Shelley, Frankenstein (1818)",
   "art": "/cards/leeds-devil.jpg",
@@ -3271,7 +3271,7 @@
     "n": 1
    }
   ],
-  "text": "Cryptid. It may enter on any empty tile. When it enters, deal 1 Power to one enemy unit.",
+  "text": "Cryptid. It may enter on any empty tile outside the rival’s half. When it enters, deal 1 Power to one enemy unit.",
   "quote": "If the owl calls your name at the window, do not answer it.",
   "quoted": "Border warning (folk)",
   "quoteSource": "folk",
@@ -4066,7 +4066,7 @@
     "op": "exhaustEnemy"
    }
   ],
-  "text": "Cryptid. She may enter on any empty tile. When she enters, exhaust an enemy unit.",
+  "text": "Cryptid. She may enter on any empty tile outside the rival’s half. When she enters, exhaust an enemy unit.",
   "quote": "She rides out of the river fog at Fort Laramie and never leaves a track.",
   "quoted": "Fort Laramie ghost story",
   "quoteSource": "folk",
