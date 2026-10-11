@@ -10,7 +10,7 @@ import { classifyGesture, dropAction, scrollTurnsToDrag, scrollToSlider, sliderT
 import { MINDS } from './Porch';
 import { WeatherLayer, pickWeather } from './Weather';
 import { flightMs, planSlides, slideKeyframes, slideTiming, type Box } from './coinMotion';
-import { playMusic, sfx, soundEvents } from './sound';
+import { playMatchSting, playMusic, sfx, soundEvents, stopMenuMusic } from './sound';
 
 const ME: Side = 'blue';
 const AI_DELAY = (() => {
@@ -112,6 +112,9 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
   const inFlight = () => performance.now() < flightUntil.current;
 
   useEffect(() => {
+    // Match start: the menu loop fades out, the sting plays, the battle track comes in under it.
+    stopMenuMusic(900);
+    playMatchSting();
     playMusic('ghost-town');
   }, []);
 
@@ -378,6 +381,7 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
     setSel(null);
     setToast(null);
     setYieldAsk(false);
+    playMatchSting();
     setM(startMatch({ ...opts, deal: undefined, money: undefined }, map));
   };
 

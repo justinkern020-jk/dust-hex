@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FACTIONS } from './game/cards';
 import { MAPS, resolveMapId } from './game/engine';
 import type { FactionId } from './game/types';
@@ -6,7 +6,7 @@ import type { Mind } from './game/ai';
 import { Porch } from './ui/Porch';
 import { Codex } from './ui/Codex';
 import { Battlefield, type BattleOpts } from './ui/Battlefield';
-import { playMusic } from './ui/sound';
+import { playMenuMusic, preloadMenuAudio, unlockAudio } from './ui/sound';
 
 type Screen = { s: 'porch' } | { s: 'codex' } | { s: 'battle'; opts: BattleOpts; key: number };
 const MIND_KEY = 'dusthex.mind';
@@ -53,12 +53,25 @@ export function App() {
   };
   useEffect(() => {
     document.body.dataset.screen = screen.s;
-    if (screen.s === 'porch') {
-      const start = () => playMusic('frontier-horn');
-      window.addEventListener('pointerdown', start, { once: true });
-      return () => window.removeEventListener('pointerdown', start);
-    }
+    // Menus (porch, codex) play the Dust Devil loop; a match fades it out itself.
+    if (screen.s !== 'battle') playMenuMusic();
   }, [screen.s]);
+  // Browsers only allow audio after a user gesture: unlock on the first one.
+  const screenRef = useRef(screen.s);
+  screenRef.current = screen.s;
+  useEffect(() => {
+    preloadMenuAudio();
+    const kinds = ['pointerdown', 'keydown', 'touchend', 'click'] as const;
+    const unlock = () => {
+      unlockAudio();
+      if (screenRef.current !== 'battle') playMenuMusic();
+      for (const k of kinds) window.removeEventListener(k, unlock, true);
+    };
+    for (const k of kinds) window.addEventListener(k, unlock, true);
+    return () => {
+      for (const k of kinds) window.removeEventListener(k, unlock, true);
+    };
+  }, []);
 
   if (screen.s === 'codex') return <Codex onBack={() => setScreen({ s: 'porch' })} />;
   if (screen.s === 'battle')

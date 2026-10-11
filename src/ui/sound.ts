@@ -29,7 +29,10 @@ export function saveSettings(s: Settings) {
     /* private mode */
   }
   current = s;
-  if (!s.music) stopMusic();
+  if (!s.music) {
+    stopMusic();
+    stopMenuMusic(0);
+  }
 }
 let current = loadSettings();
 
@@ -85,6 +88,200 @@ export function stopMusic() {
     music = null;
     musicSrc = '';
   }
+}
+
+// ------------------------------------------------------------------ menu music
+/**
+ * The porch/menu loop ("Dust Devil, Darker", 56 s) loops through a Web Audio
+ * buffer, which is sample-exact (an MP3 or <audio loop> leaves a gap at the
+ * seam). Opus/OGG where the browser plays it, AAC/M4A otherwise (older Safari).
+ * Audio can only start after a user gesture, so the App calls unlockAudio()
+ * from its first pointer/key event.
+ */
+export const MENU_LOOP_S = 56;
+const MENU_VOL = 0.32;
+const STING_VOL = 0.55;
+export const STING_MS = 5600;
+
+export type AudioFormat = 'ogg' | 'm4a';
+/** Pick the encoding to fetch from what the browser says it can play. */
+export function pickFormat(canPlay: (type: string) => string): AudioFormat {
+  return canPlay('audio/ogg; codecs="opus"') ? 'ogg' : 'm4a';
+}
+/** Loop points for a decoded buffer: exactly MENU_LOOP_S, ignoring encoder padding at the end. */
+export function loopPoints(duration: number, loopS = MENU_LOOP_S): { start: number; end: number } {
+  return { start: 0, end: duration >= loopS - 0.005 ? Math.min(loopS, duration) : duration };
+}
+
+let format: AudioFormat | null = null;
+function fmt(): AudioFormat {
+  if (format) return format;
+  try {
+    const a = typeof Audio === 'undefined' ? null : new Audio();
+    format = a ? pickFormat((t) => a.canPlayType(t)) : 'm4a';
+  } catch {
+    format = 'm4a';
+  }
+  return format;
+}
+export const menuSrc = () => `/assets/audio/music/menu-dust-devil.${fmt()}`;
+export const stingSrc = () => `/assets/audio/music/match-sting.${fmt()}`;
+
+type Ctx = AudioContext;
+let ctx: Ctx | null = null;
+function audioCtx(): Ctx | null {
+  if (ctx) return ctx;
+  const C = (globalThis as { AudioContext?: typeof AudioContext; webkitAudioContext?: typeof AudioContext }).AudioContext ?? (globalThis as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+  if (!C) return null;
+  try {
+    ctx = new C();
+  } catch {
+    ctx = null;
+  }
+  return ctx;
+}
+let unlocked = false;
+/** Call from a user gesture: browsers only let audio start after one. */
+export function unlockAudio() {
+  unlocked = true;
+  const c = audioCtx();
+  if (c && c.state === 'suspended') void c.resume().catch(() => undefined);
+}
+export const audioUnlocked = () => unlocked;
+
+const bytes = new Map<string, Promise<ArrayBuffer>>();
+const buffers = new Map<string, Promise<AudioBuffer>>();
+function fetchBytes(src: string) {
+  let p = bytes.get(src);
+  if (!p) {
+    p = fetch(src).then((r) => {
+      if (!r.ok) throw new Error(`${src} ${r.status}`);
+      return r.arrayBuffer();
+    });
+    p.catch(() => bytes.delete(src));
+    bytes.set(src, p);
+  }
+  return p;
+}
+function decoded(c: Ctx, src: string) {
+  let p = buffers.get(src);
+  if (!p) {
+    p = fetchBytes(src).then(
+      (b) =>
+        new Promise<AudioBuffer>((res, rej) => {
+          // The callback form also works on older Safari.
+          const r = c.decodeAudioData(b.slice(0), res, rej);
+          if (r && typeof (r as Promise<AudioBuffer>).then === 'function') (r as Promise<AudioBuffer>).then(res, rej);
+        }),
+    );
+    p.catch(() => buffers.delete(src));
+    buffers.set(src, p);
+  }
+  return p;
+}
+/** Start downloading the menu loop and sting early (no audio plays). */
+export function preloadMenuAudio() {
+  if (typeof fetch === 'undefined') return;
+  void fetchBytes(menuSrc()).catch(() => undefined);
+  void fetchBytes(stingSrc()).catch(() => undefined);
+}
+
+type MenuSlot = { src: AudioBufferSourceNode | null; gain: GainNode | null; el: HTMLAudioElement | null };
+let menu = null as MenuSlot | null;
+const menuNow = () => menu;
+let menuWanted = false;
+/** Play the menu loop (fades in). Safe to call repeatedly; does nothing while muted or before a gesture. */
+export function playMenuMusic() {
+  menuWanted = true;
+  if (!current.music || !unlocked || menu) return;
+  stopMusic(); // the battle track, if we came back from a match
+  const c = audioCtx();
+  if (!c) {
+    // No Web Audio: an <audio loop> (may leave a tiny gap at the seam).
+    if (typeof Audio === 'undefined') return;
+    const el = new Audio(menuSrc());
+    el.loop = true;
+    el.volume = MENU_VOL;
+    menu = { src: null, gain: null, el };
+    void el.play().catch(() => undefined);
+    return;
+  }
+  const slot: MenuSlot = { src: null, gain: null, el: null };
+  menu = slot;
+  void decoded(c, menuSrc())
+    .then((buf) => {
+      if (menuNow() !== slot || !menuWanted || !current.music) return;
+      const src = c.createBufferSource();
+      src.buffer = buf;
+      src.loop = true;
+      const lp = loopPoints(buf.duration);
+      src.loopStart = lp.start;
+      src.loopEnd = lp.end;
+      const g = c.createGain();
+      g.gain.setValueAtTime(0, c.currentTime);
+      g.gain.linearRampToValueAtTime(MENU_VOL, c.currentTime + 1.2);
+      src.connect(g).connect(c.destination);
+      src.start();
+      slot.src = src;
+      slot.gain = g;
+    })
+    .catch(() => {
+      if (menuNow() === slot) menu = null;
+    });
+}
+/** Fade the menu loop out (ms) and stop it. */
+export function stopMenuMusic(ms = 900) {
+  menuWanted = false;
+  const m = menu;
+  menu = null;
+  if (!m) return;
+  if (m.el) {
+    m.el.pause();
+    return;
+  }
+  const c = ctx;
+  if (!c || !m.src || !m.gain) return;
+  const t = c.currentTime;
+  const s = ms / 1000;
+  try {
+    m.gain.gain.cancelScheduledValues(t);
+    m.gain.gain.setValueAtTime(m.gain.gain.value, t);
+    m.gain.gain.linearRampToValueAtTime(0, t + s);
+    m.src.stop(t + s + 0.05);
+  } catch {
+    /* already stopped */
+  }
+}
+export const menuMusicPlaying = () => !!menu;
+
+let lastSting = 0;
+/** The match-start sting (music setting). Ducks the battle track under it. Never twice in a row. */
+export function playMatchSting(): boolean {
+  if (!current.music) return false;
+  const now = Date.now();
+  if (now - lastSting < 3000) return false;
+  lastSting = now;
+  duckUntil = now + STING_MS;
+  if (music) music.volume = MUSIC_VOL * 0.3;
+  if (duckTimer) clearTimeout(duckTimer);
+  duckTimer = setTimeout(() => {
+    duckTimer = null;
+    if (music && Date.now() >= duckUntil) music.volume = MUSIC_VOL;
+  }, STING_MS);
+  const c = unlocked ? audioCtx() : null;
+  if (c) {
+    void decoded(c, stingSrc())
+      .then((buf) => {
+        const src = c.createBufferSource();
+        src.buffer = buf;
+        const g = c.createGain();
+        g.gain.value = STING_VOL;
+        src.connect(g).connect(c.destination);
+        src.start();
+      })
+      .catch(() => play(stingSrc(), STING_VOL));
+  } else play(stingSrc(), STING_VOL);
+  return true;
 }
 
 // ------------------------------------------------------------------ faction cues
