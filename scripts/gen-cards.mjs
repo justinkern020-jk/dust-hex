@@ -4,6 +4,18 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { BASE, LEADERS } from './spec-base.mjs';
 import { NEW } from './spec-new.mjs';
 
+/** Strip the last Occult Wars terms from printed text. */
+function westWords(t) {
+  return t
+    .replace(/\b(\d+) Resources?\b/g, '$1 money')
+    .replace(/\bResources?\b/g, 'money')
+    .replace(/an opponent's hand/g, 'the rival’s hand')
+    .replace(/his plate is destroyed, set it aside/g, 'he is destroyed, set him aside')
+    .replace(/your leader plate/g, 'your leader')
+    .replace(/this plate/g, 'this card')
+    .replace(/the plate knows/g, 'the card knows');
+}
+
 const raw = JSON.parse(readFileSync(new URL('../reference/grok-mirror/raw-cards.json', import.meta.url), 'utf8'));
 
 const GEAR = {
@@ -39,7 +51,7 @@ for (const r of raw) {
     kw: s.kw ?? [],
     tags: r.keywords ?? [],
     mark: r.mark,
-    text: s.text ?? r.text,
+    text: westWords(s.text ?? r.text),
     quote: r.quote,
     quoted: r.quoted,
     art: r.art,

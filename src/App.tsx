@@ -21,7 +21,9 @@ function initialScreen(): Screen {
       const rival = (q.get('rival') as FactionId | null) ?? FACTIONS.find((f) => f.id !== side)!.id;
       const map = q.get('map') ?? 'ashen-cross';
       const mind = (q.get('mind') as Mind | null) ?? 'expert';
-      return { s: 'battle', opts: { blue: side, red: rival, mapId: MAPS.some((x) => x.id === map) ? map : 'ashen-cross', mind }, key: 1 };
+      const deal = q.get('deal')?.split(',').filter(Boolean);
+      const money = q.get('money') != null ? Number(q.get('money')) : undefined;
+      return { s: 'battle', opts: { blue: side, red: rival, mapId: MAPS.some((x) => x.id === map) ? map : 'ashen-cross', mind, deal, money }, key: 1 };
     }
   } catch {
     /* ignore */

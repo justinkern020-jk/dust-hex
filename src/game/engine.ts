@@ -942,7 +942,7 @@ function resolveCard(m: Match, side: Side, c: Card, target: Target | undefined) 
     }
   } else if (c.attach === 'leader') {
     m.ledger[side] = true;
-    log(m, `${c.name} is pinned to your leader's plate.`);
+    log(m, `${c.name} is pinned to your leader.`);
     kept = true;
   } else if (c.attach === 'tile' && target?.r != null) {
     m.tileDevices.push({ did: `d${m.seq++}`, r: target.r, c: target.c!, cardId: c.id, owner: side });

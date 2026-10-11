@@ -13,7 +13,7 @@
    "Returns"
   ],
   "mark": "Missouri",
-  "text": "Raid. Once each time he destroys a unit, draw 1 and gain 2 money. The first time his plate is destroyed, set it aside. At the start of your next turn, muster him again on your side, exhausted.",
+  "text": "Raid. Once each time he destroys a unit, draw 1 and gain 2 money. The first time he is destroyed, set him aside. At the start of your next turn, muster him again on your side, exhausted.",
   "quote": "I know that we are outlaws, and that there is big money on our heads.",
   "quoted": "Jesse W. James, letter, History of Daviess County (1882)",
   "art": "/cards/jesse.jpg",
@@ -74,7 +74,7 @@
    "Harbor"
   ],
   "mark": "Indian Territory",
-  "text": "Harbor. Enemy rites cannot target another allied unit while she stands. Once a turn, when you play an Outlaw card, gain 1 Resource.",
+  "text": "Harbor. Enemy rites cannot target another allied unit while she stands. Once a turn, when you play an Outlaw card, gain 1 money.",
   "quote": "I regard myself as a woman who has seen much of life.",
   "quoted": "Belle Starr, Fort Smith Elevator, as recorded in later Arkansas accounts of that interview",
   "art": "/cards/belle.jpg",
@@ -989,7 +989,7 @@
    "Record"
   ],
   "mark": "The Book",
-  "text": "Record. When an enemy unit is destroyed, gain 1 Resource. He does not strike on the turn he enters.",
+  "text": "Record. When an enemy unit is destroyed, gain 1 money. He does not strike on the turn he enters.",
   "quote": "It was the loneliest land for a grave!",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/boot-clerk.jpg",
@@ -1230,7 +1230,7 @@
    "Attach"
   ],
   "mark": "Item",
-  "text": "Attach to your leader plate. The first time each turn you play a card, gain 1 money.",
+  "text": "Attach to your leader. The first time each turn you play a card, gain 1 money.",
   "quote": "He had absolute charge of the mails, express matter, passengers and stage-coach, until he delivered them to the next conductor, and got his receipt for them.",
   "quoted": "Mark Twain, Roughing It (1872)",
   "art": "/cards/ledger.jpg",
@@ -2176,7 +2176,7 @@
    "Bestiary"
   ],
   "mark": "The Wild Man",
-  "text": "Cryptid. Tough. The first wound dealt to him does not count. The English name is later; this plate uses a frontier account, not a ceremony.",
+  "text": "Cryptid. Tough. The first wound dealt to him does not count. The English name is later; this card uses a frontier account, not a ceremony.",
   "quote": "His nostrils were struck by a strong, wild-beast odor, and he caught the loom of a great body in the darkness at the mouth of the lean-to.",
   "quoted": "Theodore Roosevelt, The Wilderness Hunter (1893)",
   "art": "/cards/sasquatch.jpg",
@@ -2331,7 +2331,7 @@
    "Bestiary"
   ],
   "mark": "Rhinelander",
-  "text": "Cryptid. When it enters, exhaust an enemy unit. Traps cannot destroy it. Shepard's 1893 beast was a hoax, and the plate knows it.",
+  "text": "Cryptid. When it enters, exhaust an enemy unit. Traps cannot destroy it. Shepard's 1893 beast was a hoax, and the card knows it.",
   "quote": "The outward and visible sign of an inward fear.",
   "quoted": "Ambrose Bierce, The Devil's Dictionary (1911)",
   "art": "/cards/hodag.jpg",
@@ -2438,7 +2438,7 @@
    "Bestiary"
   ],
   "mark": "Supernatural",
-  "text": "Look at an opponent's hand. Choose one card there. They discard it. You gain 1 Resource.",
+  "text": "Look at the rival’s hand. Choose one card there. They discard it. You gain 1 money.",
   "quote": "Strange is the night where black stars rise.",
   "quoted": "Robert W. Chambers, The King in Yellow (1895)",
   "art": "/cards/yellow-sign.jpg",

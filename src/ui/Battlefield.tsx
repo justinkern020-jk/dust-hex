@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { Action, Card, FactionId, Match, Side, Target, TargetSpec, Unit } from '../game/types';
-import { card, faction, leaderOf } from '../game/cards';
+import { card, faction, leaderOf, maybeCard } from '../game/cards';
 import { MAPS, actError, applyAction, bankFor, canAfford, deployTiles, holdings, mapById, moveTargets, newMatch, playCost, strikeTargets, targetOptions } from '../game/engine';
 import { chooseAction, choosePending, type Mind } from '../game/ai';
 import { isSpent } from '../game/rules';
@@ -57,11 +57,22 @@ export interface BattleOpts {
   red: FactionId;
   mind: Mind;
   mapId: string;
+  /** Testing aid (?deal=a,b&money=n): these cards open your hand. */
+  deal?: string[];
+  money?: number;
+}
+
+function startMatch(o: BattleOpts, mapId: string): Match {
+  const m = newMatch({ blue: o.blue, red: o.red, mapId, seed: (Date.now() & 0x7fffffff) || 7 });
+  const deal = (o.deal ?? []).filter((id) => maybeCard(id) && maybeCard(id)!.kind !== 'leader');
+  if (deal.length) m.hand.blue = [...deal, ...m.hand.blue].slice(0, 7);
+  if (o.money != null) m.money.blue = Math.max(0, Math.min(14, o.money));
+  return m;
 }
 
 export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () => void }) {
   const [mapId, setMapId] = useState(opts.mapId);
-  const [m, setM] = useState<Match>(() => newMatch({ blue: opts.blue, red: opts.red, mapId: opts.mapId, seed: (Date.now() & 0x7fffffff) || 7 }));
+  const [m, setM] = useState<Match>(() => startMatch(opts, opts.mapId));
   const [sel, setSel] = useState<Sel>(null);
   const [toast, setToast] = useState<string | null>(null);
   const [peek, setPeek] = useState<{ c: Card; power?: number } | null>(null);
@@ -268,7 +279,7 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
     setSel(null);
     setToast(null);
     setYieldAsk(false);
-    setM(newMatch({ blue: opts.blue, red: opts.red, mapId: map, seed: (Date.now() & 0x7fffffff) || 7 }));
+    setM(startMatch({ ...opts, deal: undefined, money: undefined }, map));
   };
 
   // ---- render helpers
@@ -512,15 +523,21 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
             <button type="button" className="leader-plate is-mine" id="my-leader" onClick={() => setPeek({ c: leaderCard })}>
               <CardArt c={leaderCard} className="leader-plate-art" />
               <span className="leader-plate-copy">
-                <strong>{leaderCard.name}</strong>
-                <em>{m.leaderAt[ME] === 'tray' ? 'In the tray' : m.leaderAt[ME] === 'fallen' ? 'Fallen' : m.leaderAt[ME] === 'aside' ? 'Set aside' : leaderCard.text}</em>
+                <strong>
+                  {leaderCard.name}
+                  {m.leaderAt[ME] !== 'board' && <span className="dh-leader-state"> · {m.leaderAt[ME] === 'tray' ? 'in the tray' : m.leaderAt[ME] === 'fallen' ? 'fallen' : 'set aside'}</span>}
+                </strong>
+                <em>{leaderCard.text}</em>
               </span>
             </button>
             <button type="button" className="leader-plate is-foe" id="foe-leader" onClick={() => setPeek({ c: foeLeader })}>
               <CardArt c={foeLeader} className="leader-plate-art" />
               <span className="leader-plate-copy">
-                <strong>{foeLeader.name}</strong>
-                <em>{m.leaderAt.red === 'tray' ? 'In the tray' : m.leaderAt.red === 'fallen' ? 'Fallen' : m.leaderAt.red === 'aside' ? 'Set aside' : foeLeader.text}</em>
+                <strong>
+                  {foeLeader.name}
+                  {m.leaderAt.red !== 'board' && <span className="dh-leader-state"> · {m.leaderAt.red === 'tray' ? 'in the tray' : m.leaderAt.red === 'fallen' ? 'fallen' : 'set aside'}</span>}
+                </strong>
+                <em>{foeLeader.text}</em>
               </span>
             </button>
           </div>
@@ -740,6 +757,7 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
                     e.preventDefault();
                     setPeek({ c: leaderCard });
                   }}
+                  onDoubleClick={() => setPeek({ c: leaderCard })}
                 >
                   <span className="hand-card-pip hand-card-loyalty">{leaderCard.cost}</span>
                   <CardArt c={leaderCard} />
