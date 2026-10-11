@@ -1,9 +1,9 @@
 // New characters added in the 2026 rebuild (Phase 3).
 // quoteSource: attested = recorded words; attributed = commonly credited, not
 // certain; folk = legend / saying; note = a card note, not put in anyone's mouth.
-// Art: `art` points at an existing faction card as a stand-in until new art lands
-// (see dusthex_new_art.md for prompts).
-const u = (o) => ({ kind: 'unit', standIn: true, ...o, art: `/cards/${o.standin}.jpg` });
+// Art: each card has its own painted portrait at /cards/<id>.jpg.
+// eslint-disable-next-line no-unused-vars
+const u = ({ standin, ...o }) => ({ kind: 'unit', ...o, art: `/cards/${o.id}.jpg` });
 
 const FAST = 'Fast Attack. Strikes first. A killing stroke is not answered.';
 const TOUGH = 'Tough. The first point of any one blow is refused.';

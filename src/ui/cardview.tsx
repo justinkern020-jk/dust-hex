@@ -72,7 +72,6 @@ export function CardPeek({ c, power, onClose }: { c: Card; power?: number; onClo
       <article className="codex-page dh-inspect" onClick={(e) => e.stopPropagation()}>
         <div className="codex-page-art">
           <CardArt c={c} alt={c.name} />
-          {c.standIn && <span className="dh-standin">Stand-in art</span>}
         </div>
         <div className="codex-page-text">
           <p className="plate-kicker">{basics(c)}</p>

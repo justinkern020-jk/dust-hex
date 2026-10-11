@@ -1,10 +1,5 @@
 /* Dust Hex additions on top of the mirrored styles. */
 .dh-porch-links { margin-top: 1rem; text-align: center; }
-.dh-standin {
-  position: absolute; left: .5rem; bottom: .5rem; font-family: var(--font-display); font-size: .6rem;
-  letter-spacing: .12em; text-transform: uppercase; color: #f3e2b8; background: #0c0907c4;
-  border: 1px solid #c6a15b80; border-radius: 999px; padding: .1rem .5rem;
-}
 .codex-page-art { position: relative; }
 .dh-mark { margin: -.3rem 0 .6rem; font-style: italic; color: #c6a15b; font-size: .85rem; }
 .dh-inspect .card-peek-kw { margin: .4rem 0 .8rem; padding-left: 1rem; font-size: .85rem; line-height: 1.4; }

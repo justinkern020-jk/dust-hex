@@ -126,8 +126,6 @@ export interface Card {
   act?: ActDef;
   /** Leader once-per-match LEAD power. */
   lead?: { op: string; label: string; text: string; n?: number; target?: TargetSpec };
-  /** Units with no art of their own yet use this placeholder. */
-  standIn?: boolean;
   isNew?: boolean;
   /** Items: what the attachment does while it is on its bearer. */
   gear?: { op: string; n?: number };

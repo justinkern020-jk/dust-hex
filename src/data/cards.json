@@ -2776,14 +2776,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "frank-james",
   "name": "Frank James",
   "faction": "gang",
   "cost": 3,
   "power": 3,
   "mark": "Clay County",
-  "standin": "cole",
   "ab": [
    {
     "on": "static",
@@ -2795,7 +2793,7 @@
   "quote": "I have been hunted for twenty-one years, have literally lived in the saddle, have never known a day of perfect peace.",
   "quoted": "Frank James on his surrender to Gov. Crittenden, October 1882",
   "quoteSource": "attested",
-  "art": "/cards/cole.jpg"
+  "art": "/cards/frank-james.jpg"
  },
  {
   "rarity": "uncommon",
@@ -2805,14 +2803,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "sam-bass",
   "name": "Sam Bass",
   "faction": "gang",
   "cost": 2,
   "power": 3,
   "mark": "Round Rock",
-  "standin": "billy",
   "ab": [
    {
     "on": "kill",
@@ -2824,7 +2820,7 @@
   "quote": "The world is bobbing around me.",
   "quoted": "Sam Bass, last words, Round Rock, Texas, 21 July 1878",
   "quoteSource": "attested",
-  "art": "/cards/billy.jpg"
+  "art": "/cards/sam-bass.jpg"
  },
  {
   "rarity": "rare",
@@ -2834,14 +2830,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "black-bart",
   "name": "Black Bart",
   "faction": "gang",
   "cost": 2,
   "power": 2,
   "mark": "The Stage Road",
-  "standin": "switchman",
   "ab": [
    {
     "on": "kill",
@@ -2853,7 +2847,7 @@
   "quote": "I’ve labored long and hard for bread, for honor and for riches, but on my corns too long you’ve tread, you fine-haired sons of bitches.",
   "quoted": "Verse left at a robbed Wells Fargo stage, 1877",
   "quoteSource": "attested",
-  "art": "/cards/switchman.jpg"
+  "art": "/cards/black-bart.jpg"
  },
  {
   "rarity": "rare",
@@ -2866,14 +2860,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "pearl-hart",
   "name": "Pearl Hart",
   "faction": "gang",
   "cost": 3,
   "power": 2,
   "mark": "Globe Stage",
-  "standin": "belle",
   "ab": [
    {
     "on": "enter",
@@ -2885,7 +2877,7 @@
   "quote": "I shall not consent to be tried under a law in which my sex had no voice in making.",
   "quoted": "Pearl Hart at her trial, Florence, Arizona, 1899",
   "quoteSource": "attested",
-  "art": "/cards/belle.jpg"
+  "art": "/cards/pearl-hart.jpg"
  },
  {
   "rarity": "uncommon",
@@ -2895,14 +2887,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "henry-starr",
   "name": "Henry Starr",
   "faction": "gang",
   "cost": 3,
   "power": 3,
   "mark": "Cherokee Nation",
-  "standin": "jesse",
   "ab": [
    {
     "on": "conquer",
@@ -2914,7 +2904,7 @@
   "quote": "I’ve robbed more banks than any man in America.",
   "quoted": "Attributed to Henry Starr, c. 1920",
   "quoteSource": "attributed",
-  "art": "/cards/jesse.jpg"
+  "art": "/cards/henry-starr.jpg"
  },
  {
   "rarity": "uncommon",
@@ -2924,14 +2914,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "dynamite-dick",
   "name": "Dynamite Dick",
   "faction": "gang",
   "cost": 2,
   "power": 3,
   "mark": "Doolin Gang",
-  "standin": "switchman",
   "ab": [
    {
     "on": "death",
@@ -2943,7 +2931,7 @@
   "quote": "Dan Clifton rode with the Doolins and earned the name the slow way: one fuse at a time.",
   "quoted": "Card note",
   "quoteSource": "note",
-  "art": "/cards/switchman.jpg"
+  "art": "/cards/dynamite-dick.jpg"
  },
  {
   "rarity": "rare",
@@ -2955,19 +2943,17 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "kid-curry",
   "name": "Kid Curry",
   "faction": "gang",
   "cost": 4,
   "power": 4,
   "mark": "Wild Bunch",
-  "standin": "billy",
   "text": "Fast. He strikes first, and a killing blow is not answered.",
   "quote": "The most vicious outlaw in America.",
   "quoted": "Attributed to William Pinkerton, of Harvey Logan",
   "quoteSource": "attributed",
-  "art": "/cards/billy.jpg"
+  "art": "/cards/kid-curry.jpg"
  },
  {
   "rarity": "rare",
@@ -2977,14 +2963,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "sundance",
   "name": "The Sundance Kid",
   "faction": "gang",
   "cost": 3,
   "power": 3,
   "mark": "Wild Bunch",
-  "standin": "cole",
   "ab": [
    {
     "on": "afterStrike",
@@ -2995,7 +2979,7 @@
   "quote": "Harry Longabaugh took his name from a Wyoming jail and never gave it back.",
   "quoted": "Card note",
   "quoteSource": "note",
-  "art": "/cards/cole.jpg"
+  "art": "/cards/sundance.jpg"
  },
  {
   "rarity": "rare",
@@ -3005,14 +2989,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "joaquin",
   "name": "Joaquin Murrieta",
   "faction": "gang",
   "cost": 4,
   "power": 3,
   "mark": "The Diggings",
-  "standin": "jesse",
   "ab": [
    {
     "on": "death",
@@ -3023,7 +3005,7 @@
   "quote": "Joaquin is dead, they say. Then who rode through Sonora last night?",
   "quoted": "Gold Country saying (folk)",
   "quoteSource": "folk",
-  "art": "/cards/jesse.jpg"
+  "art": "/cards/joaquin.jpg"
  },
  {
   "rarity": "uncommon",
@@ -3038,14 +3020,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "jackalope",
   "name": "Jackalope",
   "faction": "gang",
   "cost": 2,
   "power": 1,
   "mark": "Converse County",
-  "standin": "cactus-cat",
   "ab": [
    {
     "on": "enter",
@@ -3057,7 +3037,7 @@
   "quote": "The licence is good from midnight to two, and only for a man who does not drink.",
   "quoted": "Douglas, Wyoming, tall tale",
   "quoteSource": "folk",
-  "art": "/cards/cactus-cat.jpg"
+  "art": "/cards/jackalope.jpg"
  },
  {
   "rarity": "uncommon",
@@ -3067,14 +3047,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "lost-dutchman",
   "name": "The Lost Dutchman",
   "faction": "gang",
   "cost": 3,
   "power": 3,
   "mark": "Superstition Mountains",
-  "standin": "tommyknockers",
   "ab": [
    {
     "on": "death",
@@ -3086,7 +3064,7 @@
   "quote": "No miner will ever find my mine.",
   "quoted": "Attributed to Jacob Waltz, 1891 (legend)",
   "quoteSource": "folk",
-  "art": "/cards/tommyknockers.jpg"
+  "art": "/cards/lost-dutchman.jpg"
  },
  {
   "rarity": "common",
@@ -3098,14 +3076,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "cousin-jack",
   "name": "Cousin Jack",
   "faction": "gang",
   "cost": 2,
   "power": 3,
   "mark": "The Drift",
-  "standin": "tommyknockers",
   "ab": [
    {
     "on": "enter",
@@ -3116,7 +3092,7 @@
   "quote": "Wherever there is a hole in the ground, you will find a Cornishman at the bottom of it.",
   "quoted": "Mining-camp saying",
   "quoteSource": "folk",
-  "art": "/cards/tommyknockers.jpg"
+  "art": "/cards/cousin-jack.jpg"
  },
  {
   "rarity": "rare",
@@ -3128,19 +3104,17 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "tom-horn",
   "name": "Tom Horn",
   "faction": "choir",
   "cost": 3,
   "power": 2,
   "mark": "Cheyenne Gallows",
-  "standin": "clay-shade",
   "text": "Ranged. He strikes up to two tiles away in a straight line and is not answered.",
   "quote": "Killing men is my specialty. I look at it as a business proposition, and I think I have a corner on the market.",
   "quoted": "Attributed to Tom Horn, hanged at Cheyenne in 1903",
   "quoteSource": "attributed",
-  "art": "/cards/clay-shade.jpg"
+  "art": "/cards/tom-horn.jpg"
  },
  {
   "rarity": "rare",
@@ -3150,14 +3124,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "black-jack-ketchum",
   "name": "Black Jack Ketchum",
   "faction": "choir",
   "cost": 3,
   "power": 3,
   "mark": "Clayton Gallows",
-  "standin": "cinder-rider",
   "ab": [
    {
     "on": "death",
@@ -3169,7 +3141,7 @@
   "quote": "I’ll be in hell before you start breakfast, boys! Let her rip!",
   "quoted": "Tom Ketchum on the gallows, Clayton, New Mexico, 26 April 1901",
   "quoteSource": "attested",
-  "art": "/cards/cinder-rider.jpg"
+  "art": "/cards/black-jack-ketchum.jpg"
  },
  {
   "rarity": "uncommon",
@@ -3179,14 +3151,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "lester-moore",
   "name": "Lester Moore",
   "faction": "choir",
   "cost": 1,
   "power": 2,
   "mark": "Boot Hill",
-  "standin": "clay-shade",
   "ab": [
    {
     "on": "death",
@@ -3197,7 +3167,7 @@
   "quote": "Here lies Lester Moore. Four slugs from a .44. No Les, no more.",
   "quoted": "Epitaph, Boot Hill Graveyard, Tombstone",
   "quoteSource": "attested",
-  "art": "/cards/clay-shade.jpg"
+  "art": "/cards/lester-moore.jpg"
  },
  {
   "rarity": "rare",
@@ -3211,14 +3181,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "bell-witch",
   "name": "The Bell Witch",
   "faction": "choir",
   "cost": 4,
   "power": 3,
   "mark": "Red River",
-  "standin": "leeds-devil",
   "ab": [
    {
     "on": "enter",
@@ -3229,7 +3197,7 @@
   "quote": "I would rather fight the British again than have any more dealings with that torment.",
   "quoted": "Attributed to Andrew Jackson (legend)",
   "quoteSource": "folk",
-  "art": "/cards/leeds-devil.jpg"
+  "art": "/cards/bell-witch.jpg"
  },
  {
   "rarity": "rare",
@@ -3239,14 +3207,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "alferd-packer",
   "name": "Alferd Packer",
   "faction": "choir",
   "cost": 3,
   "power": 3,
   "mark": "Lake City",
-  "standin": "sleepy-hollow",
   "ab": [
    {
     "on": "kill",
@@ -3258,7 +3224,7 @@
   "quote": "There was seven Democrats in Hinsdale County, and you ate five of them.",
   "quoted": "Apocryphal sentence of Judge M. B. Gerry, 1883",
   "quoteSource": "folk",
-  "art": "/cards/sleepy-hollow.jpg"
+  "art": "/cards/alferd-packer.jpg"
  },
  {
   "rarity": "rare",
@@ -3273,14 +3239,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "lechuza",
   "name": "La Lechuza",
   "faction": "choir",
   "cost": 3,
   "power": 2,
   "mark": "The Border",
-  "standin": "leeds-devil",
   "ab": [
    {
     "on": "enter",
@@ -3292,7 +3256,7 @@
   "quote": "If the owl calls your name at the window, do not answer it.",
   "quoted": "Border warning (folk)",
   "quoteSource": "folk",
-  "art": "/cards/leeds-devil.jpg"
+  "art": "/cards/lechuza.jpg"
  },
  {
   "rarity": "uncommon",
@@ -3305,14 +3269,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "charley-parkhurst",
   "name": "One-Eyed Charley",
   "faction": "choir",
   "cost": 2,
   "power": 2,
   "mark": "Santa Cruz Road",
-  "standin": "riderless",
   "ab": [
    {
     "on": "death",
@@ -3324,7 +3286,7 @@
   "quote": "Charley Parkhurst drove stage for twenty years. The town learned she was a woman when they laid her out.",
   "quoted": "Card note",
   "quoteSource": "note",
-  "art": "/cards/riderless.jpg"
+  "art": "/cards/charley-parkhurst.jpg"
  },
  {
   "rarity": "uncommon",
@@ -3334,14 +3296,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "resurrection-man",
   "name": "Resurrection Man",
   "faction": "choir",
   "cost": 3,
   "power": 2,
   "mark": "Boot Hill",
-  "standin": "clay-shade",
   "ab": [
    {
     "on": "enter",
@@ -3352,7 +3312,7 @@
   "quote": "Nobody stays buried in a town that pays by the pound.",
   "quoted": "Margin of a Choir hymnal (invented)",
   "quoteSource": "invented",
-  "art": "/cards/clay-shade.jpg"
+  "art": "/cards/resurrection-man.jpg"
  },
  {
   "rarity": "common",
@@ -3362,14 +3322,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "undertaker",
   "name": "Boot Hill Undertaker",
   "faction": "choir",
   "cost": 2,
   "power": 2,
   "mark": "Boot Hill",
-  "standin": "faro-widow",
   "ab": [
    {
     "on": "anyDies",
@@ -3382,7 +3340,7 @@
   "quote": "Measure twice. Somebody always comes back for the second box.",
   "quoted": "Undertaker’s rule (invented)",
   "quoteSource": "invented",
-  "art": "/cards/faro-widow.jpg"
+  "art": "/cards/undertaker.jpg"
  },
  {
   "rarity": "common",
@@ -3392,14 +3350,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "circuit-rider",
   "name": "Circuit Rider",
   "faction": "choir",
   "cost": 2,
   "power": 3,
   "mark": "The Circuit",
-  "standin": "riderless",
   "ab": [
    {
     "on": "enter",
@@ -3411,7 +3367,7 @@
   "quote": "There is nothing out today but crows and Methodist preachers.",
   "quoted": "Frontier saying for foul weather",
   "quoteSource": "folk",
-  "art": "/cards/riderless.jpg"
+  "art": "/cards/circuit-rider.jpg"
  },
  {
   "rarity": "uncommon",
@@ -3421,14 +3377,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "weeping-bride",
   "name": "The Weeping Bride",
   "faction": "choir",
   "cost": 2,
   "power": 2,
   "mark": "The Chapel",
-  "standin": "faro-widow",
   "ab": [
    {
     "on": "enter",
@@ -3439,7 +3393,7 @@
   "quote": "She is still waiting at the chapel door. Do not walk past her.",
   "quoted": "Night church warning (invented)",
   "quoteSource": "invented",
-  "art": "/cards/faro-widow.jpg"
+  "art": "/cards/weeping-bride.jpg"
  },
  {
   "rarity": "uncommon",
@@ -3449,14 +3403,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "hearse-driver",
   "name": "Hearse Driver",
   "faction": "choir",
   "cost": 3,
   "power": 3,
   "mark": "Night Road",
-  "standin": "cinder-rider",
   "ab": [
    {
     "on": "afterStrike",
@@ -3467,7 +3419,7 @@
   "quote": "Nobody passes the hearse. Nobody.",
   "quoted": "Choir road saying (invented)",
   "quoteSource": "invented",
-  "art": "/cards/cinder-rider.jpg"
+  "art": "/cards/hearse-driver.jpg"
  },
  {
   "rarity": "uncommon",
@@ -3479,19 +3431,17 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "deaconess",
   "name": "Night Deaconess",
   "faction": "choir",
   "cost": 3,
   "power": 3,
   "mark": "The Night Church",
-  "standin": "faro-widow",
   "text": "Harbor. While she stands, enemy tricks can target only her, not your other units.",
   "quote": "Sing the second verse slower. They are listening.",
   "quoted": "Choir rehearsal (invented)",
   "quoteSource": "invented",
-  "art": "/cards/faro-widow.jpg"
+  "art": "/cards/deaconess.jpg"
  },
  {
   "rarity": "rare",
@@ -3501,14 +3451,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "brother-lazarus",
   "name": "Brother Lazarus",
   "faction": "choir",
   "cost": 3,
   "power": 2,
   "mark": "The Pulpit",
-  "standin": "clay-shade",
   "ab": [
    {
     "on": "death",
@@ -3519,7 +3467,7 @@
   "quote": "Lazarus, come forth.",
   "quoted": "John 11:43, King James Version",
   "quoteSource": "attested",
-  "art": "/cards/clay-shade.jpg"
+  "art": "/cards/brother-lazarus.jpg"
  },
  {
   "rarity": "uncommon",
@@ -3529,14 +3477,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "organist",
   "name": "Midnight Organist",
   "faction": "choir",
   "cost": 2,
   "power": 2,
   "mark": "The Organ Loft",
-  "standin": "sleepy-hollow",
   "ab": [
    {
     "on": "allyDies",
@@ -3549,7 +3495,7 @@
   "quote": "Play it again, softer. The dead keep time.",
   "quoted": "Choir loft (invented)",
   "quoteSource": "invented",
-  "art": "/cards/sleepy-hollow.jpg"
+  "art": "/cards/organist.jpg"
  },
  {
   "rarity": "rare",
@@ -3559,14 +3505,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "heck-thomas",
   "name": "Heck Thomas",
   "faction": "star",
   "cost": 3,
   "power": 4,
   "mark": "Three Guardsmen",
-  "standin": "night-watch",
   "ab": [
    {
     "on": "kill",
@@ -3578,7 +3522,7 @@
   "quote": "One of the Three Guardsmen. He ran Bill Doolin to ground in 1896.",
   "quoted": "Card note",
   "quoteSource": "note",
-  "art": "/cards/night-watch.jpg"
+  "art": "/cards/heck-thomas.jpg"
  },
  {
   "rarity": "rare",
@@ -3590,19 +3534,17 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "bill-tilghman",
   "name": "Bill Tilghman",
   "faction": "star",
   "cost": 4,
   "power": 4,
   "mark": "Three Guardsmen",
-  "standin": "wyatt",
   "text": "Steady. If you have not played a card this turn, his strikes deal 1 extra damage and are not answered.",
   "quote": "He would charge hell with a bucket of water.",
   "quoted": "Attributed to Theodore Roosevelt, of Tilghman",
   "quoteSource": "attributed",
-  "art": "/cards/wyatt.jpg"
+  "art": "/cards/bill-tilghman.jpg"
  },
  {
   "rarity": "uncommon",
@@ -3614,19 +3556,17 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "chris-madsen",
   "name": "Chris Madsen",
   "faction": "star",
   "cost": 2,
   "power": 3,
   "mark": "Three Guardsmen",
-  "standin": "bat",
   "text": "Tough. Every blow against him deals 1 less damage.",
   "quote": "The Dane of the Three Guardsmen. He said he had served in the French Foreign Legion, and nobody tested it.",
   "quoted": "Card note",
   "quoteSource": "note",
-  "art": "/cards/bat.jpg"
+  "art": "/cards/chris-madsen.jpg"
  },
  {
   "rarity": "rare",
@@ -3638,14 +3578,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "roy-bean",
   "name": "Judge Roy Bean",
   "faction": "star",
   "cost": 3,
   "power": 3,
   "mark": "Langtry",
-  "standin": "boot-clerk",
   "ab": [
    {
     "on": "enter",
@@ -3656,7 +3594,7 @@
   "quote": "Hang ’em first, try ’em later.",
   "quoted": "Attributed to Judge Roy Bean (legend)",
   "quoteSource": "folk",
-  "art": "/cards/boot-clerk.jpg"
+  "art": "/cards/roy-bean.jpg"
  },
  {
   "rarity": "rare",
@@ -3669,19 +3607,17 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "bill-mcdonald",
   "name": "Capt. Bill McDonald",
   "faction": "star",
   "cost": 3,
   "power": 4,
   "mark": "Texas Rangers",
-  "standin": "baca",
   "text": "Tough. Every blow against him deals 1 less damage.",
   "quote": "No man in the wrong can stand up against a fellow that’s in the right and keeps on a-comin’.",
   "quoted": "Capt. Bill McDonald, Texas Rangers",
   "quoteSource": "attested",
-  "art": "/cards/baca.jpg"
+  "art": "/cards/bill-mcdonald.jpg"
  },
  {
   "rarity": "rare",
@@ -3693,14 +3629,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "isaac-parker",
   "name": "Judge Isaac Parker",
   "faction": "star",
   "cost": 5,
   "power": 4,
   "mark": "Fort Smith",
-  "standin": "bass",
   "ab": [
    {
     "on": "enter",
@@ -3712,7 +3646,7 @@
   "quote": "I never hanged a man. It is the law.",
   "quoted": "Attributed to Judge Isaac C. Parker",
   "quoteSource": "attributed",
-  "art": "/cards/bass.jpg"
+  "art": "/cards/isaac-parker.jpg"
  },
  {
   "rarity": "uncommon",
@@ -3722,14 +3656,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "george-maledon",
   "name": "George Maledon",
   "faction": "star",
   "cost": 2,
   "power": 3,
   "mark": "Fort Smith",
-  "standin": "night-jailer",
   "ab": [
    {
     "on": "enemyDies",
@@ -3742,7 +3674,7 @@
   "quote": "I never hanged a man who came back to have the job done over.",
   "quoted": "Attributed to George Maledon, Fort Smith",
   "quoteSource": "attributed",
-  "art": "/cards/night-jailer.jpg"
+  "art": "/cards/george-maledon.jpg"
  },
  {
   "rarity": "rare",
@@ -3754,19 +3686,17 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "seth-bullock",
   "name": "Seth Bullock",
   "faction": "star",
   "cost": 4,
   "power": 4,
   "mark": "Deadwood",
-  "standin": "hickok",
   "text": "Hold. Enemy units next to him cannot move. They may still strike.",
   "quote": "Deadwood’s first sheriff. Hickok was already dead; Bullock made sure the town noticed the law had arrived anyway.",
   "quoted": "Card note",
   "quoteSource": "note",
-  "art": "/cards/hickok.jpg"
+  "art": "/cards/seth-bullock.jpg"
  },
  {
   "rarity": "rare",
@@ -3779,14 +3709,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "buffalo-bill",
   "name": "Buffalo Bill Cody",
   "faction": "army",
   "cost": 3,
   "power": 2,
   "mark": "Chief of Scouts",
-  "standin": "custer",
   "ab": [
    {
     "on": "enter",
@@ -3797,7 +3725,7 @@
   "quote": "Every Indian outbreak that I have ever known has resulted from broken promises and broken treaties by the government.",
   "quoted": "William F. Cody, 1879",
   "quoteSource": "attested",
-  "art": "/cards/custer.jpg"
+  "art": "/cards/buffalo-bill.jpg"
  },
  {
   "rarity": "rare",
@@ -3807,14 +3735,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "comanche-horse",
   "name": "Comanche",
   "faction": "army",
   "cost": 2,
   "power": 3,
   "mark": "7th Cavalry",
-  "standin": "empty-saddle",
   "ab": [
    {
     "on": "static",
@@ -3825,7 +3751,7 @@
   "quote": "Will be kindly cared for and his life preserved to the utmost limit.",
   "quoted": "General Orders No. 7, 7th Cavalry, 1878, of the horse Comanche",
   "quoteSource": "attested",
-  "art": "/cards/empty-saddle.jpg"
+  "art": "/cards/comanche-horse.jpg"
  },
  {
   "rarity": "rare",
@@ -3837,19 +3763,17 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "emanuel-stance",
   "name": "Sgt. Emanuel Stance",
   "faction": "army",
   "cost": 3,
   "power": 3,
   "mark": "9th Cavalry",
-  "standin": "flipper",
   "text": "Fast. He strikes first, and a killing blow is not answered.",
   "quote": "Gallantry on scout after Indians.",
   "quoted": "Medal of Honor citation, 1870",
   "quoteSource": "attested",
-  "art": "/cards/flipper.jpg"
+  "art": "/cards/emanuel-stance.jpg"
  },
  {
   "rarity": "uncommon",
@@ -3862,14 +3786,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "al-sieber",
   "name": "Al Sieber",
   "faction": "army",
   "cost": 3,
   "power": 3,
   "mark": "San Carlos",
-  "standin": "last-sentry",
   "ab": [
    {
     "on": "enter",
@@ -3880,7 +3802,7 @@
   "quote": "Chief of scouts in Arizona for most of twenty years. He carried more lead in him than most men fired.",
   "quoted": "Card note",
   "quoteSource": "note",
-  "art": "/cards/last-sentry.jpg"
+  "art": "/cards/al-sieber.jpg"
  },
  {
   "rarity": "rare",
@@ -3890,14 +3812,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "tom-custer",
   "name": "Tom Custer",
   "faction": "army",
   "cost": 3,
   "power": 3,
   "mark": "7th Cavalry",
-  "standin": "custer",
   "ab": [
    {
     "on": "kill",
@@ -3909,7 +3829,7 @@
   "quote": "Two Medals of Honor in the war, both for taking a flag. He died a few yards from his brother.",
   "quoted": "Card note",
   "quoteSource": "note",
-  "art": "/cards/custer.jpg"
+  "art": "/cards/tom-custer.jpg"
  },
  {
   "rarity": "rare",
@@ -3919,14 +3839,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "ambrose-bierce",
   "name": "Ambrose Bierce",
   "faction": "army",
   "cost": 2,
   "power": 2,
   "mark": "The Survey",
-  "standin": "damned-thing",
   "ab": [
    {
     "on": "enter",
@@ -3942,7 +3860,7 @@
   "quote": "Peace, n. In international affairs, a period of cheating between two periods of fighting.",
   "quoted": "Ambrose Bierce, The Devil’s Dictionary",
   "quoteSource": "attested",
-  "art": "/cards/damned-thing.jpg"
+  "art": "/cards/ambrose-bierce.jpg"
  },
  {
   "rarity": "common",
@@ -3952,14 +3870,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "telegrapher",
   "name": "Telegrapher",
   "faction": "army",
   "cost": 1,
   "power": 1,
   "mark": "Signal Corps",
-  "standin": "picket-line",
   "ab": [
    {
     "on": "cardPlayed",
@@ -3975,7 +3891,7 @@
   "quote": "What hath God wrought.",
   "quoted": "First long-distance telegraph message, 1844",
   "quoteSource": "attested",
-  "art": "/cards/picket-line.jpg"
+  "art": "/cards/telegrapher.jpg"
  },
  {
   "rarity": "common",
@@ -3985,14 +3901,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "mule-skinner",
   "name": "Mule Skinner",
   "faction": "army",
   "cost": 2,
   "power": 3,
   "mark": "Quartermaster",
-  "standin": "benteen",
   "ab": [
    {
     "on": "enter",
@@ -4004,7 +3918,7 @@
   "quote": "A mule will work for you ten years for the chance to kick you once.",
   "quoted": "Teamster’s proverb",
   "quoteSource": "folk",
-  "art": "/cards/benteen.jpg"
+  "art": "/cards/mule-skinner.jpg"
  },
  {
   "rarity": "rare",
@@ -4016,19 +3930,17 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "grierson",
   "name": "Col. Benjamin Grierson",
   "faction": "army",
   "cost": 4,
   "power": 4,
   "mark": "10th Cavalry",
-  "standin": "crook",
   "text": "Command. Your units next to him deal 1 extra damage when they strike.",
   "quote": "A music teacher who disliked horses, he led the longest cavalry raid of the war and then the 10th Cavalry.",
   "quoted": "Card note",
   "quoteSource": "note",
-  "art": "/cards/crook.jpg"
+  "art": "/cards/grierson.jpg"
  },
  {
   "rarity": "uncommon",
@@ -4042,19 +3954,17 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "gun-crew",
   "name": "Mountain Gun Crew",
   "faction": "army",
   "cost": 3,
   "power": 2,
   "mark": "Artillery",
-  "standin": "empty-guidon",
   "text": "Ranged. It strikes up to two tiles away in a straight line and is not answered. It cannot move or strike the turn it enters.",
   "quote": "Elevation two. Wait for the smoke.",
   "quoted": "Gun drill (invented)",
   "quoteSource": "invented",
-  "art": "/cards/empty-guidon.jpg"
+  "art": "/cards/gun-crew.jpg"
  },
  {
   "rarity": "rare",
@@ -4069,14 +3979,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "lady-in-green",
   "name": "The Lady in Green",
   "faction": "army",
   "cost": 4,
   "power": 3,
   "mark": "Fort Laramie",
-  "standin": "damned-thing",
   "ab": [
    {
     "on": "enter",
@@ -4087,7 +3995,7 @@
   "quote": "She rides out of the river fog at Fort Laramie and never leaves a track.",
   "quoted": "Fort Laramie ghost story",
   "quoteSource": "folk",
-  "art": "/cards/damned-thing.jpg"
+  "art": "/cards/lady-in-green.jpg"
  },
  {
   "rarity": "rare",
@@ -4099,19 +4007,17 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "gall",
   "name": "Gall",
   "faction": "grass",
   "cost": 4,
   "power": 4,
   "mark": "Hunkpapa Lakota",
-  "standin": "sitting-bull",
   "text": "Fast. He strikes first, and a killing blow is not answered.",
   "quote": "War leader beside Sitting Bull at the Greasy Grass. Ten years later he walked the field again for the anniversary.",
   "quoted": "Card note",
   "quoteSource": "note",
-  "art": "/cards/sitting-bull.jpg"
+  "art": "/cards/gall.jpg"
  },
  {
   "rarity": "uncommon",
@@ -4121,14 +4027,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "rain-in-the-face",
   "name": "Rain-in-the-Face",
   "faction": "grass",
   "cost": 3,
   "power": 3,
   "mark": "Hunkpapa Lakota",
-  "standin": "quanah",
   "ab": [
    {
     "on": "death",
@@ -4139,7 +4043,7 @@
   "quote": "Named for a fight in the rain, when the paint on his face ran and he kept fighting.",
   "quoted": "Card note",
   "quoteSource": "note",
-  "art": "/cards/quanah.jpg"
+  "art": "/cards/rain-in-the-face.jpg"
  },
  {
   "rarity": "rare",
@@ -4151,14 +4055,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "moving-robe",
   "name": "Moving Robe Woman",
   "faction": "grass",
   "cost": 3,
   "power": 2,
   "mark": "Hunkpapa Lakota",
-  "standin": "pony-herd",
   "ab": [
    {
     "on": "kill",
@@ -4170,7 +4072,7 @@
   "quote": "Her brother died at the Rosebud. She rode into the Greasy Grass a week later to answer for him.",
   "quoted": "Card note",
   "quoteSource": "note",
-  "art": "/cards/pony-herd.jpg"
+  "art": "/cards/moving-robe.jpg"
  },
  {
   "rarity": "rare",
@@ -4182,19 +4084,17 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "two-moons",
   "name": "Two Moons",
   "faction": "grass",
   "cost": 3,
   "power": 3,
   "mark": "Northern Cheyenne",
-  "standin": "joseph",
   "text": "Command. Your units next to him deal 1 extra damage when they strike.",
   "quote": "The shooting was quick, quick. Pop—pop—pop very fast.",
   "quoted": "Two Moons to Hamlin Garland, 1898",
   "quoteSource": "attested",
-  "art": "/cards/joseph.jpg"
+  "art": "/cards/two-moons.jpg"
  },
  {
   "rarity": "rare",
@@ -4204,14 +4104,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "lozen",
   "name": "Lozen",
   "faction": "grass",
   "cost": 3,
   "power": 3,
   "mark": "Chihenne Apache",
-  "standin": "geronimo",
   "ab": [
    {
     "on": "enter",
@@ -4222,7 +4120,7 @@
   "quote": "Lozen is my right hand. Strong as a man, braver than most, and cunning in strategy. Lozen is a shield to her people.",
   "quoted": "Victorio, of his sister, as remembered by the Chiricahua",
   "quoteSource": "attributed",
-  "art": "/cards/geronimo.jpg"
+  "art": "/cards/lozen.jpg"
  },
  {
   "rarity": "rare",
@@ -4234,19 +4132,17 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "victorio",
   "name": "Victorio",
   "faction": "grass",
   "cost": 4,
   "power": 4,
   "mark": "Chihenne Apache",
-  "standin": "geronimo",
   "text": "High Ground. His strikes from higher ground deal 2 extra damage instead of 1.",
   "quote": "He held the Black Range against two armies for a year, and was never taken.",
   "quoted": "Card note",
   "quoteSource": "note",
-  "art": "/cards/geronimo.jpg"
+  "art": "/cards/victorio.jpg"
  },
  {
   "rarity": "rare",
@@ -4256,14 +4152,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "satanta",
   "name": "Satanta",
   "faction": "grass",
   "cost": 3,
   "power": 2,
   "mark": "Kiowa",
-  "standin": "quanah",
   "ab": [
    {
     "on": "enter",
@@ -4280,7 +4174,7 @@
   "quote": "I love the land and the buffalo and will not part with it.",
   "quoted": "Satanta at Medicine Lodge Creek, 1867",
   "quoteSource": "attested",
-  "art": "/cards/quanah.jpg"
+  "art": "/cards/satanta.jpg"
  },
  {
   "rarity": "rare",
@@ -4292,19 +4186,17 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "standing-bear",
   "name": "Standing Bear",
   "faction": "grass",
   "cost": 3,
   "power": 4,
   "mark": "Ponca",
-  "standin": "ten-bears",
   "text": "Tough. Every blow against him deals 1 less damage.",
   "quote": "That hand is not the color of yours, but if I prick it, the blood will flow, and I shall feel pain.",
   "quoted": "Standing Bear in court, Omaha, 1879",
   "quoteSource": "attested",
-  "art": "/cards/ten-bears.jpg"
+  "art": "/cards/standing-bear.jpg"
  },
  {
   "rarity": "rare",
@@ -4314,14 +4206,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "buffalo-calf-road",
   "name": "Buffalo Calf Road Woman",
   "faction": "grass",
   "cost": 3,
   "power": 3,
   "mark": "Northern Cheyenne",
-  "standin": "pony-herd",
   "ab": [
    {
     "on": "enter",
@@ -4333,7 +4223,7 @@
   "quote": "The Battle Where the Girl Saved Her Brother.",
   "quoted": "Cheyenne name for the fight on the Rosebud, 1876",
   "quoteSource": "attested",
-  "art": "/cards/pony-herd.jpg"
+  "art": "/cards/buffalo-calf-road.jpg"
  },
  {
   "rarity": "rare",
@@ -4345,19 +4235,17 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "cochise",
   "name": "Cochise",
   "faction": "grass",
   "cost": 4,
   "power": 4,
   "mark": "Chokonen Apache",
-  "standin": "geronimo",
   "text": "Hold. Enemy units next to him cannot move. They may still strike.",
   "quote": "You must speak straight so that your words may go as sunlight into our hearts.",
   "quoted": "Cochise to Gen. O. O. Howard, 1872",
   "quoteSource": "attributed",
-  "art": "/cards/geronimo.jpg"
+  "art": "/cards/cochise.jpg"
  },
  {
   "rarity": "common",
@@ -4370,14 +4258,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "mustang-runner",
   "name": "Mustang Runner",
   "faction": "grass",
   "cost": 3,
   "power": 2,
   "mark": "The Grass",
-  "standin": "pony-herd",
   "ab": [
    {
     "on": "static",
@@ -4389,7 +4275,7 @@
   "quote": "Run them until the dust gives out, then run them some more.",
   "quoted": "Horse-camp saying (invented)",
   "quoteSource": "invented",
-  "art": "/cards/pony-herd.jpg"
+  "art": "/cards/mustang-runner.jpg"
  },
  {
   "rarity": "uncommon",
@@ -4399,14 +4285,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "white-bull",
   "name": "White Bull",
   "faction": "grass",
   "cost": 3,
   "power": 3,
   "mark": "Minneconjou Lakota",
-  "standin": "sitting-bull",
   "ab": [
    {
     "on": "kill",
@@ -4419,7 +4303,7 @@
   "quote": "Nephew of Sitting Bull. He kept count of his coups all his life and could name every one.",
   "quoted": "Card note",
   "quoteSource": "note",
-  "art": "/cards/sitting-bull.jpg"
+  "art": "/cards/white-bull.jpg"
  },
  {
   "rarity": "patron",
@@ -4432,14 +4316,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "crazy-horse",
   "name": "Crazy Horse",
   "faction": "lodge",
   "cost": 5,
   "power": 5,
   "mark": "Oglala Lakota",
-  "standin": "red-cloud",
   "ab": [
    {
     "on": "afterStrike",
@@ -4450,7 +4332,7 @@
   "quote": "We preferred hunting to a life of idleness on the reservation, where we were driven against our will.",
   "quoted": "Attributed to Crazy Horse, 1877",
   "quoteSource": "attributed",
-  "art": "/cards/red-cloud.jpg"
+  "art": "/cards/crazy-horse.jpg"
  },
  {
   "rarity": "uncommon",
@@ -4463,19 +4345,17 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "american-horse",
   "name": "American Horse",
   "faction": "lodge",
   "cost": 3,
   "power": 3,
   "mark": "Oglala Lakota",
-  "standin": "empty-lodge",
   "text": "Harbor. While he stands, enemy tricks can target only him, not your other units.",
   "quote": "There was a woman with an infant in her arms who was killed as she almost touched the flag of truce.",
   "quoted": "American Horse, testimony on Wounded Knee, Washington, February 1891",
   "quoteSource": "attested",
-  "art": "/cards/empty-lodge.jpg"
+  "art": "/cards/american-horse.jpg"
  },
  {
   "rarity": "rare",
@@ -4487,19 +4367,17 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "young-man-afraid",
   "name": "Young Man Afraid of His Horses",
   "faction": "lodge",
   "cost": 3,
   "power": 4,
   "mark": "Oglala Lakota",
-  "standin": "red-cloud",
   "text": "Hold. Enemy units next to him cannot move. They may still strike.",
   "quote": "The name means his enemies feared even his horses.",
   "quoted": "Card note",
   "quoteSource": "note",
-  "art": "/cards/red-cloud.jpg"
+  "art": "/cards/young-man-afraid.jpg"
  },
  {
   "rarity": "rare",
@@ -4509,14 +4387,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "high-backbone",
   "name": "High Backbone",
   "faction": "lodge",
   "cost": 4,
   "power": 5,
   "mark": "Minneconjou Lakota",
-  "standin": "ridge-listener",
   "ab": [
    {
     "on": "static",
@@ -4527,7 +4403,7 @@
   "quote": "He led the decoys at Fort Phil Kearny. Eighty soldiers followed them over the ridge.",
   "quoted": "Card note",
   "quoteSource": "note",
-  "art": "/cards/ridge-listener.jpg"
+  "art": "/cards/high-backbone.jpg"
  },
  {
   "rarity": "rare",
@@ -4537,14 +4413,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "roman-nose",
   "name": "Roman Nose",
   "faction": "lodge",
   "cost": 4,
   "power": 4,
   "mark": "Southern Cheyenne",
-  "standin": "red-cloud",
   "ab": [
    {
     "on": "static",
@@ -4555,7 +4429,7 @@
   "quote": "His bonnet kept him through every fight until Beecher Island.",
   "quoted": "Card note",
   "quoteSource": "note",
-  "art": "/cards/red-cloud.jpg"
+  "art": "/cards/roman-nose.jpg"
  },
  {
   "rarity": "rare",
@@ -4566,14 +4440,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "black-elk",
   "name": "Black Elk",
   "faction": "lodge",
   "cost": 3,
   "power": 3,
   "mark": "Oglala Lakota",
-  "standin": "ridge-listener",
   "ab": [
    {
     "on": "enter",
@@ -4589,7 +4461,7 @@
   "quote": "The nation’s hoop is broken and scattered. There is no center any longer.",
   "quoted": "Black Elk Speaks (1932), as told to John G. Neihardt",
   "quoteSource": "attested",
-  "art": "/cards/ridge-listener.jpg"
+  "art": "/cards/black-elk.jpg"
  },
  {
   "rarity": "uncommon",
@@ -4599,14 +4471,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "little-big-man",
   "name": "Little Big Man",
   "faction": "lodge",
   "cost": 3,
   "power": 3,
   "mark": "Oglala Lakota",
-  "standin": "empty-lodge",
   "ab": [
    {
     "on": "enter",
@@ -4617,7 +4487,7 @@
   "quote": "Small, hard, and quick to take hold of a man’s arm. Every camp knew him by it.",
   "quoted": "Card note",
   "quoteSource": "note",
-  "art": "/cards/empty-lodge.jpg"
+  "art": "/cards/little-big-man.jpg"
  },
  {
   "rarity": "rare",
@@ -4630,19 +4500,17 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "tall-bull",
   "name": "Tall Bull",
   "faction": "lodge",
   "cost": 4,
   "power": 5,
   "mark": "Cheyenne Dog Soldiers",
-  "standin": "red-cloud",
   "text": "Hold. Enemy units next to him cannot move. They may still strike.",
   "quote": "Dog Soldier chief. At Summit Springs he held the ravine so the families could get clear.",
   "quoted": "Card note",
   "quoteSource": "note",
-  "art": "/cards/red-cloud.jpg"
+  "art": "/cards/tall-bull.jpg"
  },
  {
   "rarity": "common",
@@ -4654,19 +4522,17 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "dog-soldier",
   "name": "Dog Soldier",
   "faction": "lodge",
   "cost": 2,
   "power": 3,
   "mark": "Cheyenne Dog Soldiers",
-  "standin": "empty-lodge",
   "text": "Hold. Enemy units next to him cannot move. They may still strike.",
   "quote": "A sash pinned to the earth. He does not leave until a friend pulls the pin.",
   "quoted": "Card note",
   "quoteSource": "note",
-  "art": "/cards/empty-lodge.jpg"
+  "art": "/cards/dog-soldier.jpg"
  },
  {
   "rarity": "rare",
@@ -4676,14 +4542,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "dull-knife",
   "name": "Morning Star",
   "faction": "lodge",
   "cost": 4,
   "power": 4,
   "mark": "Northern Cheyenne",
-  "standin": "red-cloud",
   "ab": [
    {
     "on": "turnStart",
@@ -4695,7 +4559,7 @@
   "quote": "Called Dull Knife by the Lakota. He led his people out of Fort Robinson in the January snow, going home.",
   "quoted": "Card note",
   "quoteSource": "note",
-  "art": "/cards/red-cloud.jpg"
+  "art": "/cards/dull-knife.jpg"
  },
  {
   "rarity": "rare",
@@ -4705,14 +4569,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "little-wolf",
   "name": "Little Wolf",
   "faction": "lodge",
   "cost": 3,
   "power": 4,
   "mark": "Northern Cheyenne",
-  "standin": "ridge-listener",
   "ab": [
    {
     "on": "static",
@@ -4724,7 +4586,7 @@
   "quote": "Sweet Medicine chief. He brought his band north fifteen hundred miles with three armies looking for him.",
   "quoted": "Card note",
   "quoteSource": "note",
-  "art": "/cards/ridge-listener.jpg"
+  "art": "/cards/little-wolf.jpg"
  },
  {
   "rarity": "common",
@@ -4734,14 +4596,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "weather-watcher",
   "name": "Weather Watcher",
   "faction": "lodge",
   "cost": 1,
   "power": 2,
   "mark": "The Lodge",
-  "standin": "ridge-listener",
   "ab": [
    {
     "on": "enter",
@@ -4756,7 +4616,7 @@
   "quote": "The wind turns before the herd does. Watch the wind.",
   "quoted": "Lodge saying (invented)",
   "quoteSource": "invented",
-  "art": "/cards/ridge-listener.jpg"
+  "art": "/cards/weather-watcher.jpg"
  },
  {
   "rarity": "common",
@@ -4768,19 +4628,17 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "lodge-keeper",
   "name": "Lodge Keeper",
   "faction": "lodge",
   "cost": 2,
   "power": 3,
   "mark": "The Lodge",
-  "standin": "empty-lodge",
   "text": "Harbor. While he stands, enemy tricks can target only him, not your other units.",
   "quote": "The door faces east. Whatever comes in, comes in where I can see it.",
   "quoted": "Lodge saying (invented)",
   "quoteSource": "invented",
-  "art": "/cards/empty-lodge.jpg"
+  "art": "/cards/lodge-keeper.jpg"
  },
  {
   "rarity": "common",
@@ -4794,19 +4652,17 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "ridge-runner",
   "name": "Ridge Runner",
   "faction": "lodge",
   "cost": 2,
   "power": 2,
   "mark": "The Height",
-  "standin": "ridge-listener",
   "text": "Fast. If his first move in a turn is a climb, it does not spend his move.",
   "quote": "Up is always shorter than around.",
   "quoted": "Ridge saying (invented)",
   "quoteSource": "invented",
-  "art": "/cards/ridge-listener.jpg"
+  "art": "/cards/ridge-runner.jpg"
  },
  {
   "rarity": "uncommon",
@@ -4816,14 +4672,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "black-coal",
   "name": "Black Coal",
   "faction": "lodge",
   "cost": 3,
   "power": 3,
   "mark": "Northern Arapaho",
-  "standin": "red-cloud",
   "ab": [
    {
     "on": "enter",
@@ -4840,7 +4694,7 @@
   "quote": "Arapaho chief. He bargained his people onto the Wind River when no one else would make room.",
   "quoted": "Card note",
   "quoteSource": "note",
-  "art": "/cards/red-cloud.jpg"
+  "art": "/cards/black-coal.jpg"
  },
  {
   "rarity": "uncommon",
@@ -4850,14 +4704,12 @@
   ],
   "isNew": true,
   "kind": "unit",
-  "standIn": true,
   "id": "hail-caller",
   "name": "Hail Caller",
   "faction": "lodge",
   "cost": 3,
   "power": 3,
   "mark": "The Lodge",
-  "standin": "empty-lodge",
   "ab": [
    {
     "on": "enter",
@@ -4869,6 +4721,6 @@
   "quote": "The sky over the ridge went green, then white, then loud.",
   "quoted": "Lodge story (invented)",
   "quoteSource": "invented",
-  "art": "/cards/empty-lodge.jpg"
+  "art": "/cards/hail-caller.jpg"
  }
 ]
