@@ -2793,7 +2793,7 @@
   "name": "Sam Bass",
   "faction": "gang",
   "cost": 2,
-  "power": 2,
+  "power": 3,
   "mark": "Round Rock",
   "standin": "billy",
   "ab": [
@@ -2912,7 +2912,7 @@
   "name": "Dynamite Dick",
   "faction": "gang",
   "cost": 2,
-  "power": 2,
+  "power": 3,
   "mark": "Doolin Gang",
   "standin": "switchman",
   "ab": [
@@ -3055,7 +3055,7 @@
   "name": "The Lost Dutchman",
   "faction": "gang",
   "cost": 3,
-  "power": 2,
+  "power": 3,
   "mark": "Superstition Mountains",
   "standin": "tommyknockers",
   "ab": [
@@ -3547,7 +3547,7 @@
   "name": "Heck Thomas",
   "faction": "star",
   "cost": 3,
-  "power": 3,
+  "power": 4,
   "mark": "Three Guardsmen",
   "standin": "night-watch",
   "ab": [
