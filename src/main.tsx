@@ -12,6 +12,7 @@ import './styles/base.css';
 import './styles/theme.css';
 import './styles/game.css';
 import './styles/dusthex.css';
+import './styles/shop.css';
 import { App } from './App';
 
 createRoot(document.getElementById('root')!).render(

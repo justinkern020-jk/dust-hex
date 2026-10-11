@@ -11,7 +11,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc -b",
-    "e2e": "node e2e/drag.mjs && node e2e/slide.mjs"
+    "e2e": "node e2e/drag.mjs && node e2e/slide.mjs && node e2e/shop.mjs"
   },
   "dependencies": {
     "@fontsource/cinzel": "^5.2.6",

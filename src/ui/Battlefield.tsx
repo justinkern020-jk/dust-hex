@@ -8,6 +8,7 @@ import { posOf, unitAt } from '../game/core';
 import { CardArt, CardPeek, KIND_LABEL } from './cardview';
 import { classifyGesture, dropAction, scrollTurnsToDrag, scrollToSlider, sliderToScroll, wheelToScroll, type HandSource } from '../game/drop';
 import { MINDS } from './Porch';
+import type { GoldAward, MatchResult } from '../game/collection';
 import { WeatherLayer, pickWeather } from './Weather';
 import { flightMs, planSlides, slideKeyframes, slideTiming, type Box } from './coinMotion';
 import { playMatchSting, playMusic, sfx, soundEvents, stopMenuMusic } from './sound';
@@ -68,10 +69,12 @@ export interface BattleOpts {
   /** Testing aid (?deal=a,b&money=n): these cards open your hand. */
   deal?: string[];
   money?: number;
+  /** Your saved deck (from the collection). The rival always gets a fresh full-pool mix. */
+  deck?: string[];
 }
 
 function startMatch(o: BattleOpts, mapId: string): Match {
-  const m = newMatch({ blue: o.blue, red: o.red, mapId, seed: (Date.now() & 0x7fffffff) || 7 });
+  const m = newMatch({ blue: o.blue, red: o.red, mapId, seed: (Date.now() & 0x7fffffff) || 7, blueDeck: o.deck && o.deck.length ? o.deck : undefined });
   if (!import.meta.env.DEV) return m;
   const deal = (o.deal ?? []).filter((id) => maybeCard(id) && maybeCard(id)!.kind !== 'leader');
   if (deal.length) m.hand.blue = [...deal, ...m.hand.blue].slice(0, 7);
@@ -79,9 +82,17 @@ function startMatch(o: BattleOpts, mapId: string): Match {
   return m;
 }
 
-export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () => void }) {
+export function Battlefield({ opts, onLeave, onFinish, gold }: {
+  opts: BattleOpts;
+  onLeave: () => void;
+  /** Pays out a finished match once per match id and returns the gold award. */
+  onFinish?: (r: MatchResult, matchId: string) => GoldAward;
+  gold?: number;
+}) {
   const [mapId, setMapId] = useState(opts.mapId);
   const [m, setM] = useState<Match>(() => startMatch(opts, opts.mapId));
+  const [runId, setRunId] = useState(() => `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`);
+  const [award, setAward] = useState<GoldAward | null>(null);
   const [sel, setSel] = useState<Sel>(null);
   const [toast, setToast] = useState<string | null>(null);
   const [peek, setPeek] = useState<{ c: Card; power?: number } | null>(null);
@@ -383,7 +394,20 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
     setYieldAsk(false);
     playMatchSting();
     setM(startMatch({ ...opts, deal: undefined, money: undefined }, map));
+    setAward(null);
+    setRunId(`${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`);
   };
+
+  // Dev builds only: expose the opening deck so browser tests can check the saved deck is used.
+  useEffect(() => {
+    if (import.meta.env.DEV) (window as unknown as { __dhOpening?: string[] }).__dhOpening = [...m.deck.blue, ...m.hand.blue];
+  }, [runId]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Gold for a finished match: once, the moment a winner is known.
+  useEffect(() => {
+    if (!m.winner || !onFinish) return;
+    setAward(onFinish({ won: m.winner === ME, mind: opts.mind, turn: m.turn, winKind: m.winKind }, runId));
+  }, [m.winner]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // ---- dragging from the hand and scrolling it
   const gesture = useRef<{ id: number; src: HandSource; x0: number; y0: number; mode: 'pending' | 'drag' | 'scroll' | 'none'; scroll0: number; touch: boolean; hold: number; lx: number; ly: number; raf: number } | null>(null);
@@ -1180,6 +1204,17 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
             <p className="match-score">
               Claims · You {m.dom.blue} / {m.goal} · Rival {m.dom.red} / {m.goal} · Turn {m.turn}
             </p>
+            {award && (
+              <div className="dh-award" data-testid="match-gold" data-gold={award.total}>
+                <p className="dh-award-total">+{award.total} gold</p>
+                {award.parts.length > 0 ? (
+                  <p className="dh-award-parts">{award.parts.map((p) => `${p.label} ${p.n}`).join(' · ')}</p>
+                ) : (
+                  <p className="dh-award-parts">No gold for yielding this early.</p>
+                )}
+                {gold != null && <p className="dh-award-parts">Purse {gold.toLocaleString('en-US')} gold · spend it at the Trading Post</p>}
+              </div>
+            )}
             <div className="match-actions">
               <button type="button" className="brass-btn brass-btn-solid" data-testid="new-match" onClick={() => restart()}>
                 New match

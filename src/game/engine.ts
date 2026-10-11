@@ -169,8 +169,9 @@ export function newMatch(o: NewMatchOpts): Match {
       if (t.trap) m.traps.push({ tid: `t${m.seq++}`, r, c, kind: t.trap === 'deadfall' ? 'pit' : t.trap, owner: null, known: { blue: false, red: false } });
     }),
   );
-  m.deck.blue = shuffle(m, o.blueDeck ?? buildDeck(o.blue));
-  m.deck.red = shuffle(m, o.redDeck ?? buildDeck(o.red));
+  // No deck given: a fresh mix from the full faction pool, drawn from the match seed.
+  m.deck.blue = shuffle(m, o.blueDeck ?? buildDeck(o.blue, 30, () => rand(m)));
+  m.deck.red = shuffle(m, o.redDeck ?? buildDeck(o.red, 30, () => rand(m)));
   draw(m, 'blue', m.rules?.firstShortHand ? 4 : 5);
   draw(m, 'red', 5);
   bank(m, 'blue', bankFor(m, 'blue'));
