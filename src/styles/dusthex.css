@@ -1,0 +1,107 @@
+/* Dust Hex additions on top of the mirrored styles. */
+.dh-porch-links { margin-top: 1rem; text-align: center; }
+.dh-standin {
+  position: absolute; left: .5rem; bottom: .5rem; font-family: var(--font-display); font-size: .6rem;
+  letter-spacing: .12em; text-transform: uppercase; color: #f3e2b8; background: #0c0907c4;
+  border: 1px solid #c6a15b80; border-radius: 999px; padding: .1rem .5rem;
+}
+.codex-page-art { position: relative; }
+.dh-mark { margin: -.3rem 0 .6rem; font-style: italic; color: #c6a15b; font-size: .85rem; }
+.dh-inspect .card-peek-kw { margin: .4rem 0 .8rem; padding-left: 1rem; font-size: .85rem; line-height: 1.4; }
+.dh-inspect .card-peek-live { color: #e7c56a; font-size: .85rem; }
+
+/* Banner: choices and aiming */
+.bf-banner-slot { min-height: 2.2rem; }
+.dh-choice, .aim-banner, .move-banner { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .35rem .5rem; }
+.dh-choice-row { display: inline-flex; flex-wrap: wrap; gap: .35rem; }
+.dh-choice .brass-btn, .aim-banner .brass-btn, .move-banner .brass-btn { padding: .25rem .6rem; font-size: .72rem; min-height: 0; }
+.dh-hint { opacity: .8; font-size: .8rem; }
+.dh-wait { opacity: .75; font-style: italic; }
+.dh-toast {
+  margin: .25rem auto 0; max-width: 34rem; text-align: center; color: #f3d6c8; font-size: .8rem;
+  background: #2a0f0cb8; border: 1px solid #8e2f2f99; border-radius: .5rem; padding: .25rem .6rem;
+}
+.dh-leave { margin-left: auto; }
+
+/* Items visibly ride on their bearer */
+.coin-gear-row {
+  position: absolute; left: 50%; top: -14%; transform: translateX(-50%); z-index: 7;
+  display: flex; gap: 2px; pointer-events: none;
+}
+.coin-gear {
+  width: clamp(14px, 2.6vw, 22px); height: clamp(14px, 2.6vw, 22px); border-radius: 50%; overflow: hidden;
+  border: 1.5px solid #e7c56a; box-shadow: 0 1px 3px #000c; background: #1a120c;
+}
+.coin-gear.is-foreign { border-color: #c4473f; }
+.coin-gear img, .coin-gear .card-art-fallback { width: 100%; height: 100%; object-fit: cover; display: block; }
+.coin-leader-mark {
+  position: absolute; right: -4%; top: -6%; z-index: 7; color: #f3e2b8; font-size: clamp(9px, 1.8vw, 14px);
+  text-shadow: 0 1px 2px #000, 0 0 6px #c6a15b; pointer-events: none;
+}
+
+/* Tile devices and cold rings */
+.dh-tile-device {
+  position: absolute; left: 4%; right: 4%; bottom: 3px; z-index: 6; pointer-events: none;
+  font-family: var(--font-display); font-size: clamp(6px, 1.3vw, 9px); letter-spacing: .08em; text-transform: uppercase;
+  text-align: center; color: #f3ead7; background: #0c0907cc; border-radius: 999px; padding: 1px 3px;
+  border: 1px solid #c6a15b99; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.dh-tile-device.is-red { border-color: #c4473fcc; }
+.dh-tile-device.is-blue { border-color: #4f8fd6cc; }
+.dh-ring { position: absolute; inset: 10%; border-radius: 50%; border: 2px dashed #bfe3ff; box-shadow: 0 0 10px #9ec8ff; pointer-events: none; z-index: 6; }
+.trap-mark.dh-safe { color: #b8d8b0; opacity: .75; }
+
+/* Device tray */
+.dh-tray { display: flex; flex-wrap: wrap; justify-content: center; gap: .4rem; margin: .4rem auto; max-width: 52rem; }
+.dh-device { display: inline-flex; align-items: center; gap: .3rem; background: #120d09d9; border: 1px solid #c6a15b66; border-radius: .6rem; padding: .2rem .35rem; }
+.dh-device.is-red { border-color: #c4473f88; }
+.dh-device.is-spent { opacity: .55; }
+.dh-device-face { display: inline-flex; align-items: center; gap: .3rem; background: none; border: 0; color: var(--color-parchment, #f3ead7); font-family: var(--font-display); font-size: .68rem; cursor: pointer; padding: 0; }
+.dh-device-face img { width: 26px; height: 26px; border-radius: 50%; object-fit: cover; border: 1px solid #c6a15b; }
+.dh-act { padding: .2rem .55rem; font-size: .68rem; min-height: 0; }
+
+/* Phones: the board and the first of the hand fit the first screen */
+@media (max-width: 700px) {
+  .app-shell { padding: .35rem .4rem 1rem; }
+  .shell-bar { margin-bottom: .2rem; padding-bottom: .25rem; gap: .5rem; }
+  .shell-back { min-height: 1.8rem; padding: .2rem .6rem; }
+  .shell-brand span { font-size: .55rem; }
+  .shell-brand em { font-size: .9rem; }
+  .bf-hud { gap: .25rem; padding: .2rem .1rem; }
+  .bf-scores { flex-wrap: nowrap; gap: 2px; width: 100%; }
+  .bf-scores .score-chip { min-width: 0; flex: 1 1 0; padding: .62rem .55rem .65rem; font-size: .62rem; }
+  .bf-scores .score-chip dt { font-size: .5rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bf-scores .score-chip dd { gap: .15rem; }
+  .bf-scores .score-chip .score-loyalty { font-size: 1.05rem; }
+  .bf-scores .score-chip em { font-size: .9rem; }
+  .bf-scores .bf-hold { font-size: .48rem; white-space: nowrap; }
+  .bf-scores .bf-turn { min-width: 3.4rem; padding: .55rem .35rem; }
+  .bf-scores .bf-turn strong { font-size: 1rem; }
+  .bf-scores .bf-turn-label, .bf-scores .bf-side { font-size: .45rem; }
+  .bf-mind { display: none; }
+  .bf-actions { gap: .25rem; flex-wrap: wrap; width: 100%; }
+  .leader-tray { flex: 1 1 100%; }
+  .leader-plate { padding: .15rem .3rem; }
+  .leader-plate-art { width: 1.6rem !important; height: 1.6rem !important; }
+  .leader-plate-copy strong { font-size: .7rem; }
+  .leader-plate-copy em { display: none; }
+  .bf-actions .brass-btn { padding: .28rem .55rem; font-size: .62rem; min-height: 0; }
+  #bf-field-select { flex: 1 1 6rem; min-width: 0; font-size: .7rem; padding: .2rem; }
+  .bf-banner-slot { min-height: 0; }
+  .bf-board-socket { width: min(100%, 100dvh - 14rem); margin: .15rem auto .3rem; }
+  .board-key { display: none; }
+  .hand-rail { padding: .8rem .9rem .9rem; }
+}
+
+/* Ridges keep their brass ring and glow from within. */
+.stone.elev-1:not(.legal-move):not(.legal-strike):not(.legal-tile) {
+  box-shadow: 0 0 0 1px #1a120c, 0 0 0 3px #c6a15b, 0 0 0 5px #2a1e12, 0 0 0 6px #e7d7a4, inset 0 0 0 4px #c6a15bb8, inset 0 0 16px #e7c56a40, 0 8px 14px #0006;
+}
+.stone.elev-2:not(.legal-move):not(.legal-strike):not(.legal-tile) {
+  box-shadow: 0 0 0 1px #1a120c, 0 0 0 3px #e7c56a, 0 0 0 5px #2a1e12, 0 0 0 6px #f3ead7, inset 0 0 0 4px #f3ead7d9, inset 0 0 22px #e7c56a66, 0 0 14px #c6a15b59, 0 8px 14px #0006;
+}
+.board-grid.is-big .stone { width: 94%; }
+.board-grid.is-big .elev-mark, .board-grid.is-big .trap-mark { font-size: 6px; letter-spacing: .08em; }
+.coin-stat abbr { display: none; }
+.coin-stat.coin-loyalty { color: #fff1c9; text-shadow: 0 1px 2px #2a1a08; }
+.dh-leader-state { font-weight: 400; font-size: .8em; color: #c6a15b; letter-spacing: .04em; }
