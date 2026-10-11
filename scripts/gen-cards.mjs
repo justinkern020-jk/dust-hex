@@ -3,6 +3,7 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { BASE, LEADERS } from './spec-base.mjs';
 import { NEW } from './spec-new.mjs';
+import { TEXT, LEAD_TEXT } from './spec-text.mjs';
 
 /** Strip the last Occult Wars terms from printed text. */
 function westWords(t) {
@@ -66,6 +67,11 @@ for (const n of NEW) {
   if (!n.quote || !n.quoted) throw new Error(`No quote for ${n.id}`);
   out.push({ rarity: 'uncommon', kw: [], tags: [], isNew: true, ...n });
 }
+for (const c of out) {
+  if (TEXT[c.id]) c.text = TEXT[c.id];
+  if (LEAD_TEXT[c.id]) c.lead = { ...c.lead, text: LEAD_TEXT[c.id] };
+}
+for (const id of [...Object.keys(TEXT), ...Object.keys(LEAD_TEXT)]) if (!out.some((c) => c.id === id)) throw new Error(`text for unknown card ${id}`);
 for (const [f, id] of Object.entries(LEADERS)) {
   const c = out.find((x) => x.id === id);
   if (!c || c.kind !== 'leader' || c.faction !== f) throw new Error(`leader ${f}`);

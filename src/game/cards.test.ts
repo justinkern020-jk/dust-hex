@@ -683,7 +683,7 @@ describe('Silver Star', () => {
     expect(m.units[e.uid].power).toBe(3);
     expect(m.exile.red).toContain('derringer');
   });
-  it('Gallows Rope: destroys Power 2 or less, or costs 2 and draws 1 when no one fits', () => {
+  it('Gallows Rope: destroys Power 2 or less, or just draws 1 when no one fits', () => {
     let m = field({ blue: 'star' });
     const e = put(m, 'billy', 'red', 1, 2);
     m = playCard(m, 'blue', 'gallows-rope', { uid: e.uid });
@@ -693,7 +693,7 @@ describe('Silver Star', () => {
     m.money.blue = 5;
     const h = m.hand.blue.length;
     m = playCard(m, 'blue', 'gallows-rope');
-    expect(m.money.blue).toBe(0);
+    expect(m.money.blue).toBe(2); // only the card's cost
     expect(m.hand.blue.length).toBe(h + 1);
   });
   it('Night Watch: looks each turn and turns the next move aside from a trap', () => {

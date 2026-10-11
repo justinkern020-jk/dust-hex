@@ -32,7 +32,7 @@ const PRIMER = [
   'Gates you hold, and your stronghold, are the only places a unit can enter. A claim you take stays yours and banks its money.',
   'Both sides score dominance together at the end of each round, 1 per claim held (your stronghold counts), so going first banks no lead. Reach the number beside the score to win.',
   'A card costs the one number printed on it. If the bank can pay that number, you may play it.',
-  'Each unit either moves or strikes once a turn. Melee strikes are answered; fast lands first and a killing stroke is not answered. Power is vitality and damage as one number.',
+  'Each unit either moves or strikes once a turn. Melee strikes are answered; fast lands first and a killing stroke is not answered. Power is health and strength as one number: damage lowers it, and a unit at 0 is destroyed.',
   'Ranged units reach two tiles in a straight line, never on a diagonal, and are not answered. High ground adds 1. A unit striking up a ridge in melee misses one blow in three.',
   'Take the enemy stronghold to end the fight at once. You may yield the ground if the hour turns against you.',
   'The range is haunted. Hidden deaths — a rattler, a shaft, a deadfall — are not marked until someone finds them.',

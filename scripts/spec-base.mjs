@@ -39,7 +39,7 @@ export const BASE = {
     text: 'Hide a shaft on an empty tile; your rival is not shown which. The first unit to enter it is destroyed, and the tile is revealed.' },
 
   // ---------------- Gallows Choir ----------------
-  'faro-widow': { faction: 'choir', kind: 'leader', kw: ['delay'], ab: [{ on: 'cardPlayed', op: 'draw', n: 1, kinds: ['item'] }],
+  'faro-widow': { faction: 'choir', kind: 'leader', kw: ['delay'], ab: [{ on: 'cardPlayed', op: 'draw', n: 1, kinds: ['item', 'device', 'rite'], once: 'turn' }],
     lead: { op: 'draw', n: 1, label: 'House cut', text: 'Draw 1.' } },
   'ride-back': { faction: 'choir', kind: 'rite', play: [{ op: 'rideBack' }],
     text: 'Return one destroyed allied Outlaw unit from your discard to your hand. If it is your leader, muster it exhausted instead. The dust on the road arrives before the horses.' },
@@ -61,7 +61,7 @@ export const BASE = {
 
   // ---------------- Silver Star ----------------
   bass: { faction: 'star', kind: 'leader', kw: ['duty'], ab: [{ on: 'kill', op: 'drawOrLook' }],
-    lead: { op: 'standFast', label: 'Duty', text: 'One allied unit gains Tough and the first lethal blow leaves it at 1. Draw 1.' } },
+    lead: { op: 'standFast', label: 'Duty', target: { kind: 'ally', optional: true }, text: 'One allied unit gains Tough and the first lethal blow leaves it at 1. Draw 1.' } },
   wyatt: { faction: 'star', kw: ['steady'] },
   hickok: { faction: 'star', ab: [{ on: 'death', op: 'lastShot' }] },
   'silver-star': { faction: 'star', kind: 'item', target: ally, attach: 'unit',
@@ -130,7 +130,7 @@ export const BASE = {
   // ---------------- High Grass Nation ----------------
   'sitting-bull': { faction: 'grass', kind: 'leader', ab: [{ on: 'turnStart', op: 'vision' }],
     text: 'Vision. At the start of your turn, look at one hidden tile. Then the first allied unit to move this turn may move one extra tile.',
-    lead: { op: 'bullVision', label: 'Vision', text: 'Look at every hidden tile in your half, and ready one allied unit.' } },
+    lead: { op: 'bullVision', label: 'Vision', target: { kind: 'ally', spent: true, optional: true }, text: 'Look at every hidden tile in your half, and ready one allied unit.' } },
   geronimo: { faction: 'grass', kw: ['highStriker'], ab: [{ on: 'static', op: 'breakAway' }] },
   joseph: { faction: 'grass', kw: ['evenGround'] },
   quanah: { faction: 'grass', act: { op: 'returnGear', target: { kind: 'enemyGear' }, once: 'turn', label: 'Two roads' } },
@@ -153,7 +153,7 @@ export const BASE = {
   // ---------------- Thunder Lodge ----------------
   'red-cloud': { faction: 'lodge', kind: 'leader', ab: [{ on: 'static', op: 'deviceTax', n: 1 }],
     act: { op: 'readyAlly', target: { kind: 'ally', spent: true }, exhaust: true, once: 'turn', label: 'Ready' },
-    lead: { op: 'cloudWord', label: 'Word', text: 'The rival loses 1 money. Ready one allied unit.' } },
+    lead: { op: 'cloudWord', label: 'Word', target: { kind: 'ally', spent: true, optional: true }, text: 'The rival loses 1 money. Ready one allied unit.' } },
   'bone-whistle': { faction: 'lodge', kind: 'device', attach: 'tray', act: { op: 'carry', n: 1, target: ally, exhaust: true, label: 'Call', keepStrike: true } },
   'thunder-ridge': { faction: 'lodge', kind: 'rite', target: ally, play: [{ op: 'thunderRidge', n: 2 }],
     text: 'Choose an allied unit. It deals 2 Power to one enemy within two tiles that does not stand above it, and that enemy cannot climb on its next turn.' },

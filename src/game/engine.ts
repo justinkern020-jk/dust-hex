@@ -477,9 +477,8 @@ function runPlay(m: Match, side: Side, c: Card, target: Target | undefined) {
           log(m, `The rope takes ${nameOf(tu)}.`);
           destroy(m, tu.uid, {});
         } else {
-          loseMoney(m, side, 2);
           draw(m, side, 1);
-          log(m, `No one fit the rope. Lose 2 money, draw 1.`);
+          log(m, `No one fits the rope. Draw 1.`);
         }
         break;
       case 'yellowSign': {
@@ -519,7 +518,7 @@ function runPlay(m: Match, side: Side, c: Card, target: Target | undefined) {
       case 'signal': {
         if (target?.r == null) break;
         const hh = heightAt(m, target.r, target.c!);
-        lookAuto(m, side, 'The signal glass');
+        lookAt(m, side, target.r, target.c!, 'The signal glass');
         const low = unitsOf(m, foe).filter((u) => {
           const p = posOf(m, u.uid)!;
           return heightAt(m, p.r, p.c) < hh;
@@ -600,7 +599,7 @@ function exileGear(m: Match, side: Side, t: Target | undefined, to: 'exile' | 'h
     if (!g) return;
     removeGear(m, u, g.gid, to);
     log(m, `${card(g.cardId).name} comes off ${nameOf(u)}${to === 'hand' ? ' and goes back to its owner' : ''}.`);
-    if (to === 'exile' && m.units[u.uid]) damage(m, u.uid, 1, { raw: true });
+    if (to === 'exile' && m.units[u.uid] && u.side !== side) damage(m, u.uid, 1, { raw: true });
     return;
   }
   if (t.did) {
@@ -622,7 +621,6 @@ function exileGear(m: Match, side: Side, t: Target | undefined, to: 'exile' | 'h
       log(m, `${card(d.cardId).name} is ${to === 'hand' ? 'sent back to its owner' : 'exiled'}.`);
     }
   }
-  void side;
 }
 
 // ------------------------------------------------------------------ acts
@@ -743,9 +741,9 @@ function runLead(m: Match, side: Side, c: Card, target: Target | undefined) {
         if (!tu.kw.includes('tough')) tu.kw.push('tough');
         if (!tu.kw.includes('lastStand')) tu.kw.push('lastStand');
         tu.spent = tu.spent.filter((s) => s !== 'lastStand');
-        draw(m, side, 1);
-        log(m, `${c.name} stands ${nameOf(tu)} to the first blow. You draw.`);
+        log(m, `${c.name} stands ${nameOf(tu)} to the first blow.`);
       }
+      draw(m, side, 1);
       return;
     case 'trainUp': {
       let k = 0;

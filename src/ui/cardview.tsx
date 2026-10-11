@@ -14,7 +14,7 @@ export const KIND_LABEL: Record<string, string> = {
 const KW_TEXT: Record<string, [string, string]> = {
   fast: ['Fast', 'Strikes first in melee. A killing blow is not answered.'],
   slow: ['Slow', 'Strikes last in melee.'],
-  tough: ['Tough', 'Each blow against it loses 1.'],
+  tough: ['Tough', 'Every blow against it deals 1 less damage. Power it simply loses is not reduced.'],
   ranged: ['Ranged', 'Strikes 2 tiles away in a straight line, never on a diagonal. The target does not answer.'],
   delay: ['Delay', 'Cannot move or strike the turn it enters.'],
   cryptid: ['Cryptid', 'A sighting from this side’s bestiary.'],
@@ -24,10 +24,10 @@ const KW_TEXT: Record<string, [string, string]> = {
   noAnswer: ['Unanswered', 'Units it strikes do not strike back.'],
   evenGround: ['Even ground', 'While it stands, ranged strikes cannot name units on its side.'],
   winged: ['Winged', 'May enter on any empty tile outside the rival’s half.'],
-  trapproof: ['Sure-footed', 'Hidden deaths do not spring on it.'],
-  climber: ['Climber', 'Its first climb each turn does not spend its move.'],
-  hold: ['Hold', 'Adjacent enemies cannot move.'],
-  crown: ['Crown', 'Adjacent allies strike for +1.'],
+  trapproof: ['Sure-footed', 'Traps cannot destroy it, though they can still hurt it.'],
+  climber: ['Climber', 'If its first move in a turn is a climb, it does not spend its move.'],
+  hold: ['Hold', 'Enemy units next to it cannot move.'],
+  crown: ['Crown', 'Your units next to it deal 1 extra damage when they strike.'],
 };
 
 export function kwList(c: Card) {
