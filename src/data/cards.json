@@ -4138,7 +4138,7 @@
   "id": "moving-robe",
   "name": "Moving Robe Woman",
   "faction": "grass",
-  "cost": 2,
+  "cost": 3,
   "power": 2,
   "mark": "Hunkpapa Lakota",
   "standin": "pony-herd",
@@ -4244,7 +4244,7 @@
   "name": "Satanta",
   "faction": "grass",
   "cost": 3,
-  "power": 3,
+  "power": 2,
   "mark": "Kiowa",
   "standin": "quanah",
   "ab": [
