@@ -1,0 +1,1866 @@
+[
+ {
+  "id": "jesse",
+  "name": "Jesse James",
+  "art": "/cards/jesse.jpg",
+  "artPos": "center 18%",
+  "faction": "Outlaws",
+  "mark": "Missouri",
+  "kind": "Leader",
+  "rarity": "patron",
+  "cost": 5,
+  "power": 5,
+  "keywords": [
+   "Raid",
+   "Returns"
+  ],
+  "text": "Raid. Once each time he destroys a unit, draw 1 and gain 2 money. The first time his plate is destroyed, set it aside. At the start of your next turn, muster him again on your side, exhausted.",
+  "quote": "I know that we are outlaws, and that there is big money on our heads.",
+  "quoted": "Jesse W. James, letter, History of Daviess County (1882)"
+ },
+ {
+  "id": "billy",
+  "name": "Billy the Kid",
+  "art": "/cards/billy.jpg",
+  "artPos": "center 20%",
+  "faction": "Outlaws",
+  "mark": "Lincoln County",
+  "kind": "Unit",
+  "rarity": "rare",
+  "cost": 1,
+  "power": 2,
+  "keywords": [
+   "Cornered",
+   "Fast"
+  ],
+  "text": "Fast Attack. Strikes first. A killing stroke is not answered. He would rather fight armed than be taken in a window.",
+  "quote": "I am not afraid to die like a man fighting, but I would not like to be killed like a dog unarmed.",
+  "quoted": "W. H. Bonney to Lew Wallace, 20 March 1879"
+ },
+ {
+  "id": "belle",
+  "name": "Belle Starr",
+  "art": "/cards/belle.jpg",
+  "artPos": "center 22%",
+  "faction": "Outlaws",
+  "mark": "Indian Territory",
+  "kind": "Unit",
+  "rarity": "rare",
+  "cost": 2,
+  "power": 2,
+  "keywords": [
+   "Harbor"
+  ],
+  "text": "Harbor. Enemy rites cannot target another allied unit while she stands. Once a turn, when you play an Outlaw card, gain 1 Resource.",
+  "quote": "I regard myself as a woman who has seen much of life.",
+  "quoted": "Belle Starr, Fort Smith Elevator, as recorded in later Arkansas accounts of that interview"
+ },
+ {
+  "id": "cole",
+  "name": "Cole Younger",
+  "art": "/cards/cole.jpg",
+  "artPos": "center 30%",
+  "faction": "Outlaws",
+  "mark": "Jackson County",
+  "kind": "Unit",
+  "rarity": "rare",
+  "cost": 4,
+  "power": 4,
+  "keywords": [
+   "Deny"
+  ],
+  "text": "Deny. When an enemy supernatural card is played, you may exhaust Cole Younger to cancel it. He has heard every lie they printed.",
+  "quote": "In the whole lot there could not be found six pages of truth.",
+  "quoted": "Cole Younger, The Story of Cole Younger by Himself (1903)"
+ },
+ {
+  "id": "grave-round",
+  "name": "Grave Round",
+  "art": "/cards/grave-round.jpg",
+  "artPos": "center 55%",
+  "faction": "Outlaws",
+  "mark": "Item",
+  "kind": "Item",
+  "rarity": "rare",
+  "cost": 2,
+  "keywords": [
+   "Attach",
+   "Expend"
+  ],
+  "text": "Attach to a unit you control. Its next strike deals +2 Power. If that strike destroys a unit, exile Grave Round, and rites cannot target the bearer until your next turn.",
+  "quote": "The good people of this world are very far from being satisfied with each other, and my arms are the best peacemakers.",
+  "quoted": "Samuel Colt, letter to Charles Manby, 18 May 1852"
+ },
+ {
+  "id": "hell-rail",
+  "name": "Hell Rail",
+  "art": "/cards/hell-rail.jpg",
+  "artPos": "center 60%",
+  "faction": "Outlaws",
+  "mark": "Device",
+  "kind": "Device",
+  "rarity": "uncommon",
+  "cost": 3,
+  "keywords": [
+   "Device",
+   "Line"
+  ],
+  "text": "Place on an empty tile. Allied units may move through that tile. The first enemy unit to enter it loses 2 Power.",
+  "quote": "I and Frank have been lied on and persecuted enough. We cannot stand everything.",
+  "quoted": "Jesse W. James to Mr. Flood, 5 June 1875"
+ },
+ {
+  "id": "ride-back",
+  "name": "Ride Back",
+  "art": "/cards/ride-back.jpg",
+  "artPos": "center 45%",
+  "faction": "Outlaws",
+  "mark": "Supernatural",
+  "kind": "Supernatural",
+  "rarity": "rare",
+  "cost": 4,
+  "keywords": [
+   "Rite"
+  ],
+  "text": "Return one destroyed allied Outlaw unit to your hand. If it is your leader, muster it exhausted instead. The dust on the road arrives before the horses.",
+  "quote": "The dirty little coward that shot Mr. Howard has laid poor Jesse in his grave.",
+  "quoted": "Traditional, “Jesse James,” sung after 1882"
+ },
+ {
+  "id": "bass",
+  "name": "Bass Reeves",
+  "art": "/cards/bass.jpg",
+  "artPos": "center 20%",
+  "faction": "Lawmen",
+  "mark": "Deputy Marshal",
+  "kind": "Leader",
+  "rarity": "patron",
+  "cost": 5,
+  "power": 5,
+  "keywords": [
+   "Duty",
+   "Unshaken"
+  ],
+  "text": "Duty. He does not lose Power from the first strike each turn. When he destroys a unit, you may draw 1 or look at one hidden tile.",
+  "quote": "He was never known to show the slightest excitement under any circumstance. He does not know what fear is.",
+  "quoted": "Oklahoma City Weekly Times-Journal, on Bass Reeves"
+ },
+ {
+  "id": "wyatt",
+  "name": "Wyatt Earp",
+  "art": "/cards/wyatt.jpg",
+  "artPos": "center 22%",
+  "faction": "Lawmen",
+  "mark": "Dodge City",
+  "kind": "Unit",
+  "rarity": "rare",
+  "cost": 4,
+  "power": 4,
+  "keywords": [
+   "Steady"
+  ],
+  "text": "Steady. When he strikes, if you have not played a card yet this turn, the strike deals +1 Power and is not answered.",
+  "quote": "The mad merry scamp with heart of gold and nerves of steel.",
+  "quoted": "Wyatt Earp on Doc Holliday, San Francisco Examiner, 2 August 1896"
+ },
+ {
+  "id": "hickok",
+  "name": "Wild Bill Hickok",
+  "art": "/cards/hickok.jpg",
+  "artPos": "center 18%",
+  "faction": "Lawmen",
+  "mark": "Deadwood",
+  "kind": "Unit",
+  "rarity": "rare",
+  "cost": 2,
+  "power": 2,
+  "keywords": [
+   "Last Shot"
+  ],
+  "text": "Last Shot. When he is destroyed, he strikes one adjacent enemy for his Power before he leaves. He names someone as he goes.",
+  "quote": "While firing my last shot, I will gently breathe the name of my wife Agnes, and with wishes even for my enemies I will make the plunge and try to swim to the other shore.",
+  "quoted": "J. B. Hickok, letter to Agnes Lake, 1876"
+ },
+ {
+  "id": "silver-star",
+  "name": "Silver Star",
+  "art": "/cards/silver-star.jpg",
+  "artPos": "center 50%",
+  "faction": "Lawmen",
+  "mark": "Item",
+  "kind": "Item",
+  "rarity": "rare",
+  "cost": 2,
+  "keywords": [
+   "Attach",
+   "Reveal"
+  ],
+  "text": "Attach to a unit you control. Before it moves, you may look at one hidden tile. If that tile is a trap, you may turn the move aside.",
+  "quote": "Place a warrant for arrest in his hands and no circumstance can cause him to deviate.",
+  "quoted": "Oklahoma City Weekly Times-Journal, on Bass Reeves"
+ },
+ {
+  "id": "open-warrant",
+  "name": "Open Warrant",
+  "art": "/cards/open-warrant.jpg",
+  "artPos": "center 48%",
+  "faction": "Lawmen",
+  "mark": "Device",
+  "kind": "Device",
+  "rarity": "uncommon",
+  "cost": 2,
+  "keywords": [
+   "Device",
+   "Hold"
+  ],
+  "text": "Play on an enemy unit. It cannot move on its controller's next turn. Rites may still target it. Paper, for a little while, is stronger than a horse.",
+  "quote": "If the governor of our State will guarantee us a fair trial, we will surrender.",
+  "quoted": "Jesse W. James, letter, History of Daviess County (1882)"
+ },
+ {
+  "id": "salt-oath",
+  "name": "Salt Oath",
+  "art": "/cards/salt-oath.jpg",
+  "artPos": "center 55%",
+  "faction": "Lawmen",
+  "mark": "Supernatural",
+  "kind": "Supernatural",
+  "rarity": "rare",
+  "cost": 3,
+  "keywords": [
+   "Rite",
+   "Ward"
+  ],
+  "text": "Until your next turn, a unit that strikes your leader loses 2 Power. The circle is only salt. It still holds.",
+  "quote": "Treat all men alike. Give them the same laws. Give them all an even chance to live and grow.",
+  "quoted": "Hinmatóowyalahtq̓it (Chief Joseph), North American Review, April 1879"
+ },
+ {
+  "id": "sitting-bull",
+  "name": "Sitting Bull",
+  "art": "/cards/sitting-bull.jpg",
+  "artPos": "center 22%",
+  "faction": "Nations",
+  "mark": "Hunkpapa Lakota",
+  "kind": "Leader",
+  "rarity": "patron",
+  "cost": 5,
+  "power": 5,
+  "keywords": [
+   "Vision"
+  ],
+  "text": "Vision. At the start of your turn, look at one hidden tile. Then one allied unit may move one extra tile.",
+  "quote": "God made me an Indian.",
+  "quoted": "Sitting Bull, as reported by Nelson A. Miles, Personal Recollections (1896)"
+ },
+ {
+  "id": "geronimo",
+  "name": "Geronimo",
+  "art": "/cards/geronimo.jpg",
+  "artPos": "center 25%",
+  "faction": "Nations",
+  "mark": "Chiricahua Apache",
+  "kind": "Unit",
+  "rarity": "rare",
+  "cost": 2,
+  "power": 3,
+  "keywords": [
+   "Break Away"
+  ],
+  "text": "Break Away. Strikes from higher ground deal +2. The first time he would be destroyed, move him to an empty tile instead.",
+  "quote": "I was born on the prairies where the wind blew free and there was nothing to break the light of the sun.",
+  "quoted": "Geronimo, Geronimo's Story of His Life, ed. S. M. Barrett (1906)"
+ },
+ {
+  "id": "joseph",
+  "name": "Chief Joseph",
+  "art": "/cards/joseph.jpg",
+  "artPos": "center 18%",
+  "faction": "Nations",
+  "mark": "Nimíipuu",
+  "kind": "Unit",
+  "rarity": "rare",
+  "cost": 4,
+  "power": 5,
+  "keywords": [
+   "Even Ground"
+  ],
+  "text": "Even Ground. Allied units are not struck by ranged attacks while he stands.",
+  "quote": "Let me be a free man, free to travel, free to stop, free to work, free to trade where I choose.",
+  "quoted": "Hinmatóowyalahtq̓it (Chief Joseph), North American Review, April 1879"
+ },
+ {
+  "id": "quanah",
+  "name": "Quanah Parker",
+  "art": "/cards/quanah.jpg",
+  "artPos": "center 20%",
+  "faction": "Nations",
+  "mark": "Comanche",
+  "kind": "Unit",
+  "rarity": "rare",
+  "cost": 2,
+  "power": 3,
+  "keywords": [
+   "Two Roads"
+  ],
+  "text": "Two Roads. Once a turn, return an enemy item or device to its owner's hand. He can speak in both camps, and neither camp likes it.",
+  "quote": "I love my mother. I want my people to follow, get educated, know work, and make a living when the payments stop.",
+  "quoted": "Quanah Parker, remarks at his mother's reburial (1910), Chronicles of Oklahoma (1921)"
+ },
+ {
+  "id": "parfleche",
+  "name": "Painted Parfleche",
+  "art": "/cards/parfleche.jpg",
+  "artPos": "center 50%",
+  "faction": "Nations",
+  "mark": "Item",
+  "kind": "Item",
+  "rarity": "uncommon",
+  "cost": 2,
+  "keywords": [
+   "Attach"
+  ],
+  "text": "Attach to a unit you control. The first strike against it each turn deals 1 less Power.",
+  "quote": "You might as well expect the rivers to run backward as that any man who was born a free man should be contented penned up.",
+  "quoted": "Hinmatóowyalahtq̓it (Chief Joseph), North American Review, April 1879"
+ },
+ {
+  "id": "bone-whistle",
+  "name": "Bone Whistle",
+  "art": "/cards/bone-whistle.jpg",
+  "artPos": "center 55%",
+  "faction": "Nations",
+  "mark": "Device",
+  "kind": "Device",
+  "rarity": "uncommon",
+  "cost": 2,
+  "keywords": [
+   "Device",
+   "Call"
+  ],
+  "text": "Exhaust this device: move one allied unit one tile. A short call carries farther than a shot.",
+  "quote": "I was no chief and never had been, but because I had been more deeply wronged than others, this honor was conferred upon me.",
+  "quoted": "Geronimo, Geronimo's Story of His Life, ed. S. M. Barrett (1906)"
+ },
+ {
+  "id": "thunder-ridge",
+  "name": "Thunder on the Ridge",
+  "art": "/cards/thunder-ridge.jpg",
+  "artPos": "center 40%",
+  "faction": "Nations",
+  "mark": "Supernatural",
+  "kind": "Supernatural",
+  "rarity": "rare",
+  "cost": 3,
+  "keywords": [
+   "Rite",
+   "High Ground"
+  ],
+  "text": "Choose a unit on higher ground. It deals 2 Power to one unit below it, and that unit cannot climb this turn.",
+  "quote": "The earth is the mother of all people, and all people should have equal rights upon it.",
+  "quoted": "Hinmatóowyalahtq̓it (Chief Joseph), North American Review, April 1879"
+ },
+ {
+  "id": "crook",
+  "name": "George Crook",
+  "art": "/cards/crook.jpg",
+  "artPos": "center 20%",
+  "faction": "The Army",
+  "mark": "Brigadier General",
+  "kind": "Leader",
+  "rarity": "patron",
+  "cost": 5,
+  "power": 4,
+  "keywords": [
+   "Pack Train"
+  ],
+  "text": "Pack Train. Your devices cost 1 less. Once a turn, ready one allied unit.",
+  "quote": "All the tribes tell the same story. They are surrounded on all sides, the game is destroyed or driven away, and there remains but one thing for them to do: fight while they can.",
+  "quoted": "George Crook, on the tribes of the Plains"
+ },
+ {
+  "id": "five-wheel",
+  "name": "Five in the Wheel",
+  "art": "/cards/five-wheel.jpg",
+  "artPos": "center 55%",
+  "faction": "The Army",
+  "mark": "Item",
+  "kind": "Item",
+  "rarity": "uncommon",
+  "cost": 1,
+  "keywords": [
+   "Attach"
+  ],
+  "text": "Attach to a unit. The first time it would be destroyed by a strike, it is not. Then exile Five in the Wheel. The chamber under the hammer was empty on purpose.",
+  "quote": "The boldest plan is the best and safest.",
+  "quoted": "J. B. Hickok, as reported by George Ward Nichols, Harper's New Monthly, February 1867"
+ },
+ {
+  "id": "signal-glass",
+  "name": "Signal Glass",
+  "art": "/cards/signal-glass.jpg",
+  "artPos": "center 45%",
+  "faction": "The Army",
+  "mark": "Device",
+  "kind": "Device",
+  "rarity": "rare",
+  "cost": 3,
+  "keywords": [
+   "Device",
+   "Flash"
+  ],
+  "text": "Name a tile of higher ground. Look at one hidden tile, and deal 1 Power to one enemy standing lower than that tile.",
+  "quote": "Another reason was I wanted to make my own living and not be dependent on relations or friends.",
+  "quoted": "Cathay Williams, St. Louis Daily Times, 2 January 1876"
+ },
+ {
+  "id": "dead-volley",
+  "name": "Dead Men's Volley",
+  "art": "/cards/dead-volley.jpg",
+  "artPos": "center 50%",
+  "faction": "The Army",
+  "mark": "Supernatural",
+  "kind": "Supernatural",
+  "rarity": "rare",
+  "cost": 4,
+  "keywords": [
+   "Rite"
+  ],
+  "text": "Deal 2 Power to each enemy unit. Your own units are not touched. The smoke hangs after the men are gone.",
+  "quote": "Sometimes men fall down a shaft, there, a thousand feet deep. In such cases, the usual plan is to hold an inquest.",
+  "quoted": "Mark Twain, Roughing It (1872)"
+ },
+ {
+  "id": "shaft-viper",
+  "name": "Shaft Viper",
+  "art": "/cards/shaft-viper.jpg",
+  "artPos": "center 62%",
+  "faction": "The Territory",
+  "mark": "Trap",
+  "kind": "Supernatural",
+  "rarity": "uncommon",
+  "cost": 3,
+  "keywords": [
+   "Hidden",
+   "Trap"
+  ],
+  "text": "Hide a shaft on an empty tile. Neither player is shown which tile. The first unit to enter it is destroyed, and the tile is revealed. A map holds only a few of these.",
+  "quote": "It is admitted that the rattlesnake has a poison-fang for its own defence and for the destruction of its prey.",
+  "quoted": "Charles Darwin, On the Origin of Species, 6th edition (1872)"
+ },
+ {
+  "id": "switchman",
+  "name": "Switchman",
+  "art": "/cards/switchman.jpg",
+  "artPos": "center 28%",
+  "faction": "Outlaws",
+  "mark": "The Line",
+  "kind": "Unit",
+  "rarity": "uncommon",
+  "cost": 3,
+  "power": 3,
+  "keywords": [
+   "Switch"
+  ],
+  "text": "Switch. When an enemy unit moves adjacent to him, you may move that unit onto a different empty adjacent tile. It loses 1 Power.",
+  "quote": "I have literally lived in the saddle.",
+  "quoted": "Frank James, interview, Kansas City Journal, 7 October 1882"
+ },
+ {
+  "id": "faro-widow",
+  "name": "Faro Widow",
+  "art": "/cards/faro-widow.jpg",
+  "artPos": "center 22%",
+  "faction": "Outlaws",
+  "mark": "The Layout",
+  "kind": "Unit",
+  "rarity": "rare",
+  "cost": 3,
+  "power": 3,
+  "keywords": [
+   "Bank"
+  ],
+  "text": "Bank. When you play an item, draw 1. She does not strike on the turn she enters.",
+  "quote": "I have never known a day of perfect peace.",
+  "quoted": "Frank James, interview, Kansas City Journal, 7 October 1882"
+ },
+ {
+  "id": "cinder-rider",
+  "name": "Cinder Rider",
+  "art": "/cards/cinder-rider.jpg",
+  "artPos": "center 35%",
+  "faction": "Outlaws",
+  "mark": "Night Road",
+  "kind": "Unit",
+  "rarity": "uncommon",
+  "cost": 2,
+  "power": 2,
+  "keywords": [
+   "Fast",
+   "Cinders"
+  ],
+  "text": "Fast. He may move one extra tile. The tile he leaves becomes a one-shot trap: the next enemy to enter it loses 2 Power.",
+  "quote": "When I slept it was literally in the midst of an arsenal.",
+  "quoted": "Frank James, interview, Kansas City Journal, 7 October 1882"
+ },
+ {
+  "id": "clay-shade",
+  "name": "Clay County Shade",
+  "art": "/cards/clay-shade.jpg",
+  "artPos": "center 24%",
+  "faction": "Outlaws",
+  "mark": "The Road",
+  "kind": "Unit",
+  "rarity": "rare",
+  "cost": 4,
+  "power": 3,
+  "keywords": [
+   "Returns"
+  ],
+  "text": "Returns. The first time he is destroyed, set him aside. At the start of your next turn, muster him again on your side, exhausted.",
+  "quote": "If I heard dogs bark more fiercely than usual, I stood to my arms.",
+  "quoted": "Frank James, interview, Kansas City Journal, 7 October 1882"
+ },
+ {
+  "id": "derringer",
+  "name": "Derringer",
+  "art": "/cards/derringer.jpg",
+  "artPos": "center 55%",
+  "faction": "Outlaws",
+  "mark": "Item",
+  "kind": "Item",
+  "rarity": "uncommon",
+  "cost": 1,
+  "keywords": [
+   "Attach",
+   "First"
+  ],
+  "text": "Attach to a unit you control. The next time it strikes, it strikes first and deals +1 Power. Then exile Derringer.",
+  "quote": "I will never surrender to be mobbed by a set of bloodthirsty poltroons.",
+  "quoted": "Jesse W. James, letter, History of Daviess County (1882)"
+ },
+ {
+  "id": "false-coffin",
+  "name": "False Coffin",
+  "art": "/cards/false-coffin.jpg",
+  "artPos": "center 50%",
+  "faction": "Outlaws",
+  "mark": "Item",
+  "kind": "Item",
+  "rarity": "rare",
+  "cost": 3,
+  "keywords": [
+   "Attach"
+  ],
+  "text": "Attach to a destroyed allied Outlaw in your discard. At the end of the turn, return that unit to your hand and exile False Coffin.",
+  "quote": "I was tired of an outlaw's life.",
+  "quoted": "Frank James, interview, Kansas City Journal, 7 October 1882"
+ },
+ {
+  "id": "riderless",
+  "name": "Riderless",
+  "art": "/cards/riderless.jpg",
+  "artPos": "center 40%",
+  "faction": "Outlaws",
+  "mark": "Night Road",
+  "kind": "Unit",
+  "rarity": "uncommon",
+  "cost": 2,
+  "power": 2,
+  "keywords": [
+   "Fast"
+  ],
+  "text": "Fast. When he enters, move another allied unit one tile.",
+  "quote": "We left our six fine horses and took six mules in their place.",
+  "quoted": "Mark Twain, Roughing It (1872)"
+ },
+ {
+  "id": "night-wire",
+  "name": "Night Wire",
+  "art": "/cards/night-wire.jpg",
+  "artPos": "center 30%",
+  "faction": "Outlaws",
+  "mark": "Device",
+  "kind": "Device",
+  "rarity": "uncommon",
+  "cost": 2,
+  "keywords": [
+   "Device",
+   "Line"
+  ],
+  "text": "Place on an empty tile. Enemy units cannot move through it. Exhaust: deal 1 Power to a unit on that tile.",
+  "quote": "The coach we were in had a neat hole through its front—a reminiscence of its last trip through this region.",
+  "quoted": "Mark Twain, Roughing It (1872)"
+ },
+ {
+  "id": "powder-fuse",
+  "name": "Powder Fuse",
+  "art": "/cards/powder-fuse.jpg",
+  "artPos": "center 55%",
+  "faction": "Outlaws",
+  "mark": "Device",
+  "kind": "Device",
+  "rarity": "rare",
+  "cost": 2,
+  "keywords": [
+   "Device"
+  ],
+  "text": "Exhaust: deal 2 Power to a unit. If that destroys it, deal 1 Power to one enemy adjacent to it.",
+  "quote": "Think of that for perishable horse and human flesh and blood to do!",
+  "quoted": "Mark Twain, Roughing It (1872)"
+ },
+ {
+  "id": "widow-lamp",
+  "name": "Widow Lamp",
+  "art": "/cards/widow-lamp.jpg",
+  "artPos": "center 40%",
+  "faction": "Outlaws",
+  "mark": "Supernatural",
+  "kind": "Supernatural",
+  "rarity": "uncommon",
+  "cost": 2,
+  "keywords": [
+   "Rite",
+   "Reveal"
+  ],
+  "text": "Look at one hidden tile. You may move that trap or device onto a different empty tile. Neither player is shown the new tile.",
+  "quote": "We jumped into the stage, the driver cracked his whip, and we bowled away and left “the States” behind us.",
+  "quoted": "Mark Twain, Roughing It (1872)"
+ },
+ {
+  "id": "night-jailer",
+  "name": "Night Jailer",
+  "art": "/cards/night-jailer.jpg",
+  "artPos": "center 22%",
+  "faction": "Lawmen",
+  "mark": "The Cells",
+  "kind": "Unit",
+  "rarity": "uncommon",
+  "cost": 3,
+  "power": 4,
+  "keywords": [
+   "Hold"
+  ],
+  "text": "Hold. Enemy units adjacent to him cannot move. They may still strike.",
+  "quote": "The station-boss stopped dead still, and glared at me speechless.",
+  "quoted": "Mark Twain, Roughing It (1872)"
+ },
+ {
+  "id": "boot-clerk",
+  "name": "Boot Hill Clerk",
+  "art": "/cards/boot-clerk.jpg",
+  "artPos": "center 28%",
+  "faction": "Lawmen",
+  "mark": "The Book",
+  "kind": "Unit",
+  "rarity": "uncommon",
+  "cost": 2,
+  "power": 3,
+  "keywords": [
+   "Record"
+  ],
+  "text": "Record. When an enemy unit is destroyed, gain 1 Resource. He does not strike on the turn he enters.",
+  "quote": "It was the loneliest land for a grave!",
+  "quoted": "Mark Twain, Roughing It (1872)"
+ },
+ {
+  "id": "silver-jury",
+  "name": "Silver Jury",
+  "art": "/cards/silver-jury.jpg",
+  "artPos": "center 45%",
+  "faction": "Lawmen",
+  "mark": "Supernatural",
+  "kind": "Supernatural",
+  "rarity": "rare",
+  "cost": 3,
+  "keywords": [
+   "Rite",
+   "Hold"
+  ],
+  "text": "Choose an enemy unit. It cannot strike this turn.",
+  "quote": "The “divide” was high, unoccupied ground, between the towns, the scene of twenty midnight murders and a hundred robberies.",
+  "quoted": "Mark Twain, Roughing It (1872)"
+ },
+ {
+  "id": "manacles",
+  "name": "Manacles",
+  "art": "/cards/manacles.jpg",
+  "artPos": "center 55%",
+  "faction": "Lawmen",
+  "mark": "Item",
+  "kind": "Item",
+  "rarity": "uncommon",
+  "cost": 2,
+  "keywords": [
+   "Attach",
+   "Hold"
+  ],
+  "text": "Attach to an enemy unit. It cannot move. Its controller may pay 2 money to break the manacles and exile this.",
+  "quote": "He carried no arms—he carried nothing that was not absolutely necessary.",
+  "quoted": "Mark Twain, Roughing It (1872)"
+ },
+ {
+  "id": "jail-key",
+  "name": "Jail Key",
+  "art": "/cards/jail-key.jpg",
+  "artPos": "center 50%",
+  "faction": "Lawmen",
+  "mark": "Item",
+  "kind": "Item",
+  "rarity": "uncommon",
+  "cost": 1,
+  "keywords": [
+   "Expend"
+  ],
+  "text": "Exile an enemy item or device. If it was attached to a unit, that unit loses 1 Power.",
+  "quote": "The building consisted of barns, stable-room for twelve or fifteen horses, and a hut for an eating-room for passengers.",
+  "quoted": "Mark Twain, Roughing It (1872)"
+ },
+ {
+  "id": "gallows-rope",
+  "name": "Gallows Rope",
+  "art": "/cards/gallows-rope.jpg",
+  "artPos": "center 48%",
+  "faction": "Lawmen",
+  "mark": "Supernatural",
+  "kind": "Supernatural",
+  "rarity": "rare",
+  "cost": 3,
+  "keywords": [
+   "Rite"
+  ],
+  "text": "Destroy an enemy unit with Power 2 or less. If you cannot, lose 2 money and draw 1.",
+  "quote": "Every twenty steps we passed the skeleton of some dead beast of burthen, with its dust-coated skin stretched tightly over its empty ribs.",
+  "quoted": "Mark Twain, Roughing It (1872)"
+ },
+ {
+  "id": "night-watch",
+  "name": "Night Watch",
+  "art": "/cards/night-watch.jpg",
+  "artPos": "center 35%",
+  "faction": "Lawmen",
+  "mark": "The Boards",
+  "kind": "Unit",
+  "rarity": "uncommon",
+  "cost": 3,
+  "power": 3,
+  "keywords": [
+   "Reveal"
+  ],
+  "text": "Reveal. At the start of your turn, look at one hidden tile. If it is a trap, you may turn the next allied move aside.",
+  "quote": "Away across the endless dead level of the prairie a black speck appears against the sky, and it is plain that it moves.",
+  "quoted": "Mark Twain, Roughing It (1872)"
+ },
+ {
+  "id": "coroner",
+  "name": "Coroner's Table",
+  "art": "/cards/coroner.jpg",
+  "artPos": "center 55%",
+  "faction": "Lawmen",
+  "mark": "Device",
+  "kind": "Device",
+  "rarity": "uncommon",
+  "cost": 2,
+  "keywords": [
+   "Device"
+  ],
+  "text": "When a unit is destroyed, you may look at the top card of your deck. If it is a Lawman card, draw it. Otherwise leave it.",
+  "quote": "We gave up the breakfast, and paid our dollar apiece and went back to our mail-bag bed in the coach.",
+  "quoted": "Mark Twain, Roughing It (1872)"
+ },
+ {
+  "id": "posse-bell",
+  "name": "Posse Bell",
+  "art": "/cards/posse-bell.jpg",
+  "artPos": "center 30%",
+  "faction": "Lawmen",
+  "mark": "Device",
+  "kind": "Device",
+  "rarity": "uncommon",
+  "cost": 2,
+  "keywords": [
+   "Device",
+   "Call"
+  ],
+  "text": "Exhaust: move up to two allied Lawmen one tile each.",
+  "quote": "We changed horses every ten miles, all day long, and fairly flew over the hard, level road.",
+  "quoted": "Mark Twain, Roughing It (1872)"
+ },
+ {
+  "id": "hang-fire",
+  "name": "Hang Fire",
+  "art": "/cards/hang-fire.jpg",
+  "artPos": "center 22%",
+  "faction": "Lawmen",
+  "mark": "The Saloon",
+  "kind": "Unit",
+  "rarity": "rare",
+  "cost": 3,
+  "power": 4,
+  "keywords": [
+   "Last Shot"
+  ],
+  "text": "He strikes last. The first time a strike would destroy him, it does not, and he strikes that attacker for his Power.",
+  "quote": "Bemis did not want the mule; but the owner came out with a double-barreled shotgun and persuaded him to buy it, anyhow.",
+  "quoted": "Mark Twain, Roughing It (1872)"
+ },
+ {
+  "id": "ledger",
+  "name": "Night Ledger",
+  "art": "/cards/ledger.jpg",
+  "artPos": "center 55%",
+  "faction": "Lawmen",
+  "mark": "Item",
+  "kind": "Item",
+  "rarity": "rare",
+  "cost": 2,
+  "keywords": [
+   "Attach"
+  ],
+  "text": "Attach to your leader. The first time each turn you play a card, gain 1 Resource.",
+  "quote": "He had absolute charge of the mails, express matter, passengers and stage-coach, until he delivered them to the next conductor, and got his receipt for them.",
+  "quoted": "Mark Twain, Roughing It (1872)"
+ },
+ {
+  "id": "red-cloud",
+  "name": "Red Cloud",
+  "art": "/cards/red-cloud.jpg",
+  "artPos": "center 18%",
+  "faction": "Nations",
+  "mark": "Oglala Lakota",
+  "kind": "Unit",
+  "rarity": "patron",
+  "cost": 5,
+  "power": 5,
+  "keywords": [
+   "Promises"
+  ],
+  "text": "Promises. While he stands, enemy devices cost 1 more. Once a turn, you may exhaust him to ready one allied unit.",
+  "quote": "The Great Father that made us both wishes peace to be kept; we want to keep peace.",
+  "quoted": "Red Cloud, Cooper Union, New York, June 1870"
+ },
+ {
+  "id": "ridge-listener",
+  "name": "Ridge Listener",
+  "art": "/cards/ridge-listener.jpg",
+  "artPos": "center 40%",
+  "faction": "Nations",
+  "mark": "The Height",
+  "kind": "Unit",
+  "rarity": "uncommon",
+  "cost": 3,
+  "power": 4,
+  "keywords": [
+   "Vision",
+   "Climb"
+  ],
+  "text": "When he enters, look at one hidden tile. He may climb onto higher ground without spending his move.",
+  "quote": "I know every stream and every wood between the Rio Grande and the Arkansas.",
+  "quoted": "Paruasemena (Ten Bears), Medicine Lodge council, October 1867"
+ },
+ {
+  "id": "river-mist",
+  "name": "River That Remembers",
+  "art": "/cards/river-mist.jpg",
+  "artPos": "center 45%",
+  "faction": "Nations",
+  "mark": "Supernatural",
+  "kind": "Supernatural",
+  "rarity": "rare",
+  "cost": 3,
+  "keywords": [
+   "Rite"
+  ],
+  "text": "Move an allied unit up to two tiles. It cannot strike this turn.",
+  "quote": "I want to die there and not within walls.",
+  "quoted": "Paruasemena (Ten Bears), Medicine Lodge council, October 1867"
+ },
+ {
+  "id": "painted-shield",
+  "name": "Painted Shield",
+  "art": "/cards/painted-shield.jpg",
+  "artPos": "center 55%",
+  "faction": "Nations",
+  "mark": "Item",
+  "kind": "Item",
+  "rarity": "uncommon",
+  "cost": 2,
+  "keywords": [
+   "Attach"
+  ],
+  "text": "Attach to a unit you control. The first strike against it each turn deals 1 less Power.",
+  "quote": "They were not sweet like sugar, but bitter like gourds.",
+  "quoted": "Paruasemena (Ten Bears), Medicine Lodge council, October 1867"
+ },
+ {
+  "id": "ten-bears",
+  "name": "Ten Bears",
+  "art": "/cards/ten-bears.jpg",
+  "artPos": "center 20%",
+  "faction": "Nations",
+  "mark": "Yamparika Comanche",
+  "kind": "Unit",
+  "rarity": "rare",
+  "cost": 4,
+  "power": 4,
+  "keywords": [
+   "Even Ground"
+  ],
+  "text": "Even Ground. Allied units do not lose Power from the first strike against them each turn.",
+  "quote": "Do not ask us to give up the buffalo for the sheep.",
+  "quoted": "Paruasemena (Ten Bears), Medicine Lodge council, October 1867"
+ },
+ {
+  "id": "winter-count",
+  "name": "Winter Count",
+  "art": "/cards/winter-count.jpg",
+  "artPos": "center 55%",
+  "faction": "Nations",
+  "mark": "Item",
+  "kind": "Item",
+  "rarity": "rare",
+  "cost": 2,
+  "keywords": [
+   "Attach"
+  ],
+  "text": "Attach to a unit you control. At the start of your turn, draw 1.",
+  "quote": "I was born where there were no enclosures and everything drew a free breath.",
+  "quoted": "Paruasemena (Ten Bears), Medicine Lodge council, October 1867"
+ },
+ {
+  "id": "pony-herd",
+  "name": "Pony Herd",
+  "art": "/cards/pony-herd.jpg",
+  "artPos": "center 45%",
+  "faction": "Nations",
+  "mark": "The Grass",
+  "kind": "Unit",
+  "rarity": "uncommon",
+  "cost": 2,
+  "power": 3,
+  "keywords": [
+   "Herd"
+  ],
+  "text": "Herd. When it enters, move another allied unit one tile.",
+  "quote": "Along about an hour after breakfast we saw the first prairie-dog villages, the first antelope, and the first wolf.",
+  "quoted": "Mark Twain, Roughing It (1872)"
+ },
+ {
+  "id": "cold-ring",
+  "name": "Cold Ring",
+  "art": "/cards/cold-ring.jpg",
+  "artPos": "center 50%",
+  "faction": "Nations",
+  "mark": "Supernatural",
+  "kind": "Supernatural",
+  "rarity": "uncommon",
+  "cost": 2,
+  "keywords": [
+   "Rite",
+   "Hold"
+  ],
+  "text": "Choose a tile. Until your next turn, units on it cannot leave.",
+  "quote": "Ask anyone who has gone through our country to California; ask those who have settled there and in Utah, and you will find that we have treated them always well.",
+  "quoted": "Red Cloud, Cooper Union, New York, June 1870"
+ },
+ {
+  "id": "empty-lodge",
+  "name": "Empty Lodge",
+  "art": "/cards/empty-lodge.jpg",
+  "artPos": "center 40%",
+  "faction": "Nations",
+  "mark": "Winter",
+  "kind": "Unit",
+  "rarity": "uncommon",
+  "cost": 3,
+  "power": 2,
+  "keywords": [
+   "Harbor"
+  ],
+  "text": "Harbor. Enemy rites cannot target another allied unit while it stands. When it is destroyed, gain 2 money.",
+  "quote": "Camp-fires and hot suppers in the deserts would be impossible but for the friendly sage-brush.",
+  "quoted": "Mark Twain, Roughing It (1872)"
+ },
+ {
+  "id": "buffalo-skull",
+  "name": "Buffalo Skull",
+  "art": "/cards/buffalo-skull.jpg",
+  "artPos": "center 50%",
+  "faction": "Nations",
+  "mark": "Item",
+  "kind": "Item",
+  "rarity": "uncommon",
+  "cost": 1,
+  "keywords": [
+   "Attach"
+  ],
+  "text": "Attach to a unit you control. When that unit is destroyed by a strike, deal 2 Power to the attacker.",
+  "quote": "Then he and the waiting ravens explore the skeleton and polish the bones.",
+  "quoted": "Mark Twain, Roughing It (1872)"
+ },
+ {
+  "id": "trade-blanket",
+  "name": "Trade Blanket",
+  "art": "/cards/trade-blanket.jpg",
+  "artPos": "center 55%",
+  "faction": "Nations",
+  "mark": "Item",
+  "kind": "Item",
+  "rarity": "uncommon",
+  "cost": 2,
+  "keywords": [
+   "Attach",
+   "Climb"
+  ],
+  "text": "Attach to a unit. You may pay 1 money to move Trade Blanket onto a different unit.",
+  "quote": "When a party camps, the first thing to be done is to cut sage-brush.",
+  "quoted": "Mark Twain, Roughing It (1872)"
+ },
+ {
+  "id": "flipper",
+  "name": "Henry O. Flipper",
+  "art": "/cards/flipper.jpg",
+  "artPos": "center 18%",
+  "faction": "The Army",
+  "mark": "10th Cavalry",
+  "kind": "Unit",
+  "rarity": "rare",
+  "cost": 2,
+  "power": 3,
+  "keywords": [
+   "Pack Train"
+  ],
+  "text": "Pack Train. Your devices cost 1 less. The first time each turn you play a device, draw 1.",
+  "quote": "I wanted to prove that it was not done because of my color.",
+  "quoted": "Henry O. Flipper, The Colored Cadet at West Point (1878)"
+ },
+ {
+  "id": "empty-guidon",
+  "name": "Empty Guidon",
+  "art": "/cards/empty-guidon.jpg",
+  "artPos": "center 35%",
+  "faction": "The Army",
+  "mark": "The Troop",
+  "kind": "Unit",
+  "rarity": "uncommon",
+  "cost": 2,
+  "power": 4,
+  "keywords": [
+   "High Ground"
+  ],
+  "text": "Adjacent allied units get +1 Power when they strike. He does not strike on the turn he enters.",
+  "quote": "War is cruelty, and you cannot refine it.",
+  "quoted": "William T. Sherman to the Atlanta council, 12 September 1864"
+ },
+ {
+  "id": "last-sentry",
+  "name": "Last Sentry",
+  "art": "/cards/last-sentry.jpg",
+  "artPos": "center 30%",
+  "faction": "The Army",
+  "mark": "The Bluff",
+  "kind": "Unit",
+  "rarity": "uncommon",
+  "cost": 3,
+  "power": 3,
+  "keywords": [
+   "Watch"
+  ],
+  "text": "Watch. The first enemy unit to move adjacent to him each turn loses 2 Power.",
+  "quote": "You cannot qualify war in harsher terms than I will.",
+  "quoted": "William T. Sherman to the Atlanta council, 12 September 1864"
+ },
+ {
+  "id": "gatling",
+  "name": "Gatling",
+  "art": "/cards/gatling.jpg",
+  "artPos": "center 55%",
+  "faction": "The Army",
+  "mark": "Device",
+  "kind": "Device",
+  "rarity": "rare",
+  "cost": 4,
+  "keywords": [
+   "Device"
+  ],
+  "text": "Exhaust: deal 1 Power to each enemy unit.",
+  "quote": "It occurred to me that if I could invent a machine—a gun—that would by its rapidity of fire enable one man to do as much battle duty as a hundred it would to a great extent, supersede the necessity of large armies.",
+  "quoted": "Richard J. Gatling, postwar letter, quoted in American Heritage, November 1987"
+ },
+ {
+  "id": "bugle",
+  "name": "Camp Bugle",
+  "art": "/cards/bugle.jpg",
+  "artPos": "center 55%",
+  "faction": "The Army",
+  "mark": "Device",
+  "kind": "Device",
+  "rarity": "uncommon",
+  "cost": 2,
+  "keywords": [
+   "Device",
+   "Call"
+  ],
+  "text": "Exhaust: ready one allied Army unit.",
+  "quote": "From the moment I reached Sill I haven't experienced any thing but happiness.",
+  "quoted": "Henry O. Flipper, The Colored Cadet at West Point (1878)"
+ },
+ {
+  "id": "supply-wagon",
+  "name": "Supply Wagon",
+  "art": "/cards/supply-wagon.jpg",
+  "artPos": "center 40%",
+  "faction": "The Army",
+  "mark": "Device",
+  "kind": "Device",
+  "rarity": "uncommon",
+  "cost": 3,
+  "keywords": [
+   "Device"
+  ],
+  "text": "Exhaust: gain 2 money. If an enemy unit is adjacent to this device, gain 1 instead.",
+  "quote": "There was a great pile of it strapped on top of the stage, and both the fore and hind boots were full.",
+  "quoted": "Mark Twain, Roughing It (1872)"
+ },
+ {
+  "id": "picket-line",
+  "name": "Picket Line",
+  "art": "/cards/picket-line.jpg",
+  "artPos": "center 45%",
+  "faction": "The Army",
+  "mark": "The Troop",
+  "kind": "Unit",
+  "rarity": "uncommon",
+  "cost": 2,
+  "power": 3,
+  "keywords": [
+   "Watch"
+  ],
+  "text": "Enemy units that move adjacent to him lose 1 Power and cannot strike this turn.",
+  "quote": "The stage-coach traveled about a hundred to a hundred and twenty-five miles a day, the pony-rider about two hundred and fifty.",
+  "quoted": "Mark Twain, Roughing It (1872)"
+ },
+ {
+  "id": "surgeon-kit",
+  "name": "Surgeon's Roll",
+  "art": "/cards/surgeon-kit.jpg",
+  "artPos": "center 55%",
+  "faction": "The Army",
+  "mark": "Item",
+  "kind": "Item",
+  "rarity": "rare",
+  "cost": 2,
+  "keywords": [
+   "Attach"
+  ],
+  "text": "Attach to a unit you control. Once, it regains 2 Power it has lost. Then exile Surgeon's Roll.",
+  "quote": "I have been disposed not only to overlook the offence, but to forgive and forget it.",
+  "quoted": "Henry O. Flipper, The Colored Cadet at West Point (1878)"
+ },
+ {
+  "id": "howitzer",
+  "name": "Bluff Gun",
+  "art": "/cards/howitzer.jpg",
+  "artPos": "center 55%",
+  "faction": "The Army",
+  "mark": "Device",
+  "kind": "Device",
+  "rarity": "rare",
+  "cost": 4,
+  "keywords": [
+   "Device",
+   "High Ground"
+  ],
+  "text": "Exhaust: deal 3 Power to one enemy unit.",
+  "quote": "Our coach was a great swinging and swaying stage, of the most sumptuous description—an imposing cradle on wheels.",
+  "quoted": "Mark Twain, Roughing It (1872)"
+ },
+ {
+  "id": "cut-wire",
+  "name": "Cut Wire",
+  "art": "/cards/cut-wire.jpg",
+  "artPos": "center 50%",
+  "faction": "The Army",
+  "mark": "Device",
+  "kind": "Device",
+  "rarity": "uncommon",
+  "cost": 2,
+  "keywords": [
+   "Device"
+  ],
+  "text": "Place on an empty tile. Enemy rites cost 1 more. Units cannot move through that tile.",
+  "quote": "We were spinning along through Kansas, and in the course of an hour and a half we were fairly abroad on the great Plains.",
+  "quoted": "Mark Twain, Roughing It (1872)"
+ },
+ {
+  "id": "empty-saddle",
+  "name": "Empty Saddle",
+  "art": "/cards/empty-saddle.jpg",
+  "artPos": "center 50%",
+  "faction": "The Army",
+  "mark": "The Troop",
+  "kind": "Unit",
+  "rarity": "uncommon",
+  "cost": 2,
+  "power": 2,
+  "keywords": [
+   "Returns"
+  ],
+  "text": "When another allied Army unit is destroyed, you may exhaust Empty Saddle. If you do, return that unit to your hand.",
+  "quote": "His horse was stripped of all unnecessary weight, too.",
+  "quoted": "Mark Twain, Roughing It (1872)"
+ },
+ {
+  "id": "sibley",
+  "name": "Sibley",
+  "art": "/cards/sibley.jpg",
+  "artPos": "center 45%",
+  "faction": "The Army",
+  "mark": "Device",
+  "kind": "Device",
+  "rarity": "uncommon",
+  "cost": 2,
+  "keywords": [
+   "Device",
+   "Ward"
+  ],
+  "text": "Place on a tile. Allied units on that tile are not struck by enemy rites.",
+  "quote": "We took two or three blankets for protection against frosty weather in the mountains.",
+  "quoted": "Mark Twain, Roughing It (1872)"
+ },
+ {
+  "id": "ambulance",
+  "name": "Ambulance",
+  "art": "/cards/ambulance.jpg",
+  "artPos": "center 45%",
+  "faction": "The Army",
+  "mark": "Device",
+  "kind": "Device",
+  "rarity": "rare",
+  "cost": 3,
+  "keywords": [
+   "Device"
+  ],
+  "text": "Exhaust: move an allied unit up to two tiles. It cannot strike this turn.",
+  "quote": "We breakfasted at Horse-Shoe Station, six hundred and seventy-six miles out from St. Joseph.",
+  "quoted": "Mark Twain, Roughing It (1872)"
+ },
+ {
+  "id": "custer",
+  "name": "George Armstrong Custer",
+  "art": "/cards/custer.jpg",
+  "artPos": "center 18%",
+  "faction": "The Army",
+  "mark": "7th Cavalry",
+  "kind": "Unit",
+  "rarity": "rare",
+  "cost": 4,
+  "power": 4,
+  "keywords": [
+   "Fast"
+  ],
+  "text": "Fast Attack. He strikes first. A killing stroke is not answered.",
+  "quote": "If I were an Indian, I think that I would greatly prefer to cast my lot with those of my people who adhered to the free life of the plains rather than to the limits of a reservation.",
+  "quoted": "George Armstrong Custer, My Life on the Plains (1874)"
+ },
+ {
+  "id": "miles",
+  "name": "Nelson A. Miles",
+  "art": "/cards/miles.jpg",
+  "artPos": "center 16%",
+  "faction": "The Army",
+  "mark": "5th Infantry",
+  "kind": "Unit",
+  "rarity": "rare",
+  "cost": 4,
+  "power": 4,
+  "keywords": [
+   "Tough"
+  ],
+  "text": "Tough. The first point of any one blow is refused.",
+  "quote": "The most abominable criminal military blunder and a horrible massacre of women and children.",
+  "quoted": "Nelson A. Miles to his wife, on Wounded Knee, December 1890"
+ },
+ {
+  "id": "cathay",
+  "name": "Cathay Williams",
+  "art": "/cards/cathay.jpg",
+  "artPos": "center 20%",
+  "faction": "The Army",
+  "mark": "Buffalo Soldier",
+  "kind": "Unit",
+  "rarity": "rare",
+  "cost": 2,
+  "power": 3,
+  "keywords": [
+   "Tough"
+  ],
+  "text": "Tough. The first point of any one blow is refused. She enlisted under the name William Cathay.",
+  "quote": "Only two persons, a cousin and a particular friend, members of the regiment, knew that I was a woman.",
+  "quoted": "Cathay Williams, St. Louis Daily Times, 2 January 1876"
+ },
+ {
+  "id": "benteen",
+  "name": "Frederick Benteen",
+  "art": "/cards/benteen.jpg",
+  "artPos": "center 22%",
+  "faction": "The Army",
+  "mark": "7th Cavalry",
+  "kind": "Unit",
+  "rarity": "uncommon",
+  "cost": 2,
+  "power": 2,
+  "keywords": [
+   "Tough"
+  ],
+  "text": "Tough. The first point of any one blow is refused.",
+  "quote": "My Lie on the Plains.",
+  "quoted": "Frederick Benteen, on Custer's My Life on the Plains"
+ },
+ {
+  "id": "baca",
+  "name": "Elfego Baca",
+  "art": "/cards/baca.jpg",
+  "artPos": "center 18%",
+  "faction": "Lawmen",
+  "mark": "Frisco",
+  "kind": "Unit",
+  "rarity": "rare",
+  "cost": 2,
+  "power": 2,
+  "keywords": [
+   "Tough"
+  ],
+  "text": "Tough. The first point of any one blow is refused.",
+  "quote": "I will show the Texans there is at least one Mexican in the county who is not afraid of an American cowboy.",
+  "quoted": "Elfego Baca, 1884"
+ },
+ {
+  "id": "garrett",
+  "name": "Pat Garrett",
+  "art": "/cards/garrett.jpg",
+  "artPos": "center 16%",
+  "faction": "Lawmen",
+  "mark": "Lincoln County",
+  "kind": "Unit",
+  "rarity": "rare",
+  "cost": 2,
+  "power": 2,
+  "keywords": [
+   "Ranged"
+  ],
+  "text": "Ranged. He shoots in a straight line, up to two tiles, and does not step in.",
+  "quote": "He never spoke. A struggle or two, a little strangling sound as he gasped for breath, and the Kid was with his many victims.",
+  "quoted": "Pat Garrett, The Authentic Life of Billy the Kid (1882)"
+ },
+ {
+  "id": "doc",
+  "name": "Doc Holliday",
+  "art": "/cards/doc.jpg",
+  "artPos": "center 18%",
+  "faction": "Lawmen",
+  "mark": "Tombstone",
+  "kind": "Unit",
+  "rarity": "rare",
+  "cost": 2,
+  "power": 2,
+  "keywords": [
+   "Fast"
+  ],
+  "text": "Fast Attack. Strikes first. A killing stroke is not answered.",
+  "quote": "This is funny.",
+  "quoted": "John H. Holliday, last words, Glenwood Springs, 8 November 1887"
+ },
+ {
+  "id": "bat",
+  "name": "Bat Masterson",
+  "art": "/cards/bat.jpg",
+  "artPos": "center 16%",
+  "faction": "Lawmen",
+  "mark": "Dodge City",
+  "kind": "Unit",
+  "rarity": "rare",
+  "cost": 2,
+  "power": 2,
+  "keywords": [
+   "Tough"
+  ],
+  "text": "Tough. The first point of any one blow is refused.",
+  "quote": "I never killed a white person that I remember. Might have aimed my gun at one or two.",
+  "quoted": "W. B. Masterson to the New York Times, 1905"
+ },
+ {
+  "id": "mine-shaft",
+  "name": "Mine Shaft",
+  "art": "/cards/mine-shaft.jpg",
+  "artPos": "center 55%",
+  "faction": "The Territory",
+  "mark": "Trap",
+  "kind": "Supernatural",
+  "rarity": "rare",
+  "cost": 3,
+  "keywords": [
+   "Hidden",
+   "Trap"
+  ],
+  "text": "Hide a shaft on an empty tile. Neither player is shown which. The first unit to enter it is destroyed, and the tile is revealed.",
+  "quote": "The alkali dust cut through our lips, it persecuted our eyes, it ate through the delicate membranes and made our noses bleed.",
+  "quoted": "Mark Twain, Roughing It (1872)"
+ },
+ {
+  "id": "alkali",
+  "name": "Alkali Sink",
+  "art": "/cards/alkali.jpg",
+  "artPos": "center 50%",
+  "faction": "The Territory",
+  "mark": "Trap",
+  "kind": "Supernatural",
+  "rarity": "uncommon",
+  "cost": 2,
+  "keywords": [
+   "Hidden",
+   "Trap"
+  ],
+  "text": "Hide a sink on an empty tile. The first unit to enter loses 3 Power and cannot move on its next turn.",
+  "quote": "It was like drinking lye, and not weak lye, either.",
+  "quoted": "Mark Twain, Roughing It (1872)"
+ },
+ {
+  "id": "deadfall",
+  "name": "Deadfall",
+  "art": "/cards/deadfall.jpg",
+  "artPos": "center 50%",
+  "faction": "The Territory",
+  "mark": "Trap",
+  "kind": "Supernatural",
+  "rarity": "uncommon",
+  "cost": 2,
+  "keywords": [
+   "Hidden",
+   "Trap"
+  ],
+  "text": "Hide a deadfall on an empty tile. The first unit to enter loses 2 Power and cannot strike this turn.",
+  "quote": "Imagine a vast, waveless ocean stricken dead and turned to ashes.",
+  "quoted": "Mark Twain, Roughing It (1872)"
+ },
+ {
+  "id": "cave-in",
+  "name": "Cave-In",
+  "art": "/cards/cave-in.jpg",
+  "artPos": "center 50%",
+  "faction": "The Territory",
+  "mark": "Trap",
+  "kind": "Supernatural",
+  "rarity": "rare",
+  "cost": 3,
+  "keywords": [
+   "Hidden",
+   "Trap"
+  ],
+  "text": "Hide a collapse on an empty tile. The first unit to enter is destroyed, and one device or item on an adjacent tile is exiled.",
+  "quote": "The sage-brush is a singularly hardy plant, and grows right in the midst of deep sand, and among barren rocks.",
+  "quoted": "Mark Twain, Roughing It (1872)"
+ },
+ {
+  "id": "sasquatch",
+  "name": "Sasquatch",
+  "art": "/cards/sasquatch.jpg",
+  "artPos": "center 18%",
+  "faction": "Nations",
+  "mark": "The Wild Man",
+  "kind": "Unit",
+  "rarity": "rare",
+  "cost": 5,
+  "power": 6,
+  "keywords": [
+   "Cryptid",
+   "Tough",
+   "Bestiary"
+  ],
+  "text": "Cryptid. Tough. The first wound dealt to him does not count. The English name is later; this plate uses a frontier account, not a ceremony.",
+  "quote": "His nostrils were struck by a strong, wild-beast odor, and he caught the loom of a great body in the darkness at the mouth of the lean-to.",
+  "quoted": "Theodore Roosevelt, The Wilderness Hunter (1893)"
+ },
+ {
+  "id": "thunderbird",
+  "name": "Thunderbird",
+  "art": "/cards/thunderbird.jpg",
+  "artPos": "center 30%",
+  "faction": "Nations",
+  "mark": "Blackfeet",
+  "kind": "Unit",
+  "rarity": "rare",
+  "cost": 5,
+  "power": 5,
+  "keywords": [
+   "Cryptid",
+   "Storm",
+   "Bestiary"
+  ],
+  "text": "Cryptid. When it enters, deal 1 Power to each enemy unit.",
+  "quote": "You have heard the Thunder, for he is everywhere.",
+  "quoted": "George Bird Grinnell, Blackfeet Indian Stories (1913)"
+ },
+ {
+  "id": "piasa",
+  "name": "Piasa",
+  "art": "/cards/piasa.jpg",
+  "artPos": "center 35%",
+  "faction": "Nations",
+  "mark": "The Bluff",
+  "kind": "Unit",
+  "rarity": "rare",
+  "cost": 5,
+  "power": 5,
+  "keywords": [
+   "Cryptid",
+   "Bestiary"
+  ],
+  "text": "Cryptid. When it destroys a unit, gain 2 money. Each enemy unit loses 1 Power the turn it enters.",
+  "quote": "They have horns on their heads like those of deer, a horrible look, red eyes.",
+  "quoted": "Jacques Marquette, journal of the 1673 voyage"
+ },
+ {
+  "id": "tommyknockers",
+  "name": "Tommyknockers",
+  "art": "/cards/tommyknockers.jpg",
+  "artPos": "center 40%",
+  "faction": "Outlaws",
+  "mark": "The Drift",
+  "kind": "Unit",
+  "rarity": "rare",
+  "cost": 3,
+  "power": 2,
+  "keywords": [
+   "Cryptid",
+   "Bestiary"
+  ],
+  "text": "Cryptid. Once each turn, look at one hidden tile. If it is a trap, you may move that trap onto a different empty tile. They do not strike the turn they enter.",
+  "quote": "We must not look at goblin men, we must not buy their fruits.",
+  "quoted": "Christina Rossetti, Goblin Market (1862)"
+ },
+ {
+  "id": "cactus-cat",
+  "name": "Cactus Cat",
+  "art": "/cards/cactus-cat.jpg",
+  "artPos": "center 40%",
+  "faction": "Outlaws",
+  "mark": "Arizona",
+  "kind": "Unit",
+  "rarity": "rare",
+  "cost": 3,
+  "power": 3,
+  "keywords": [
+   "Cryptid",
+   "Fast",
+   "Bestiary"
+  ],
+  "text": "Cryptid. Fast. It strikes first. When it destroys a unit, that unit's controller loses 1 money.",
+  "quote": "The cactus cat has thorny hair, the thorns being especially long and rigid on its ears.",
+  "quoted": "William T. Cox, Fearsome Creatures of the Lumberwoods (1910)"
+ },
+ {
+  "id": "hodag",
+  "name": "Hodag",
+  "art": "/cards/hodag.jpg",
+  "artPos": "center 45%",
+  "faction": "Outlaws",
+  "mark": "Rhinelander",
+  "kind": "Unit",
+  "rarity": "rare",
+  "cost": 4,
+  "power": 4,
+  "keywords": [
+   "Cryptid",
+   "Bestiary"
+  ],
+  "text": "Cryptid. When it enters, exhaust an enemy unit. Traps cannot destroy it. Shepard's 1893 beast was a hoax, and the plate knows it.",
+  "quote": "The outward and visible sign of an inward fear.",
+  "quoted": "Ambrose Bierce, The Devil's Dictionary (1911)"
+ },
+ {
+  "id": "the-raven",
+  "name": "The Raven",
+  "art": "/cards/the-raven.jpg",
+  "artPos": "center 30%",
+  "faction": "Outlaws",
+  "mark": "Supernatural",
+  "kind": "Supernatural",
+  "rarity": "rare",
+  "cost": 3,
+  "keywords": [
+   "Rite",
+   "Bestiary"
+  ],
+  "text": "Return a unit to its owner's hand. If it was a leader, they also discard 1.",
+  "quote": "Quoth the Raven, \"Nevermore.\"",
+  "quoted": "Edgar Allan Poe, The Raven (1845)"
+ },
+ {
+  "id": "mothman",
+  "name": "Mothman",
+  "art": "/cards/mothman.jpg",
+  "artPos": "center 20%",
+  "faction": "Lawmen",
+  "mark": "Point Pleasant",
+  "kind": "Unit",
+  "rarity": "rare",
+  "cost": 4,
+  "power": 3,
+  "keywords": [
+   "Cryptid",
+   "Ranged",
+   "Bestiary"
+  ],
+  "text": "Cryptid. Ranged. It strikes up to 2 tiles away and is not answered. Point Pleasant counts the red eyes inside the curse told on the ground where Cornstalk was murdered, and on through that river country.",
+  "quote": "And his eyes have all the seeming of a demon's that is dreaming.",
+  "quoted": "Edgar Allan Poe, The Raven (1845)"
+ },
+ {
+  "id": "black-dog",
+  "name": "Black Dog",
+  "art": "/cards/black-dog.jpg",
+  "artPos": "center 35%",
+  "faction": "Lawmen",
+  "mark": "The Road",
+  "kind": "Unit",
+  "rarity": "rare",
+  "cost": 3,
+  "power": 3,
+  "keywords": [
+   "Cryptid",
+   "Fast",
+   "Bestiary"
+  ],
+  "text": "Cryptid. Fast. It strikes first. The first time an enemy unit moves onto your half of the field, you may move the dog adjacent to it.",
+  "quote": "Listen to them—the children of the night. What music they make!",
+  "quoted": "Bram Stoker, Dracula (1897)"
+ },
+ {
+  "id": "yellow-sign",
+  "name": "The Yellow Sign",
+  "art": "/cards/yellow-sign.jpg",
+  "artPos": "center 40%",
+  "faction": "Lawmen",
+  "mark": "Supernatural",
+  "kind": "Supernatural",
+  "rarity": "rare",
+  "cost": 2,
+  "keywords": [
+   "Rite",
+   "Bestiary"
+  ],
+  "text": "Look at an opponent's hand. Choose one card there. They discard it. You gain 1 Resource.",
+  "quote": "Strange is the night where black stars rise.",
+  "quoted": "Robert W. Chambers, The King in Yellow (1895)"
+ },
+ {
+  "id": "at-the-window",
+  "name": "At the Window",
+  "art": "/cards/at-the-window.jpg",
+  "artPos": "center 30%",
+  "faction": "Lawmen",
+  "mark": "Supernatural",
+  "kind": "Supernatural",
+  "rarity": "rare",
+  "cost": 3,
+  "keywords": [
+   "Rite",
+   "Bestiary"
+  ],
+  "text": "Look at every hidden tile. Destroy one trap among them, or deal 2 Power to a unit standing on a tile you looked at.",
+  "quote": "I was aware of a person on the other side of the window and looking straight in.",
+  "quoted": "Henry James, The Turn of the Screw (1898)"
+ },
+ {
+  "id": "haunted-chamber",
+  "name": "Haunted Chamber",
+  "art": "/cards/haunted-chamber.jpg",
+  "artPos": "center 45%",
+  "faction": "Lawmen",
+  "mark": "Supernatural",
+  "kind": "Supernatural",
+  "rarity": "uncommon",
+  "cost": 2,
+  "keywords": [
+   "Rite",
+   "Bestiary"
+  ],
+  "text": "Exhaust a unit. It cannot strike, and rites cannot target it, until your next turn.",
+  "quote": "One need not be a chamber to be haunted.",
+  "quoted": "Emily Dickinson, Poems"
+ },
+ {
+  "id": "damned-thing",
+  "name": "The Damned Thing",
+  "art": "/cards/damned-thing.jpg",
+  "artPos": "center 40%",
+  "faction": "The Army",
+  "mark": "The Ridge",
+  "kind": "Unit",
+  "rarity": "rare",
+  "cost": 4,
+  "power": 4,
+  "keywords": [
+   "Cryptid",
+   "Bestiary"
+  ],
+  "text": "Cryptid. Rites and ranged strikes cannot target it. When it strikes, the defender does not strike back.",
+  "quote": "It was as if something had passed along between me and them; but I could not see it.",
+  "quoted": "Ambrose Bierce, The Damned Thing (1893)"
+ },
+ {
+  "id": "owl-creek",
+  "name": "Owl Creek",
+  "art": "/cards/owl-creek.jpg",
+  "artPos": "center 28%",
+  "faction": "The Army",
+  "mark": "Supernatural",
+  "kind": "Supernatural",
+  "rarity": "rare",
+  "cost": 3,
+  "keywords": [
+   "Rite",
+   "Bestiary"
+  ],
+  "text": "Destroy a unit with 2 Power or less. If you do, its owner draws 1.",
+  "quote": "A man stood upon a railroad bridge in northern Alabama, looking down into the swift water twenty feet below.",
+  "quoted": "Ambrose Bierce, An Occurrence at Owl Creek Bridge (1890)"
+ },
+ {
+  "id": "bear-lake",
+  "name": "Bear Lake Monster",
+  "art": "/cards/bear-lake.jpg",
+  "artPos": "center 40%",
+  "faction": "The Territory",
+  "mark": "Bear Lake",
+  "kind": "Unit",
+  "rarity": "rare",
+  "cost": 5,
+  "power": 5,
+  "keywords": [
+   "Cryptid",
+   "Bestiary"
+  ],
+  "text": "Cryptid. While it stands, enemy units adjacent to it cannot move.",
+  "quote": "They represent it as being of the serpent kind, but having legs about eighteen inches long.",
+  "quoted": "Joseph C. Rich, letter, Deseret Evening News (1868)"
+ },
+ {
+  "id": "hidebehind",
+  "name": "Hidebehind",
+  "art": "/cards/hidebehind.jpg",
+  "artPos": "center 35%",
+  "faction": "The Territory",
+  "mark": "The Timber",
+  "kind": "Unit",
+  "rarity": "rare",
+  "cost": 3,
+  "power": 3,
+  "keywords": [
+   "Cryptid",
+   "Hidden",
+   "Bestiary"
+  ],
+  "text": "Cryptid. Hide it on an empty tile. Neither player is shown which. The first enemy to enter is dealt 3 Power, and the Hidebehind is revealed there, exhausted.",
+  "quote": "It is too incredible, too monstrous; such things can never be in this quiet world.",
+  "quoted": "Arthur Machen, The Great God Pan (1894)"
+ },
+ {
+  "id": "llorona",
+  "name": "La Llorona",
+  "art": "/cards/llorona.jpg",
+  "artPos": "center 20%",
+  "faction": "The Territory",
+  "mark": "The River",
+  "kind": "Unit",
+  "rarity": "rare",
+  "cost": 4,
+  "power": 3,
+  "keywords": [
+   "Cryptid",
+   "Returns",
+   "Bestiary"
+  ],
+  "text": "Cryptid. An adjacent enemy cannot move on its next turn. The first time she is destroyed, return her to your hand and lose 2 money.",
+  "quote": "Be with me always—take any form—drive me mad!",
+  "quoted": "Emily Brontë, Wuthering Heights (1847)"
+ },
+ {
+  "id": "sleepy-hollow",
+  "name": "Sleepy Hollow Rider",
+  "art": "/cards/sleepy-hollow.jpg",
+  "artPos": "center 30%",
+  "faction": "The Territory",
+  "mark": "The Road",
+  "kind": "Unit",
+  "rarity": "rare",
+  "cost": 4,
+  "power": 4,
+  "keywords": [
+   "Cryptid",
+   "Fast",
+   "Bestiary"
+  ],
+  "text": "Cryptid. Fast. It strikes first. After it strikes and survives, you may move it one tile. A unit it destroys cannot return.",
+  "quote": "The apparition of a figure on horseback, without a head.",
+  "quoted": "Washington Irving, The Legend of Sleepy Hollow (1820)"
+ },
+ {
+  "id": "leeds-devil",
+  "name": "Leeds Devil",
+  "art": "/cards/leeds-devil.jpg",
+  "artPos": "center 25%",
+  "faction": "The Territory",
+  "mark": "The Barrens",
+  "kind": "Unit",
+  "rarity": "rare",
+  "cost": 4,
+  "power": 3,
+  "keywords": [
+   "Cryptid",
+   "Winged",
+   "Bestiary"
+  ],
+  "text": "Cryptid. It may enter on any empty tile. Rites cannot target it the turn it enters.",
+  "quote": "Beware, for I am fearless and therefore powerful.",
+  "quoted": "Mary Shelley, Frankenstein (1818)"
+ },
+ {
+  "id": "goodman-path",
+  "name": "Goodman Brown's Path",
+  "art": "/cards/goodman-path.jpg",
+  "artPos": "center 30%",
+  "faction": "The Territory",
+  "mark": "Supernatural",
+  "kind": "Supernatural",
+  "rarity": "uncommon",
+  "cost": 3,
+  "keywords": [
+   "Rite",
+   "Bestiary"
+  ],
+  "text": "Name a unit. It cannot move or strike until your next turn. Draw 1.",
+  "quote": "The fiend in his own shape is less hideous than when he rages in the breast of man.",
+  "quoted": "Nathaniel Hawthorne, Young Goodman Brown (1835)"
+ },
+ {
+  "id": "carmilla",
+  "name": "Carmilla",
+  "art": "/cards/carmilla.jpg",
+  "artPos": "center 18%",
+  "faction": "The Territory",
+  "mark": "Supernatural",
+  "kind": "Supernatural",
+  "rarity": "rare",
+  "cost": 3,
+  "keywords": [
+   "Rite",
+   "Attach",
+   "Bestiary"
+  ],
+  "text": "Attach to an enemy unit. At the start of your turn it loses 1 Power. If it is destroyed while Carmilla is attached, draw 1 and gain 2 money.",
+  "quote": "You are mine, you shall be mine, you and I are one for ever.",
+  "quoted": "Sheridan Le Fanu, Carmilla (1872)"
+ }
+]
