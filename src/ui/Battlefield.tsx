@@ -111,6 +111,7 @@ export function Battlefield({ opts, onLeave, onFinish, gold }: {
   const [sel, setSel] = useState<Sel>(null);
   const [toast, setToast] = useState<string | null>(null);
   const [turnBanner, setTurnBanner] = useState<{ id: number; side: Side } | null>(null);
+  const [claims, setClaims] = useState<{ id: number; r: number; c: number; side: Side; income: number }[]>([]);
   const [reveals, setReveals] = useState<TrapReveal[]>([]);
   const revealSeq = useRef(0);
   const [peek, setPeek] = useState<{ c: Card; power?: number } | null>(null);
@@ -151,6 +152,11 @@ export function Battlefield({ opts, onLeave, onFinish, gold }: {
     soundEvents(next.events, ME, next);
     const turnEv = next.events.find((e) => e.e === 'turn') as { side: Side } | undefined;
     if (turnEv && !next.winner) setTurnBanner({ id: Date.now(), side: turnEv.side });
+    const won = next.events.filter((e) => e.e === 'claim').map((e) => ({ ...(e as { r: number; c: number; side: Side; income: number }), id: hitId.current++ }));
+    if (won.length) {
+      setClaims((q) => [...q, ...won]);
+      window.setTimeout(() => setClaims((q) => q.filter((x) => !won.includes(x))), 1600);
+    }
     const tr = trapReveals(next.events, revealSeq.current++);
     if (tr.length) setReveals((q) => [...q, ...tr]);
     const fresh: { id: number; uid: string; text: string }[] = [];
@@ -1229,6 +1235,7 @@ export function Battlefield({ opts, onLeave, onFinish, gold }: {
                         selUnit && posOf(m, selUnit.uid)?.r === r && posOf(m, selUnit.uid)?.c === c ? 'stone-origin' : '',
                         u ? 'has-unit' : '',
                         drag?.over === k ? 'dh-drop-ok' : '',
+                        claims.some((x) => x.r === r && x.c === c) ? 'just-claimed' : '',
                       ]
                         .filter(Boolean)
                         .join(' ')}
@@ -1242,6 +1249,14 @@ export function Battlefield({ opts, onLeave, onFinish, gold }: {
                     >
                       {t.k === 'gate' && <span className={`tile-mark gate-mark gate-${t.home ?? 'neutral'}${u ? ' mark-under' : ''}`} aria-hidden />}
                       {t.k === 'stronghold' && <span className={`tile-mark stronghold-mark stronghold-${t.home ?? 'neutral'}${u ? ' mark-under' : ''}`} aria-hidden />}
+                      {t.k === 'resource' && owner && <span className={`claim-rim is-${owner}`} aria-hidden />}
+                      {t.k === 'resource' && owner && <span className={`claim-flag is-${owner}`} title={`${owner === ME ? 'Yours' : 'Rival'}: +${t.sym ?? 1} money a turn`} aria-label={`Held by ${owner === ME ? 'you' : 'the rival'}`} />}
+                      {claims.filter((x) => x.r === r && x.c === c).map((x) => (
+                        <span key={x.id} className={`claim-pop is-${x.side}`} data-testid="claim-pop" aria-live="polite">
+                          <b>Claimed!</b>
+                          <em>+{x.income} a turn</em>
+                        </span>
+                      ))}
                       {t.k === 'resource' && <span className={`tile-mark resource-mark resource-${t.sym === 2 ? 'double' : 'single'}${u ? ' mark-under' : ''}`} aria-hidden />}
                       {h > 0 && <span className={`elev-mark elev-mark-${Math.min(2, h)}`}>{terrainLabel(h)}</span>}
                       {trap && <span className="trap-mark">{TRAP_LABEL[trap.kind] ?? trap.kind}</span>}

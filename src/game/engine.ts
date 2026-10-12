@@ -1092,7 +1092,11 @@ function step(m: Match, a: Action): string | null {
       if (trapAt(m, a.r, a.c) || tileAt(m, a.r, a.c)!.k !== 'gate') {
         // Winged arrivals can land on open ground: claim it like a step.
         const t = tileAt(m, a.r, a.c)!;
-        if ((t.k === 'street' || t.k === 'resource') && m.control[a.r][a.c] !== side) m.control[a.r][a.c] = side;
+        if ((t.k === 'street' || t.k === 'resource') && m.control[a.r][a.c] !== side) {
+          const was = m.control[a.r][a.c] ?? null;
+          m.control[a.r][a.c] = side;
+          if (t.k === 'resource') m.events.push({ e: 'claim', r: a.r, c: a.c, side, income: t.sym ?? 1, from: was });
+        }
       }
       for (const ab of abilitiesOf(cardId)) if (ab.on === 'enter') fire(m, u, ab);
       for (const w of unitsOf(m, other(side))) for (const ab of abilitiesOf(w.cardId)) if (ab.on === 'enemyDeploys' && m.units[u.uid]) fire(m, w, ab, { victim: u });

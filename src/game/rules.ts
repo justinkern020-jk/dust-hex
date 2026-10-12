@@ -931,7 +931,9 @@ export function enterTile(m: Match, uid: string, from: { r: number; c: number } 
     return;
   }
   if (isPaintable(tile) && m.control[to.r][to.c] !== u.side) {
+    const was = m.control[to.r][to.c] ?? null;
     m.control[to.r][to.c] = u.side;
+    if (tile.k === 'resource') m.events.push({ e: 'claim', r: to.r, c: to.c, side: u.side, income: tile.sym ?? 1, from: was });
     for (const ab of abilitiesOf(u.cardId)) {
       if (ab.on === 'conquer' && ab.op === 'raid' && tile.k === 'resource') {
         bank(m, u.side, ab.n ?? 1);

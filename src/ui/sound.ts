@@ -363,6 +363,9 @@ export function soundEvents(events: GameEvent[], me: Side = 'blue', m?: Match) {
       case 'trap':
         sfx(e.kind === 'deadfall' || e.kind === 'pit' || e.kind === 'cavein' ? 'dynamite' : 'ricochet', 0.5);
         break;
+      case 'claim':
+        sfx('jingle', 0.4);
+        break;
       case 'play': {
         const k = card(e.cardId).kind;
         sfx(k === 'device' ? 'cylinder' : k === 'item' ? 'cock' : 'bell', 0.45);

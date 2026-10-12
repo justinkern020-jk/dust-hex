@@ -34,3 +34,11 @@ save('crumble',x)
 # landing thud: soft dusty boom
 tt=t(0.5); n=rng.standard_normal(len(tt)); x=np.sin(2*np.pi*(95-40*tt)*tt)*np.exp(-14*tt)+0.5*lp(n,.05)*np.exp(-18*tt)*8
 save('thud',x)
+
+# coin jingle for claiming a money tile: a few bright struck coins
+tt=t(0.7); x=np.zeros_like(tt)
+for j,(o,f) in enumerate([(0,2400),(0.07,3150),(0.13,2750),(0.21,3600)]):
+    s0=int(SR*o); s=t(0.5)
+    c=sum(a*np.sin(2*np.pi*f*r*s)*np.exp(-d*s) for r,a,d in [(1,1,9),(2.4,.5,14),(4.1,.25,22)])
+    x[s0:s0+len(s)]+=c[:len(x)-s0]*(1-0.15*j)
+save('jingle',x)

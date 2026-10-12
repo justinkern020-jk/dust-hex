@@ -82,3 +82,26 @@
 }
 @keyframes fxFade { 0%, 30% { opacity: 1; } 100% { opacity: 0; } }
 @keyframes fxBannerFade { 0% { opacity: 0; } 20%, 75% { opacity: 1; } 100% { opacity: 0; } }
+
+/* ---- Money tile claims ---- */
+.claim-flag { position: absolute; top: 2%; right: 6%; z-index: 6; width: 22%; aspect-ratio: 3 / 4; pointer-events: none;
+  background: linear-gradient(#5d3a1c, #5d3a1c) left top / 12% 100% no-repeat; filter: drop-shadow(0 1px 1.5px #000c); }
+.claim-flag::after { content: ''; position: absolute; left: 12%; top: 4%; width: 88%; height: 52%;
+  clip-path: polygon(0 0, 100% 18%, 74% 50%, 100% 82%, 0 100%); box-shadow: inset 0 0 0 1px rgba(255,255,255,.25); }
+.claim-flag.is-blue::after { background: linear-gradient(#9cc0f0, #3c6fb8); }
+.claim-flag.is-red::after { background: linear-gradient(#f0a090, #b03a2a); }
+.claim-rim { position: absolute; inset: 5%; border-radius: 50%; pointer-events: none; z-index: 3; }
+.claim-rim.is-blue { box-shadow: inset 0 0 0 2.5px #8eb6ea, 0 0 8px rgba(110,160,230,.55); }
+.claim-rim.is-red { box-shadow: inset 0 0 0 2.5px #e58a7a, 0 0 8px rgba(220,100,80,.55); }
+.stone.just-claimed .claim-rim { animation: claimRing .7s cubic-bezier(.2,1.4,.4,1); }
+@keyframes claimRing { 0% { transform: scale(.6) rotateY(90deg); opacity: 0; } 60% { transform: scale(1.08); opacity: 1; } 100% { transform: none; } }
+.claim-pop { position: absolute; left: 50%; top: 18%; z-index: 52; pointer-events: none; display: flex; flex-direction: column; align-items: center; white-space: nowrap;
+  transform: translate(-50%, 0); animation: claimPop 1.5s ease-out forwards; }
+.claim-pop b { font-family: 'Rye', Georgia, serif; font-weight: 400; font-size: clamp(12px, 3.4vw, 17px); color: #ffe6a0; text-shadow: 0 0 6px #d8a030, 0 2px 0 #2a1604; }
+.claim-pop em { font: italic 700 clamp(10px, 2.8vw, 13px) Georgia, serif; color: #fff4d6; text-shadow: 0 1px 2px #000, 0 0 5px #000; }
+.claim-pop.is-red b { color: #ffd0c0; text-shadow: 0 0 6px #c04030, 0 2px 0 #2a0602; }
+@keyframes claimPop { 0% { opacity: 0; transform: translate(-50%, 10px) scale(.7); } 15% { opacity: 1; transform: translate(-50%, -4px) scale(1.08); } 75% { opacity: 1; transform: translate(-50%, -14px) scale(1); } 100% { opacity: 0; transform: translate(-50%, -24px); } }
+@media (prefers-reduced-motion: reduce) {
+  .stone.just-claimed .claim-rim { animation: none; }
+  .claim-pop { animation: fxBannerFade 1.5s ease-in-out forwards; }
+}
