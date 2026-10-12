@@ -267,7 +267,10 @@ export function DeckEditor({ col, setCol, side, setSide, onBack, onShop }: {
           <ul>
             {deckCards.map((c) => (
               <li key={c.id} className={`dh-row rarity-${c.rarity}`} data-testid="deck-row" data-card={c.id}>
-                <span className="dh-row-cost">{c.cost}</span>
+                <button type="button" className="dh-row-thumb" onClick={() => setPeek(c)} aria-label={`Read ${c.name}`}>
+                  <CardArt c={c} />
+                  <span className="dh-row-cost">{c.cost}</span>
+                </button>
                 <button type="button" className="dh-row-name" onClick={() => setPeek(c)}>
                   {c.name}
                   <small>{KIND_LABEL[c.kind]}</small>
