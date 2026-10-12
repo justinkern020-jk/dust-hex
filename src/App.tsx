@@ -12,6 +12,8 @@ import { DeckEditor } from './ui/DeckEditor';
 import { loadCollection, saveCollection } from './ui/collectionStore';
 import { awardMatch, deckForMatch, type Collection, type GoldAward, type MatchResult } from './game/collection';
 import type { FactionId } from './game/types';
+import { MatchGuard } from './ui/MatchGuard';
+import { clearLive, loadLive } from './ui/resume';
 import { playMenuMusic, preloadMenuAudio, unlockAudio } from './ui/sound';
 
 const MIND_KEY = 'dusthex.mind';
@@ -25,9 +27,15 @@ export function App() {
     setColState(c);
     saveCollection(c);
   };
-  const [screen, setScreen] = useState<Screen>(() =>
-    launchScreen(window.location.search, import.meta.env.DEV, (side) => deckForMatch(colRef.current, side)),
-  );
+  const [screen, setScreen] = useState<Screen>(() => {
+    const first = launchScreen(window.location.search, import.meta.env.DEV, (side) => deckForMatch(colRef.current, side));
+    // A reload mid-match (tab killed, pull-to-refresh) picks the match back up instead of the title card.
+    if (first.s === 'title') {
+      const live = loadLive();
+      if (live) return { s: 'battle', opts: { ...live.opts, resume: live.m }, key: 1 };
+    }
+    return first;
+  });
   const [side, setSide] = useState<FactionId>(FACTIONS[0].id);
   // A finished match pays once; StrictMode or a re-render asking again gets the same answer.
   const awards = useRef(new Map<string, GoldAward>());
@@ -50,7 +58,10 @@ export function App() {
       window.history.replaceState({ dh: 'porch' }, '', window.location.pathname);
       window.history.pushState({ dh: s0 }, '', here);
     } else if (!st?.dh) window.history.replaceState({ dh: s0 }, '', window.location.href);
-    const onPop = () => setScreen((cur) => (cur.s === 'porch' ? cur : { s: 'porch' }));
+    const onPop = () => {
+      clearLive();
+      setScreen((cur) => (cur.s === 'porch' ? cur : { s: 'porch' }));
+    };
     window.addEventListener('popstate', onPop);
     return () => window.removeEventListener('popstate', onPop);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -71,6 +82,7 @@ export function App() {
       setScreen({ s: 'porch' });
     }
   };
+  const crashes = useRef(0);
   const [mind, setMindState] = useState<Mind>(() => {
     try {
       const v = localStorage.getItem(MIND_KEY) as Mind | null;
@@ -125,7 +137,30 @@ export function App() {
   if (screen.s === 'decks')
     return <DeckEditor key={side} col={col} setCol={setCol} side={side} setSide={setSide} onBack={toPorch} onShop={() => swap({ s: 'shop' })} />;
   if (screen.s === 'battle')
-    return <Battlefield key={screen.key} opts={screen.opts} onLeave={toPorch} onFinish={onFinish} gold={col.gold} />;
+    return (
+      <MatchGuard
+        key={screen.key}
+        onCrash={() => {
+          crashes.current += 1;
+          const live = loadLive();
+          if (live && crashes.current < 3) setScreen({ s: 'battle', opts: { ...live.opts, resume: live.m }, key: screen.key + 1 });
+          else {
+            clearLive();
+            setScreen({ s: 'porch' });
+          }
+        }}
+      >
+        <Battlefield
+          opts={screen.opts}
+          onFinish={onFinish}
+          gold={col.gold}
+          onLeave={() => {
+            clearLive();
+            toPorch();
+          }}
+        />
+      </MatchGuard>
+    );
   return (
     <Porch
       col={col}

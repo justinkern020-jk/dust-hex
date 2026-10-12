@@ -343,17 +343,22 @@ export function soundEvents(events: GameEvent[], me: Side = 'blue', m?: Match) {
         const u = m?.units[e.uid];
         const c = u ? maybeCard(u.cardId) : undefined;
         if (c?.kind === 'leader' && c.faction === 'army' && playCue('army-leader-deploy', 0.6)) break;
-        sfx('enter', 0.45);
+        sfx('enter', 0.4);
+        if (typeof window !== 'undefined') window.setTimeout(() => sfx('thud', 0.5), 320);
         break;
       }
       case 'move':
         sfx(`step-${pickN(4)}`, 0.35);
         break;
       case 'strike':
-        if (shots++ < 2) sfx(e.ranged ? `shot-${pickN(3)}` : 'whip', 0.5);
+        if (shots++ < 2) {
+          if (e.ranged) sfx(`shot-${pickN(3)}`, 0.5);
+          // Steel-on-steel with a spur jingle, timed to the coins meeting.
+          else if (typeof window !== 'undefined') window.setTimeout(() => sfx(`clash-${pickN(3)}`, 0.55), 120);
+        }
         break;
       case 'death':
-        sfx('death', 0.45);
+        if (typeof window !== 'undefined') window.setTimeout(() => sfx('crumble', 0.55), 180);
         break;
       case 'trap':
         sfx(e.kind === 'deadfall' || e.kind === 'pit' || e.kind === 'cavein' ? 'dynamite' : 'ricochet', 0.5);

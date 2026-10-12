@@ -17,6 +17,7 @@ import './styles/dusthex.css';
 import './styles/shop.css';
 import './styles/title.css';
 import './styles/coins.css';
+import './styles/fx.css';
 import { App } from './App';
 
 createRoot(document.getElementById('root')!).render(

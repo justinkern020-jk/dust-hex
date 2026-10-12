@@ -9,7 +9,16 @@ import { CardArt, CardPeek, CoinFace, KIND_LABEL } from './cardview';
 import { HOLD_TO_DRAG_MS, HOLD_TO_READ_MS, TOUCH_LIFT, classifyGesture, dropAction, legalDrops, nearestLegal, scrollTurnsToDrag, type TileSpot, scrollToSlider, sliderToScroll, wheelToScroll, type HandSource } from '../game/drop';
 import { MINDS } from './Porch';
 import type { GoldAward, MatchResult } from '../game/collection';
+import { saveLive } from './resume';
+import { trapReveals, type TrapReveal } from '../game/trapReveal';
+
+/** Read at load, before the launch code tidies the URL. */
+if (import.meta.env.DEV && typeof window !== 'undefined') (window as unknown as { __dhFx: unknown }).__dhFx = { planFx, runFx };
+/** Dev-only ?autoplay: the rival mind plays both sides (soak tests). */
+const AUTOPLAY = import.meta.env.DEV && new URLSearchParams(window.location.search).has('autoplay');
+const TRAP_DEMO = import.meta.env.DEV && new URLSearchParams(window.location.search).has('trapdemo');
 import { WeatherLayer, pickWeather } from './Weather';
+import { planFx, fxMs, runFx } from './fx';
 import { flightMs, planSlides, slideKeyframes, slideTiming, type Box } from './coinMotion';
 import { playMatchSting, playMusic, sfx, soundEvents, stopMenuMusic } from './sound';
 
@@ -71,6 +80,8 @@ export interface BattleOpts {
   money?: number;
   /** Your saved deck (from the collection). The rival always gets a fresh full-pool mix. */
   deck?: string[];
+  /** Pick a saved match back up (after a reload or a caught render error). */
+  resume?: Match;
 }
 
 function startMatch(o: BattleOpts, mapId: string): Match {
@@ -89,12 +100,19 @@ export function Battlefield({ opts, onLeave, onFinish, gold }: {
   onFinish?: (r: MatchResult, matchId: string) => GoldAward;
   gold?: number;
 }) {
-  const [mapId, setMapId] = useState(opts.mapId);
-  const [m, setM] = useState<Match>(() => startMatch(opts, opts.mapId));
+  const [mapId, setMapId] = useState(opts.resume?.mapId ?? opts.mapId);
+  const [m, setM] = useState<Match>(() => (opts.resume ? { ...opts.resume, events: [] } : startMatch(opts, opts.mapId)));
+  // Safety net: keep the live match saved so a reload or a crash lands back here.
+  useEffect(() => {
+    if (!AUTOPLAY) saveLive({ ...opts, resume: undefined, mapId }, m);
+  }, [m, mapId, opts]);
   const [runId, setRunId] = useState(() => `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`);
   const [award, setAward] = useState<GoldAward | null>(null);
   const [sel, setSel] = useState<Sel>(null);
   const [toast, setToast] = useState<string | null>(null);
+  const [turnBanner, setTurnBanner] = useState<{ id: number; side: Side } | null>(null);
+  const [reveals, setReveals] = useState<TrapReveal[]>([]);
+  const revealSeq = useRef(0);
   const [peek, setPeek] = useState<{ c: Card; power?: number } | null>(null);
   const [hits, setHits] = useState<{ id: number; uid: string; text: string }[]>([]);
   const [yieldAsk, setYieldAsk] = useState(false);
@@ -131,6 +149,10 @@ export function Battlefield({ opts, onLeave, onFinish, gold }: {
 
   const after = useCallback((next: Match) => {
     soundEvents(next.events, ME, next);
+    const turnEv = next.events.find((e) => e.e === 'turn') as { side: Side } | undefined;
+    if (turnEv && !next.winner) setTurnBanner({ id: Date.now(), side: turnEv.side });
+    const tr = trapReveals(next.events, revealSeq.current++);
+    if (tr.length) setReveals((q) => [...q, ...tr]);
     const fresh: { id: number; uid: string; text: string }[] = [];
     for (const e of next.events) if (e.e === 'damage' && e.n > 0) fresh.push({ id: hitId.current++, uid: e.uid, text: `-${e.n}` });
     if (fresh.length) {
@@ -158,9 +180,9 @@ export function Battlefield({ opts, onLeave, onFinish, gold }: {
 
   // The rival's hand.
   const pendingMine = m.pending[0]?.side === ME ? m.pending[0] : null;
-  const aiToMove = !m.winner && (m.pending.length ? m.pending[0].side === 'red' : m.side === 'red');
+  const aiToMove = !m.winner && (AUTOPLAY || (m.pending.length ? m.pending[0].side === 'red' : m.side === 'red'));
   useEffect(() => {
-    if (!aiToMove || primer) return;
+    if (!aiToMove || primer || reveals.length) return;
     const wait = Math.max(AI_DELAY, flightUntil.current - performance.now() + 140);
     const id = window.setTimeout(() => {
       const cur = mRef.current;
@@ -174,7 +196,26 @@ export function Battlefield({ opts, onLeave, onFinish, gold }: {
       }
     }, wait);
     return () => window.clearTimeout(id);
-  }, [m, aiToMove, opts.mind, after, primer]);
+  }, [m, aiToMove, opts.mind, after, primer, reveals.length]);
+
+  useEffect(() => {
+    // Dev-only test param: ?trapdemo shows a sample reveal queue (e2e screenshots).
+    if (!TRAP_DEMO) return;
+    setReveals(trapReveals([
+      { e: 'trap', r: 2, c: 2, kind: 'snake', uid: 'demo1', victimName: 'Frank James', victimSide: 'blue', owner: 'red', cardId: 'shaft-viper' },
+      { e: 'death', uid: 'demo1', cardId: 'frank-james', side: 'blue' },
+      { e: 'trap', r: 3, c: 2, kind: 'sink', uid: 'demo2', victimName: 'Belle Starr', victimSide: 'red', owner: 'blue', cardId: 'alkali' },
+      { e: 'damage', uid: 'demo2', n: 3 },
+    ], 999));
+  }, []);
+
+  // Trap reveal queue: each card shows ~1.8s, tap to dismiss.
+  const reveal = reveals[0];
+  useEffect(() => {
+    if (!reveal) return;
+    const id = window.setTimeout(() => setReveals((q) => q.slice(1)), TRAP_DEMO ? 6000 : 1800);
+    return () => window.clearTimeout(id);
+  }, [reveal?.key]);
 
   useLayoutEffect(() => {
     const grid = gridRef.current;
@@ -190,6 +231,14 @@ export function Battlefield({ opts, onLeave, onFinish, gold }: {
     });
     const prev = coinBoxes.current;
     coinBoxes.current = now;
+    const reducedFx = typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prev.size && m.events.length) {
+      const fx = planFx(m.events, prev, now, reducedFx);
+      if (fx.length) {
+        runFx(grid, fx, (id) => maybeCard(id)?.art ?? '', reducedFx);
+        flightUntil.current = Math.max(flightUntil.current, performance.now() + fxMs(fx));
+      }
+    }
     if (!prev.size && !m.events.some((e) => e.e === 'deploy')) return;
     const deployed = new Set(m.events.filter((e) => e.e === 'deploy').map((e) => (e as { uid: string }).uid));
     const launch = (uid: string): Box | null => {
@@ -236,7 +285,7 @@ export function Battlefield({ opts, onLeave, onFinish, gold }: {
       anim.oncancel = done;
     }
     const ms = flightMs(slides, reduced);
-    flightUntil.current = performance.now() + ms;
+    flightUntil.current = Math.max(flightUntil.current, performance.now() + ms);
     if (deploying)
       window.setTimeout(() => {
         if (wrap) wrap.style.overflow = '';
@@ -1011,6 +1060,10 @@ export function Battlefield({ opts, onLeave, onFinish, gold }: {
     );
   };
 
+  if (import.meta.env.DEV && (window as unknown as { __dhCrashOnce?: boolean }).__dhCrashOnce) {
+    (window as unknown as { __dhCrashOnce?: boolean }).__dhCrashOnce = false;
+    throw new Error('dev: forced render crash');
+  }
   const hand = m.hand[ME];
   const dragCard = drag ? (drag.src === 'leader' ? leaderCard : maybeCard(hand[drag.src] ?? '')) : undefined;
   const dragCoin = dragCard && (dragCard.kind === 'unit' || dragCard.kind === 'leader') ? dragCard : undefined;
@@ -1116,6 +1169,26 @@ export function Battlefield({ opts, onLeave, onFinish, gold }: {
       </header>
       <div className="bf-banner-slot" aria-live="polite" ref={slotRef} style={drag ? { height: slotH.current, overflow: 'hidden' } : undefined}>
         {!drag && banner}
+        {turnBanner && !reveal && (
+          <div key={turnBanner.id} className={`dh-turn-banner is-${turnBanner.side}`} data-testid="turn-banner" onAnimationEnd={() => setTurnBanner(null)} aria-live="polite">
+            <span>{turnBanner.side === ME ? 'Your Turn' : 'Rival Rides'}</span>
+          </div>
+        )}
+        {reveal && (() => {
+          const rc = reveal.cardId ? maybeCard(reveal.cardId) : undefined;
+          return (
+            <div key={reveal.key} className={`dh-trap-reveal dh-trap-${reveal.outcome}`} data-testid="trap-reveal" role="alert" onPointerDown={(e) => { e.stopPropagation(); setReveals((q) => q.slice(1)); }}>
+              <div className="dh-trap-card">
+                <div className="dh-trap-banner">Trap Sprung!</div>
+                {rc ? <CardArt c={rc} className="dh-trap-art" alt={reveal.title} /> : <div className="dh-trap-art card-art-fallback" aria-hidden />}
+                <h3 className="dh-trap-name">{reveal.title}</h3>
+                <p className="dh-trap-text">{reveal.text}</p>
+              </div>
+              <p className="dh-trap-line">{reveal.line}</p>
+              <p className="dh-trap-hint">{reveals.length > 1 ? `Tap for next (${reveals.length - 1} more)` : 'Tap to continue'}</p>
+            </div>
+          );
+        })()}
         {!drag && toast && (
           <p className="dh-toast" data-testid="toast">
             {toast}
