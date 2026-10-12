@@ -282,3 +282,17 @@
 
 /* Coins in flight: the glide owns the transform; no clicks land mid-air. */
 .stone-coin.is-flying { animation: none !important; pointer-events: none; will-change: transform, filter; }
+
+/* ---- Trap reveal ---- */
+.dh-trap-reveal { position: fixed; inset: 0; z-index: 900; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 16px; background: radial-gradient(ellipse at center, rgba(40,18,6,.72), rgba(0,0,0,.88)); animation: dhTrapFade .2s ease-out; cursor: pointer; }
+.dh-trap-card { width: min(70vw, 300px, 42vh); background: linear-gradient(#f1dfb8, #d9bb85); border: 3px solid #5a3414; border-radius: 12px; box-shadow: 0 0 0 2px #c79a4b, 0 18px 40px rgba(0,0,0,.7); padding: 8px; color: #2a1608; animation: dhTrapFlip .45s cubic-bezier(.2,1.4,.4,1); text-align: center; }
+.dh-trap-banner { font-family: 'Rye', Georgia, serif; font-size: 15px; letter-spacing: 1px; color: #f6e2b5; background: #7a1d10; border-radius: 6px; padding: 3px 0; margin-bottom: 6px; text-transform: uppercase; }
+.dh-trap-art { display: block; width: 100%; aspect-ratio: 2 / 3; max-height: 30vh; object-fit: cover; border: 2px solid #5a3414; border-radius: 6px; background: #3a2412; }
+.dh-trap-name { font-family: 'Rye', Georgia, serif; font-size: 22px; margin: 6px 0 2px; }
+.dh-trap-text { font: 13px/1.3 Georgia, serif; margin: 0 2px 4px; }
+.dh-trap-line { max-width: 420px; text-align: center; font-family: 'Rye', Georgia, serif; font-size: 18px; color: #ffe3a3; text-shadow: 0 2px 4px #000; margin: 0; }
+.dh-trap-killed .dh-trap-line { color: #ff9d7a; }
+.dh-trap-hint { font: 12px Georgia, serif; color: #cdb48a; margin: 0; opacity: .8; }
+@keyframes dhTrapFade { from { opacity: 0 } }
+@keyframes dhTrapFlip { from { transform: rotateY(90deg) scale(.6); } to { transform: none; } }
+@media (min-width: 900px) { .dh-trap-card { width: 320px; } .dh-trap-line { font-size: 22px; } }

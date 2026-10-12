@@ -953,8 +953,8 @@ export function enterTile(m: Match, uid: string, from: { r: number; c: number } 
 
 export function springTrap(m: Match, u: Unit, t: { tid: string; r: number; c: number; kind: string; owner: Side | null; cardId?: string }) {
   m.traps = m.traps.filter((x) => x.tid !== t.tid);
-  m.events.push({ e: 'trap', r: t.r, c: t.c, kind: t.kind });
   const name = nameOf(u);
+  m.events.push({ e: 'trap', r: t.r, c: t.c, kind: t.kind, uid: u.uid, victimId: u.cardId, victimName: name, victimSide: u.side, owner: t.owner, cardId: t.cardId });
   const deadly = ['snake', 'shaft', 'pit', 'cavein'];
   if (deadly.includes(t.kind)) {
     if (hasKw(u, 'trapproof')) {

@@ -305,7 +305,7 @@ export type GameEvent =
   | { e: 'strike'; uid: string; target: string; ranged: boolean }
   | { e: 'damage'; uid: string; n: number }
   | { e: 'death'; uid: string; cardId: string; side: Side }
-  | { e: 'trap'; r: number; c: number; kind: string }
+  | { e: 'trap'; r: number; c: number; kind: string; uid?: string; victimId?: string; victimName?: string; victimSide?: Side; owner?: Side | null; cardId?: string }
   | { e: 'play'; side: Side; cardId: string }
   | { e: 'lead'; side: Side }
   | { e: 'turn'; side: Side }

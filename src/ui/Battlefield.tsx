@@ -8,6 +8,10 @@ import { posOf, unitAt } from '../game/core';
 import { CardArt, CardPeek, CoinFace, KIND_LABEL } from './cardview';
 import { HOLD_TO_DRAG_MS, HOLD_TO_READ_MS, TOUCH_LIFT, classifyGesture, dropAction, legalDrops, nearestLegal, scrollTurnsToDrag, type TileSpot, scrollToSlider, sliderToScroll, wheelToScroll, type HandSource } from '../game/drop';
 import { MINDS } from './Porch';
+import { trapReveals, type TrapReveal } from '../game/trapReveal';
+
+/** Read at load, before the launch code tidies the URL. */
+const TRAP_DEMO = import.meta.env.DEV && new URLSearchParams(window.location.search).has('trapdemo');
 import { WeatherLayer, pickWeather } from './Weather';
 import { flightMs, planSlides, slideKeyframes, slideTiming, type Box } from './coinMotion';
 import { playMatchSting, playMusic, sfx, soundEvents, stopMenuMusic } from './sound';
@@ -84,6 +88,8 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
   const [m, setM] = useState<Match>(() => startMatch(opts, opts.mapId));
   const [sel, setSel] = useState<Sel>(null);
   const [toast, setToast] = useState<string | null>(null);
+  const [reveals, setReveals] = useState<TrapReveal[]>([]);
+  const revealSeq = useRef(0);
   const [peek, setPeek] = useState<{ c: Card; power?: number } | null>(null);
   const [hits, setHits] = useState<{ id: number; uid: string; text: string }[]>([]);
   const [yieldAsk, setYieldAsk] = useState(false);
@@ -120,6 +126,8 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
 
   const after = useCallback((next: Match) => {
     soundEvents(next.events, ME, next);
+    const tr = trapReveals(next.events, revealSeq.current++);
+    if (tr.length) setReveals((q) => [...q, ...tr]);
     const fresh: { id: number; uid: string; text: string }[] = [];
     for (const e of next.events) if (e.e === 'damage' && e.n > 0) fresh.push({ id: hitId.current++, uid: e.uid, text: `-${e.n}` });
     if (fresh.length) {
@@ -149,7 +157,7 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
   const pendingMine = m.pending[0]?.side === ME ? m.pending[0] : null;
   const aiToMove = !m.winner && (m.pending.length ? m.pending[0].side === 'red' : m.side === 'red');
   useEffect(() => {
-    if (!aiToMove || primer) return;
+    if (!aiToMove || primer || reveals.length) return;
     const wait = Math.max(AI_DELAY, flightUntil.current - performance.now() + 140);
     const id = window.setTimeout(() => {
       const cur = mRef.current;
@@ -163,7 +171,26 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
       }
     }, wait);
     return () => window.clearTimeout(id);
-  }, [m, aiToMove, opts.mind, after, primer]);
+  }, [m, aiToMove, opts.mind, after, primer, reveals.length]);
+
+  useEffect(() => {
+    // Dev-only test param: ?trapdemo shows a sample reveal queue (e2e screenshots).
+    if (!TRAP_DEMO) return;
+    setReveals(trapReveals([
+      { e: 'trap', r: 2, c: 2, kind: 'snake', uid: 'demo1', victimName: 'Frank James', victimSide: 'blue', owner: 'red', cardId: 'shaft-viper' },
+      { e: 'death', uid: 'demo1', cardId: 'frank-james', side: 'blue' },
+      { e: 'trap', r: 3, c: 2, kind: 'sink', uid: 'demo2', victimName: 'Belle Starr', victimSide: 'red', owner: 'blue', cardId: 'alkali' },
+      { e: 'damage', uid: 'demo2', n: 3 },
+    ], 999));
+  }, []);
+
+  // Trap reveal queue: each card shows ~1.8s, tap to dismiss.
+  const reveal = reveals[0];
+  useEffect(() => {
+    if (!reveal) return;
+    const id = window.setTimeout(() => setReveals((q) => q.slice(1)), TRAP_DEMO ? 6000 : 1800);
+    return () => window.clearTimeout(id);
+  }, [reveal?.key]);
 
   useLayoutEffect(() => {
     const grid = gridRef.current;
@@ -1092,6 +1119,21 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
       </header>
       <div className="bf-banner-slot" aria-live="polite" ref={slotRef} style={drag ? { height: slotH.current, overflow: 'hidden' } : undefined}>
         {!drag && banner}
+        {reveal && (() => {
+          const rc = reveal.cardId ? maybeCard(reveal.cardId) : undefined;
+          return (
+            <div key={reveal.key} className={`dh-trap-reveal dh-trap-${reveal.outcome}`} data-testid="trap-reveal" role="alert" onPointerDown={(e) => { e.stopPropagation(); setReveals((q) => q.slice(1)); }}>
+              <div className="dh-trap-card">
+                <div className="dh-trap-banner">Trap Sprung!</div>
+                {rc ? <CardArt c={rc} className="dh-trap-art" alt={reveal.title} /> : <div className="dh-trap-art card-art-fallback" aria-hidden />}
+                <h3 className="dh-trap-name">{reveal.title}</h3>
+                <p className="dh-trap-text">{reveal.text}</p>
+              </div>
+              <p className="dh-trap-line">{reveal.line}</p>
+              <p className="dh-trap-hint">{reveals.length > 1 ? `Tap for next (${reveals.length - 1} more)` : 'Tap to continue'}</p>
+            </div>
+          );
+        })()}
         {!drag && toast && (
           <p className="dh-toast" data-testid="toast">
             {toast}
