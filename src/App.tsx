@@ -7,12 +7,22 @@ import { Title } from './ui/Title';
 import { launchScreen, type Screen } from './ui/launch';
 import { Codex } from './ui/Codex';
 import { Battlefield } from './ui/Battlefield';
+import { MatchGuard } from './ui/MatchGuard';
+import { clearLive, loadLive } from './ui/resume';
 import { playMenuMusic, preloadMenuAudio, unlockAudio } from './ui/sound';
 
 const MIND_KEY = 'dusthex.mind';
 
 export function App() {
-  const [screen, setScreen] = useState<Screen>(() => launchScreen(window.location.search, import.meta.env.DEV));
+  const [screen, setScreen] = useState<Screen>(() => {
+    const first = launchScreen(window.location.search, import.meta.env.DEV);
+    // A reload mid-match (tab killed, pull-to-refresh) picks the match back up instead of the title card.
+    if (first.s === 'title') {
+      const live = loadLive();
+      if (live) return { s: 'battle', opts: { ...live.opts, resume: live.m }, key: 1 };
+    }
+    return first;
+  });
   // History: the Codex and a match sit one step above the porch, so the in-app Back,
   // the Android back gesture and the browser's back button all land on the porch.
   // A deep link (?codex, ?side=...) gets a porch entry slipped in underneath it.
@@ -24,7 +34,10 @@ export function App() {
       window.history.replaceState({ dh: 'porch' }, '', window.location.pathname);
       window.history.pushState({ dh: s0 }, '', here);
     } else if (!st?.dh) window.history.replaceState({ dh: s0 }, '', window.location.href);
-    const onPop = () => setScreen((cur) => (cur.s === 'porch' ? cur : { s: 'porch' }));
+    const onPop = () => {
+      clearLive();
+      setScreen((cur) => (cur.s === 'porch' ? cur : { s: 'porch' }));
+    };
     window.addEventListener('popstate', onPop);
     return () => window.removeEventListener('popstate', onPop);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -40,6 +53,7 @@ export function App() {
       setScreen({ s: 'porch' });
     }
   };
+  const crashes = useRef(0);
   const [mind, setMindState] = useState<Mind>(() => {
     try {
       const v = localStorage.getItem(MIND_KEY) as Mind | null;
@@ -87,7 +101,28 @@ export function App() {
       />;
   if (screen.s === 'codex') return <Codex onBack={toPorch} />;
   if (screen.s === 'battle')
-    return <Battlefield key={screen.key} opts={screen.opts} onLeave={toPorch} />;
+    return (
+      <MatchGuard
+        key={screen.key}
+        onCrash={() => {
+          crashes.current += 1;
+          const live = loadLive();
+          if (live && crashes.current < 3) setScreen({ s: 'battle', opts: { ...live.opts, resume: live.m }, key: screen.key + 1 });
+          else {
+            clearLive();
+            setScreen({ s: 'porch' });
+          }
+        }}
+      >
+        <Battlefield
+          opts={screen.opts}
+          onLeave={() => {
+            clearLive();
+            toPorch();
+          }}
+        />
+      </MatchGuard>
+    );
   return (
     <Porch
       mind={mind}

@@ -8,10 +8,13 @@ import { posOf, unitAt } from '../game/core';
 import { CardArt, CardPeek, CoinFace, KIND_LABEL } from './cardview';
 import { HOLD_TO_DRAG_MS, HOLD_TO_READ_MS, TOUCH_LIFT, classifyGesture, dropAction, legalDrops, nearestLegal, scrollTurnsToDrag, type TileSpot, scrollToSlider, sliderToScroll, wheelToScroll, type HandSource } from '../game/drop';
 import { MINDS } from './Porch';
+import { saveLive } from './resume';
 import { trapReveals, type TrapReveal } from '../game/trapReveal';
 
 /** Read at load, before the launch code tidies the URL. */
 if (import.meta.env.DEV && typeof window !== 'undefined') (window as unknown as { __dhFx: unknown }).__dhFx = { planFx, runFx };
+/** Dev-only ?autoplay: the rival mind plays both sides (soak tests). */
+const AUTOPLAY = import.meta.env.DEV && new URLSearchParams(window.location.search).has('autoplay');
 const TRAP_DEMO = import.meta.env.DEV && new URLSearchParams(window.location.search).has('trapdemo');
 import { WeatherLayer, pickWeather } from './Weather';
 import { planFx, fxMs, runFx } from './fx';
@@ -74,6 +77,8 @@ export interface BattleOpts {
   /** Testing aid (?deal=a,b&money=n): these cards open your hand. */
   deal?: string[];
   money?: number;
+  /** Pick a saved match back up (after a reload or a caught render error). */
+  resume?: Match;
 }
 
 function startMatch(o: BattleOpts, mapId: string): Match {
@@ -86,8 +91,12 @@ function startMatch(o: BattleOpts, mapId: string): Match {
 }
 
 export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () => void }) {
-  const [mapId, setMapId] = useState(opts.mapId);
-  const [m, setM] = useState<Match>(() => startMatch(opts, opts.mapId));
+  const [mapId, setMapId] = useState(opts.resume?.mapId ?? opts.mapId);
+  const [m, setM] = useState<Match>(() => (opts.resume ? { ...opts.resume, events: [] } : startMatch(opts, opts.mapId)));
+  // Safety net: keep the live match saved so a reload or a crash lands back here.
+  useEffect(() => {
+    if (!AUTOPLAY) saveLive({ ...opts, resume: undefined, mapId }, m);
+  }, [m, mapId, opts]);
   const [sel, setSel] = useState<Sel>(null);
   const [toast, setToast] = useState<string | null>(null);
   const [turnBanner, setTurnBanner] = useState<{ id: number; side: Side } | null>(null);
@@ -160,7 +169,7 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
 
   // The rival's hand.
   const pendingMine = m.pending[0]?.side === ME ? m.pending[0] : null;
-  const aiToMove = !m.winner && (m.pending.length ? m.pending[0].side === 'red' : m.side === 'red');
+  const aiToMove = !m.winner && (AUTOPLAY || (m.pending.length ? m.pending[0].side === 'red' : m.side === 'red'));
   useEffect(() => {
     if (!aiToMove || primer || reveals.length) return;
     const wait = Math.max(AI_DELAY, flightUntil.current - performance.now() + 140);
@@ -1027,6 +1036,10 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
     );
   };
 
+  if (import.meta.env.DEV && (window as unknown as { __dhCrashOnce?: boolean }).__dhCrashOnce) {
+    (window as unknown as { __dhCrashOnce?: boolean }).__dhCrashOnce = false;
+    throw new Error('dev: forced render crash');
+  }
   const hand = m.hand[ME];
   const dragCard = drag ? (drag.src === 'leader' ? leaderCard : maybeCard(hand[drag.src] ?? '')) : undefined;
   const dragCoin = dragCard && (dragCard.kind === 'unit' || dragCard.kind === 'leader') ? dragCard : undefined;

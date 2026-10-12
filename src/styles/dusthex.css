@@ -296,3 +296,6 @@
 @keyframes dhTrapFade { from { opacity: 0 } }
 @keyframes dhTrapFlip { from { transform: rotateY(90deg) scale(.6); } to { transform: none; } }
 @media (min-width: 900px) { .dh-trap-card { width: 320px; } .dh-trap-line { font-size: 22px; } }
+
+/* No pull-to-refresh during a match: a downward swipe at the top must not reload the page. */
+html:has(body[data-screen="battle"]), body[data-screen="battle"] { overscroll-behavior-y: none; }
