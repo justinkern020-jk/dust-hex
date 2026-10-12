@@ -40,7 +40,7 @@ try {
     const page = await ctx.newPage();
     page.on('pageerror', (e) => errs.push(String(e)));
     await open(page);
-    ok((await page.locator('.hand-card').first().evaluate((el) => getComputedStyle(el).touchAction)) === 'pan-x', 'hand cards let the browser swipe sideways (touch-action: pan-x)');
+    ok((await page.locator('.hand-card').first().evaluate((el) => getComputedStyle(el).touchAction)) === 'none', 'hand cards keep every touch for the game (touch-action: none; sideways swipes are scrolled in JS)');
     const overflow = await page.$eval('[data-testid="hand-row"]', (el) => el.scrollWidth > el.clientWidth + 4);
     if (!LIVE) ok(overflow, 'hand overflows at this width');
     else console.log(`info hand overflows: ${overflow}`);
@@ -150,7 +150,7 @@ try {
     await page.waitForTimeout(500);
     const touch = (type, x, y) => cdp.send('Input.dispatchTouchEvent', { type, touchPoints: type === 'touchEnd' ? [] : [{ x, y, id: 1 }] });
     await page.locator('[data-testid="hand-row"]').scrollIntoViewIfNeeded();
-    // sideways swipe scrolls natively
+    // a sideways swipe scrolls the hand
     const c1 = await center(page, '[data-testid="hand-1"]');
     await touch('touchStart', c1.x, c1.y);
     for (let i = 1; i <= 10; i++) {
