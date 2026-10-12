@@ -5,7 +5,7 @@ import { MAPS, actError, applyAction, bankFor, canAfford, deployTiles, holdings,
 import { chooseAction, choosePending, type Mind } from '../game/ai';
 import { isSpent } from '../game/rules';
 import { posOf, unitAt } from '../game/core';
-import { CardArt, CardPeek, KIND_LABEL } from './cardview';
+import { CardArt, CardPeek, CoinFace, KIND_LABEL } from './cardview';
 import { classifyGesture, dropAction, scrollTurnsToDrag, scrollToSlider, sliderToScroll, wheelToScroll, type HandSource } from '../game/drop';
 import { MINDS } from './Porch';
 import type { GoldAward, MatchResult } from '../game/collection';
@@ -326,7 +326,11 @@ export function Battlefield({ opts, onLeave, onFinish, gold }: {
       if (lit.moves.has(key)) return void act({ t: 'move', uid: sel.uid, r, c });
     }
     if (u && u.side === ME) {
-      if (sel?.k === 'unit' && sel.uid === u.uid) return setSel(null);
+      // A second tap on your picked coin reads its card (phones have no double-click).
+      if (sel?.k === 'unit' && sel.uid === u.uid) {
+        setSel(null);
+        return setPeek({ c: card(u.cardId), power: u.power });
+      }
       return setSel({ k: 'unit', uid: u.uid });
     }
     if (u) return setPeek({ c: card(u.cardId), power: u.power });
@@ -410,7 +414,11 @@ export function Battlefield({ opts, onLeave, onFinish, gold }: {
   }, [m.winner]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // ---- dragging from the hand and scrolling it
-  const gesture = useRef<{ id: number; src: HandSource; x0: number; y0: number; mode: 'pending' | 'drag' | 'scroll' | 'none'; scroll0: number; touch: boolean; hold: number; lx: number; ly: number; raf: number } | null>(null);
+  // Hand cards take every touch themselves (touch-action: none): with pan-x the browser
+  // claimed any slanted pull toward the board as a sideways swipe and cancelled the drag.
+  // So sideways swipes of the hand (with a little fling) and page pulls are done here.
+  const gesture = useRef<{ id: number; src: HandSource; x0: number; y0: number; mode: 'pending' | 'drag' | 'scroll' | 'page' | 'none'; scroll0: number; page0: number; touch: boolean; hold: number; lx: number; ly: number; raf: number; vx: number; vy: number; t: number } | null>(null);
+  const fling = useRef(0);
   const swallowClick = useRef(false);
   // Window listeners must be the same functions to add and remove; they call the latest handlers.
   const live = useRef({ move: (_e: PointerEvent) => {}, up: (_e: PointerEvent) => {}, cancel: () => {} });
@@ -472,14 +480,30 @@ export function Battlefield({ opts, onLeave, onFinish, gold }: {
         slotH.current = slotRef.current?.offsetHeight ?? 0;
         setSel(g.src === 'leader' ? { k: 'leader' } : { k: 'hand', i: g.src });
         setToast(null);
-      } else if (k === 'scroll' && !g.touch) {
+      } else if (k === 'scroll') {
         g.mode = 'scroll';
         g.scroll0 = rowRef.current?.scrollLeft ?? 0;
+      } else if (g.touch) {
+        // A pull down (or a drag that cannot be played) moves the page, as a native pan would.
+        g.mode = 'page';
+        g.page0 = window.scrollY;
       } else {
         g.mode = 'none';
       }
     }
-    if (g.mode === 'drag') {
+    // Finger speed, for the fling when a touch swipe lets go.
+    const now = performance.now();
+    const dt = Math.max(1, now - g.t);
+    g.vx = 0.8 * ((e.clientX - g.lx) / dt) + 0.2 * g.vx;
+    g.vy = 0.8 * ((e.clientY - g.ly) / dt) + 0.2 * g.vy;
+    g.t = now;
+    if (g.mode !== 'drag') {
+      g.lx = e.clientX;
+      g.ly = e.clientY;
+    }
+    if (g.mode === 'page') {
+      window.scrollTo(window.scrollX, g.page0 - dy);
+    } else if (g.mode === 'drag') {
       e.preventDefault();
       g.lx = e.clientX;
       g.ly = e.clientY;
@@ -513,6 +537,25 @@ export function Battlefield({ opts, onLeave, onFinish, gold }: {
       }
       else if (t) setToast('That tile is not lit for this card. Drop it on a lit tile.');
       setDrag(null);
+    } else if (g.touch && (g.mode === 'scroll' || g.mode === 'page') && performance.now() - g.t < 90) {
+      // Let a quick touch swipe coast, like a native fling.
+      const row = rowRef.current;
+      let vx = g.vx;
+      let vy = g.mode === 'page' ? g.vy : 0;
+      if (g.mode !== 'scroll') vx = 0;
+      let last = performance.now();
+      const step = (now: number) => {
+        const dt = Math.min(40, now - last);
+        last = now;
+        if (row && vx) row.scrollLeft -= vx * dt;
+        if (vy) window.scrollBy(0, -vy * dt);
+        const k = Math.pow(0.995, dt);
+        vx *= k;
+        vy *= k;
+        fling.current = Math.abs(vx) + Math.abs(vy) > 0.03 ? window.requestAnimationFrame(step) : 0;
+      };
+      window.cancelAnimationFrame(fling.current);
+      fling.current = window.requestAnimationFrame(step);
     }
     endGesture();
     window.setTimeout(() => (swallowClick.current = false), 0);
@@ -528,6 +571,8 @@ export function Battlefield({ opts, onLeave, onFinish, gold }: {
     if (e.button !== 0 || gesture.current || inFlight()) return;
     const touch = e.pointerType !== 'mouse';
     swallowClick.current = false;
+    window.cancelAnimationFrame(fling.current);
+    fling.current = 0;
     gesture.current = {
       id: e.pointerId,
       src,
@@ -535,6 +580,10 @@ export function Battlefield({ opts, onLeave, onFinish, gold }: {
       y0: e.clientY,
       mode: 'pending',
       scroll0: 0,
+      page0: window.scrollY,
+      vx: 0,
+      vy: 0,
+      t: performance.now(),
       lx: e.clientX,
       ly: e.clientY,
       raf: 0,
@@ -554,7 +603,13 @@ export function Battlefield({ opts, onLeave, onFinish, gold }: {
     window.addEventListener('pointerup', stable.up);
     window.addEventListener('pointercancel', stable.cancel);
   };
-  useEffect(() => () => endGesture(), []); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(
+    () => () => {
+      endGesture();
+      window.cancelAnimationFrame(fling.current);
+    },
+    [], // eslint-disable-line react-hooks/exhaustive-deps
+  );
   const tapGuard = (fn: () => void) => () => {
     if (swallowClick.current) {
       swallowClick.current = false;
@@ -787,7 +842,7 @@ export function Battlefield({ opts, onLeave, onFinish, gold }: {
           setPeek({ c, power: u.power });
         }}
       >
-        <CardArt c={c} className="stone-face" />
+        <CoinFace c={c} />
         <span className="coin-stat coin-loyalty" title="Cost">
           <abbr>$</abbr>
           {c.cost}
@@ -1166,10 +1221,24 @@ export function Battlefield({ opts, onLeave, onFinish, gold }: {
           {(() => {
             const c = drag.src === 'leader' ? leaderCard : card(hand[drag.src] ?? 'jesse');
             return (
-              <span className="dh-ghost-card">
-                <CardArt c={c} />
-                <span>{c.name}</span>
-              </span>
+              c.kind === 'unit' || c.kind === 'leader' ? (
+                // The coin this card becomes, hovering over the tile it would land on.
+                <span className="dh-ghost-coinwrap">
+                  <span className={`stone-coin is-${ME} coin-mine dh-ghost-coin${c.kind === 'leader' ? ' is-leader' : ''}`}>
+                    <CoinFace c={c} />
+                    <span className="coin-power-slot">
+                      <span className="coin-stat coin-power">{c.power}</span>
+                    </span>
+                    {c.kind === 'leader' && <span className="coin-leader-mark" aria-hidden>★</span>}
+                  </span>
+                  <span className="dh-ghost-name">{c.name}</span>
+                </span>
+              ) : (
+                <span className="dh-ghost-card">
+                  <CardArt c={c} />
+                  <span>{c.name}</span>
+                </span>
+              )
             );
           })()}
         </div>

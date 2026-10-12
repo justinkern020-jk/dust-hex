@@ -1,0 +1,222 @@
+/* ============================================================== portrait coins
+   Every unit on the board is a struck coin bearing its card portrait (face and upper
+   body, cropped per card by scripts/coin-faces.py). Your side: brass rim with a blue
+   enamel line. The rival: dark iron with a red enamel line. Leaders: a gold double
+   rim and a star. Power sits on a large badge; cost and keywords stay small. */
+.stone-coin {
+  --rim-hi: #fff2c4;
+  --rim-a: #e6be66;
+  --rim-b: #9a6a26;
+  --rim-lo: #4a2f10;
+  --enamel: #4f8fd6;
+  --drop: 0 3px 0 #120c07, 0 7px 12px #000000a6;
+  container-type: inline-size;
+  inset: 2.5%;
+  padding: 0;
+  border-radius: 50%;
+  background: #120d09;
+  box-shadow: var(--drop);
+  filter: none;
+}
+.stone-coin.is-blue,
+.stone-coin.is-red { box-shadow: var(--drop); }
+.stone-coin.coin-foe {
+  --rim-hi: #eef1f5;
+  --rim-a: #8b919b;
+  --rim-b: #3b3f47;
+  --rim-lo: #15171b;
+  --enamel: #c4473f;
+  background: #0e0f12;
+  filter: none;
+}
+/* the portrait */
+.coin-face {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 35%, #3a2c1c, #120d09 70%);
+  pointer-events: none;
+}
+.coin-face .coin-portrait {
+  position: absolute;
+  display: block;
+  max-width: none;
+  height: auto;
+  aspect-ratio: 2 / 3;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.coin-face .card-art-fallback { position: absolute; inset: 0; }
+/* the struck metal rim */
+.stone-coin::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: 50%;
+  pointer-events: none;
+  background: conic-gradient(from 200deg, var(--rim-hi), var(--rim-a) 12%, var(--rim-b) 30%, var(--rim-lo) 42%, var(--rim-b) 52%, var(--rim-a) 64%, var(--rim-hi) 74%, var(--rim-a) 86%, var(--rim-b) 94%, var(--rim-hi));
+  -webkit-mask: radial-gradient(closest-side, #0000 83%, #000 85%);
+  mask: radial-gradient(closest-side, #0000 83%, #000 85%);
+}
+/* enamel side line inside the rim + a soft vignette on the face */
+.stone-coin::after {
+  content: '';
+  position: absolute;
+  inset: 7.5%;
+  z-index: 3;
+  border-radius: 50%;
+  pointer-events: none;
+  box-shadow: 0 0 0 1px #0009, inset 0 0 0 max(2px, 3.5cqw) var(--enamel), inset 0 0 0 max(3px, 5cqw) #0006, inset 0 -7cqw 12cqw #0008, inset 0 6cqw 10cqw #fff1;
+}
+/* Leaders: gold double rim and a star */
+.stone-coin.is-leader.is-blue,
+.stone-coin.is-leader.is-red {
+  box-shadow: 0 0 0 1.5px #1a120c, 0 0 0 4px #f3d68a, 0 0 0 5px #5a3c12, 0 0 12px #e7c56a80, var(--drop);
+}
+.stone-coin.coin-foe.is-leader.is-red,
+.stone-coin.coin-foe.is-leader.is-blue {
+  box-shadow: 0 0 0 1.5px #0b0c0f, 0 0 0 4px #e8c46a, 0 0 0 5px #6a1c18, 0 0 12px #c4473f80, var(--drop);
+}
+.stone-coin .coin-leader-mark {
+  left: 50%;
+  right: auto;
+  top: -13%;
+  transform: translateX(-50%);
+  z-index: 8;
+  font-size: max(12px, 26cqw);
+  line-height: 1;
+  color: #ffe7a3;
+  text-shadow: 0 0 1px #3a2408, 0 1px 0 #3a2408, 0 0 6px #e7c56acc;
+}
+.stone-coin.coin-foe .coin-leader-mark { color: #ffd2a8; text-shadow: 0 0 1px #3a0e08, 0 1px 0 #3a0e08, 0 0 6px #c4473fcc; }
+
+/* Badges: power large and legible, cost small */
+.stone-coin .coin-stat {
+  z-index: 6;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0;
+  text-shadow: none;
+  bottom: auto;
+}
+.stone-coin .coin-power-slot { right: -7%; bottom: -7%; z-index: 6; }
+.stone-coin .coin-power {
+  width: max(19px, 40cqw);
+  height: max(19px, 40cqw);
+  font-size: max(12px, 25cqw);
+  color: #1d1206;
+  background: radial-gradient(circle at 35% 28%, #fff7da, #f0cf7c 40%, #b98633 75%, #6f4a16);
+  border: 1.5px solid #2a1a08;
+  box-shadow: 0 2px 0 #120c07, 0 2px 6px #000a, inset 0 1px 0 #fffc;
+  text-shadow: 0 1px 0 #fff5;
+}
+.stone-coin.coin-foe .coin-power {
+  color: #fff4ea;
+  background: radial-gradient(circle at 35% 28%, #9aa1ab, #4a4f58 45%, #1e2025 85%);
+  border-color: #c4473f;
+  text-shadow: 0 1px 1px #000;
+}
+.stone-coin .coin-power.coin-hurt,
+.stone-coin.coin-foe .coin-power.coin-hurt {
+  color: #fff;
+  background: radial-gradient(circle at 35% 28%, #ff9b8c, #c8352a 45%, #6d120c 90%);
+  border-color: #2a0806;
+  text-shadow: 0 1px 1px #3a0000;
+}
+.stone-coin .coin-loyalty {
+  left: -4%;
+  bottom: -2%;
+  width: max(13px, 25cqw);
+  height: max(13px, 25cqw);
+  font-size: max(8px, 15cqw);
+  color: #f3e2b8;
+  background: radial-gradient(circle at 35% 28%, #3d3022, #17110b 80%);
+  border: 1px solid #c6a15b;
+  box-shadow: 0 1px 3px #000c;
+}
+.stone-coin .coin-fast-dagger {
+  top: -3%;
+  right: -3%;
+  width: max(12px, 24cqw);
+  height: max(12px, 24cqw);
+  z-index: 6;
+}
+.stone-coin .coin-gear-row { top: -18%; }
+
+/* Spent this turn / just arrived: the portrait greys, badges stay readable. */
+.stone-coin.is-sick { opacity: 1; filter: none; }
+.stone-coin.is-sick .coin-face { filter: grayscale(0.75) brightness(0.78) contrast(0.95); }
+.stone-coin.is-sick::before { filter: saturate(0.5) brightness(0.8); }
+
+/* Ready to act: a soft halo in the side colour (replaces the old ring pulse). */
+.stone-coin.can-step.is-blue,
+.stone-coin.can-step.is-red { animation: 2.4s ease-in-out infinite dh-coin-ready; }
+.stone-coin.can-step.is-red { --ready: #ff9a8a; }
+.stone-coin.can-step { --ready: #a9d0ff; }
+@keyframes dh-coin-ready {
+  0%, 100% { box-shadow: 0 0 0 1px #0008, 0 0 6px var(--ready), var(--drop); }
+  50% { box-shadow: 0 0 0 2px var(--ready), 0 0 16px var(--ready), var(--drop); }
+}
+.stone-coin.is-leader.can-step { animation-name: dh-coin-ready-leader; }
+@keyframes dh-coin-ready-leader {
+  0%, 100% { box-shadow: 0 0 0 1.5px #1a120c, 0 0 0 4px #f3d68a, 0 0 6px var(--ready), var(--drop); }
+  50% { box-shadow: 0 0 0 1.5px #1a120c, 0 0 0 4px #f3d68a, 0 0 18px var(--ready), var(--drop); }
+}
+.stone-coin.stone-picked { outline: 2px solid #fff6d8; outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  .stone-coin.can-step.is-blue, .stone-coin.can-step.is-red { animation: none; box-shadow: 0 0 0 2px var(--ready), var(--drop); }
+}
+
+/* Drag ghost: the coin the card will become */
+.dh-ghost-coinwrap { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.stone-coin.dh-ghost-coin,
+.stone-coin.dh-ghost-coin.is-blue {
+  position: relative;
+  inset: auto;
+  display: block;
+  width: 4.6rem;
+  height: 4.6rem;
+  box-shadow: 0 0 0 3px #e7c56a66, 0 18px 28px #000c;
+  animation: none;
+}
+.dh-ghost-name {
+  font-family: var(--font-display);
+  font-size: .6rem;
+  letter-spacing: .04em;
+  color: #f3e6c8;
+  background: #0a0806e6;
+  border: 1px solid #c6a15b88;
+  border-radius: 999px;
+  padding: 1px 8px;
+  white-space: nowrap;
+}
+.dh-ghost:has(.dh-ghost-coinwrap) { transform: translate(-50%, -100%); }
+
+/* The primer's Ride button stays in reach on short screens. */
+.primer-plate [data-testid='primer-dismiss'] {
+  position: sticky;
+  bottom: 0;
+  box-shadow: 0 -12px 18px #12100d, 0 4px 10px #000a;
+}
+
+/* Terrain under a coin: a small tag on the coin's top edge instead of a clipped word. */
+.stone.has-unit .elev-mark {
+  z-index: 7;
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 7px;
+  letter-spacing: .1em;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: #0c0907d9;
+  border: 1px solid #c6a15b88;
+}
+.stone.has-unit:has(.is-leader) .elev-mark { top: auto; bottom: -5px; }

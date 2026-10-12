@@ -190,7 +190,7 @@
 .hand-row.hand-row-slide { margin-top: 0; padding: var(--dh-s2) var(--dh-s1) var(--dh-s2); scroll-snap-type: x proximity; scroll-padding: 0 var(--dh-s2); }
 .hand-row.hand-row-slide > .hand-card { scroll-snap-align: start; }
 /* Let the browser handle sideways swipes; vertical moves become drags. */
-.hand-card, .hand-card.is-draggable, .hand-scroller.is-overflowing .hand-card.is-draggable { touch-action: pan-x; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+.hand-card, .hand-card.is-draggable, .hand-scroller.is-overflowing .hand-card.is-draggable { touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
 .hand-card.is-draggable { cursor: grab; }
 .dh-scroller { display: flex; align-items: center; gap: var(--dh-s2); }
 .dh-scroller .hand-scroller-view { flex: 1 1 auto; min-width: 0; }

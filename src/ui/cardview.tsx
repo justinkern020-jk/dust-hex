@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { Card } from '../game/types';
 import { faction } from '../game/cards';
+import { coinCrop } from './coinface';
 
 export const KIND_LABEL: Record<string, string> = {
   unit: 'Unit',
@@ -56,6 +57,21 @@ export function CardArt({ c, className, alt = '' }: { c: Card; className?: strin
       style={c.artPos ? { objectPosition: c.artPos } : undefined}
       onError={() => setBad(true)}
     />
+  );
+}
+
+/** A unit's portrait as it sits in a round board coin (face and upper body). */
+export function CoinFace({ c }: { c: Card }) {
+  const [bad, setBad] = useState(false);
+  useEffect(() => setBad(false), [c.id]);
+  return (
+    <span className="coin-face" aria-hidden>
+      {bad ? (
+        <span className="card-art-fallback" />
+      ) : (
+        <img className="coin-portrait" src={c.art} alt="" draggable={false} style={coinCrop(c.id)} onError={() => setBad(true)} />
+      )}
+    </span>
   );
 }
 
