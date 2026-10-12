@@ -1,0 +1,84 @@
+/* ---- Battlefield feel: clash, death, landing, trails, shake, turn banner ---- */
+.board-grid { position: relative; }
+.fx { position: absolute; pointer-events: none; z-index: 45; transform: translate(-50%, -50%); }
+.fx i, .fx b { position: absolute; left: 50%; top: 50%; display: block; }
+
+/* clash: hot flash + sparks + dust */
+.fx-clash { width: 0; height: 0; }
+.fx-flash { width: 64px; height: 64px; margin: -32px 0 0 -32px; border-radius: 50%;
+  background: radial-gradient(circle, #fffbe8 0 18%, #ffd27a 38%, rgba(255,150,40,.45) 58%, transparent 72%);
+  opacity: 0; animation: fxFlash .36s ease-out forwards; animation-delay: inherit; will-change: transform, opacity; }
+.fx-clash.is-ranged .fx-flash { width: 44px; height: 44px; margin: -22px 0 0 -22px; }
+.fx-spark { width: var(--s); height: calc(var(--s) * .45); margin: -1px 0 0 0; border-radius: 2px;
+  background: #ffe9a8; box-shadow: 0 0 6px #ff9f2e; opacity: 0;
+  animation: fxSpark .42s cubic-bezier(.1,.7,.3,1) forwards; animation-delay: inherit; }
+.fx-dust { width: calc(var(--s) * 3); height: calc(var(--s) * 3); margin: calc(var(--s) * -1.5) 0 0 calc(var(--s) * -1.5); border-radius: 50%;
+  background: radial-gradient(circle, rgba(196,160,110,.75), rgba(150,115,70,0) 70%); opacity: 0;
+  animation: fxDust .55s ease-out forwards; animation-delay: inherit; }
+@keyframes fxFlash { 0% { opacity: 0; transform: scale(.3); } 18% { opacity: 1; transform: scale(1.1); } 100% { opacity: 0; transform: scale(1.5); } }
+@keyframes fxSpark { 0% { opacity: 1; transform: rotate(var(--a)) translateX(4px) scaleX(2.2); } 100% { opacity: 0; transform: rotate(var(--a)) translateX(calc(var(--d) * .5)) scaleX(.6); } }
+@keyframes fxDust { 0% { opacity: .9; transform: rotate(var(--a)) translateX(2px) scale(.5); } 100% { opacity: 0; transform: rotate(var(--a)) translateX(calc(var(--d) * .38)) scale(1.4); } }
+
+/* death: coin desaturates, cracks, halves fall apart into grit */
+.fx-death { border-radius: 50%; z-index: 44; }
+.fx-half { position: absolute; inset: 0; border-radius: 50%; overflow: hidden; box-shadow: 0 0 0 2px #3a2412;
+  animation: fxHalfL 1s cubic-bezier(.35,.1,.4,1) forwards; animation-delay: inherit; will-change: transform, opacity; }
+.fx-half img { width: 100%; height: 100%; object-fit: cover; display: block; animation: fxGray .35s ease-out forwards; animation-delay: inherit; }
+.fx-half-l { clip-path: polygon(0 0, 52% 0, 46% 22%, 57% 37%, 43% 54%, 55% 70%, 48% 100%, 0 100%); }
+.fx-half-r { clip-path: polygon(52% 0, 100% 0, 100% 100%, 48% 100%, 55% 70%, 43% 54%, 57% 37%, 46% 22%); animation-name: fxHalfR; }
+.fx-crack { position: absolute; inset: 0; width: 100%; height: 100%; fill: none; stroke: #f6e2b5; stroke-width: 3; stroke-linecap: round;
+  filter: drop-shadow(0 0 2px #000); stroke-dasharray: 120; stroke-dashoffset: 120; animation: fxCrack 1s ease-out forwards; animation-delay: inherit; }
+.fx-grit { width: var(--s); height: var(--s); margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2); border-radius: 30%;
+  background: #8a6a44; opacity: 0; animation: fxGrit .9s cubic-bezier(.2,.6,.4,1) forwards; animation-delay: calc(var(--fx-delay) + .22s); }
+@keyframes fxGray { to { filter: grayscale(1) sepia(.35) brightness(.7); } }
+@keyframes fxHalfL { 0%, 24% { transform: none; opacity: 1; } 100% { transform: translate(-16%, 22%) rotate(-14deg); opacity: 0; } }
+@keyframes fxHalfR { 0%, 24% { transform: none; opacity: 1; } 100% { transform: translate(15%, 26%) rotate(11deg); opacity: 0; } }
+@keyframes fxCrack { 0% { stroke-dashoffset: 120; opacity: 1; } 24% { stroke-dashoffset: 0; opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 0; } }
+@keyframes fxGrit { 0% { opacity: 1; transform: rotate(var(--a)) translateX(0); } 100% { opacity: 0; transform: rotate(var(--a)) translateX(calc(var(--d) * .7)) translateY(30%); } }
+
+/* deploy landing: dust ring */
+.fx-land { border-radius: 50%; z-index: 4; opacity: 0;
+  background: radial-gradient(circle, transparent 38%, rgba(190,150,100,.55) 48%, transparent 66%);
+  animation: fxLand .42s ease-out forwards; animation-delay: inherit; }
+.fx-land .fx-dust { animation-delay: inherit; }
+@keyframes fxLand { 0% { opacity: .9; transform: translate(-50%, -50%) scale(.45); } 100% { opacity: 0; transform: translate(-50%, -50%) scale(1); } }
+
+/* move trail: hoofprint dust streak */
+.fx-trail { height: 6px; margin-top: -3px; transform-origin: 0 50%; z-index: 3; border-radius: 3px; opacity: 0;
+  background: repeating-linear-gradient(90deg, rgba(200,165,115,.6) 0 7px, transparent 7px 13px);
+  animation: fxTrail .6s ease-out forwards; animation-delay: inherit; translate: 0 0; }
+.fx.fx-trail { transform: none; }
+@keyframes fxTrail { 0% { opacity: 0; } 25% { opacity: .85; } 100% { opacity: 0; } }
+
+/* screen shake */
+.bf-board-socket.fx-shake { animation: fxShake .32s cubic-bezier(.3,.7,.4,1); --shk: 2.5px; }
+.bf-board-socket.fx-shake-hard { --shk: 4px; }
+@keyframes fxShake { 0%,100% { transform: translate(0,0); } 20% { transform: translate(calc(var(--shk) * -1), calc(var(--shk) * .5)); } 40% { transform: translate(var(--shk), calc(var(--shk) * -.6)); } 60% { transform: translate(calc(var(--shk) * -.5), calc(var(--shk) * .3)); } 80% { transform: translate(calc(var(--shk) * .3), 0); } }
+
+/* selection + hover glows */
+.stone-coin.stone-picked { box-shadow: 0 0 0 2px #2a1608, 0 0 0 4px #ffd27a, 0 0 18px 4px rgba(255,190,90,.7); animation: fxPickPulse 1.3s ease-in-out infinite; }
+@keyframes fxPickPulse { 50% { box-shadow: 0 0 0 2px #2a1608, 0 0 0 4px #ffe6ad, 0 0 26px 7px rgba(255,190,90,.85); } }
+@media (hover: hover) { .stone-coin.can-step:hover { filter: brightness(1.12); box-shadow: 0 0 0 3px rgba(255,214,140,.8), 0 0 14px rgba(255,190,90,.55); } }
+
+/* damage / heal numbers: bigger, outlined, readable on art */
+.coin-dmg-float { font-family: 'Rye', Georgia, serif; font-size: clamp(16px, 4.6vw, 24px) !important; color: #ffe0d0 !important;
+  -webkit-text-stroke: 1px #3a0a04; text-shadow: 0 0 6px #e0381c, 0 2px 0 #2a0602 !important; z-index: 50; }
+.coin-dmg-float.is-heal { color: #e6ffd8 !important; text-shadow: 0 0 6px #3fb060, 0 2px 0 #062a10 !important; -webkit-text-stroke-color: #0a3a14; }
+
+/* turn banner */
+.dh-turn-banner { position: fixed; left: 0; right: 0; top: 38%; z-index: 880; pointer-events: none; display: flex; justify-content: center; }
+.dh-turn-banner span { font-family: 'Rye', Georgia, serif; font-size: clamp(22px, 7vw, 40px); letter-spacing: 2px; color: #f6e2b5;
+  padding: 8px 34px; background: linear-gradient(90deg, transparent, rgba(60,30,10,.92) 18%, rgba(60,30,10,.92) 82%, transparent);
+  border-top: 2px solid #c79a4b; border-bottom: 2px solid #c79a4b; text-shadow: 0 2px 3px #000; animation: fxBanner 1.1s ease-in-out forwards; }
+.dh-turn-banner.is-red span { color: #ffc2a8; border-color: #9a3a22; }
+@keyframes fxBanner { 0% { opacity: 0; transform: translateX(-40px) scaleY(.6); } 18% { opacity: 1; transform: none; } 78% { opacity: 1; transform: none; } 100% { opacity: 0; transform: translateX(40px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .fx-spark, .fx-dust, .fx-grit, .fx-trail { display: none; }
+  .fx-half { animation: fxFade .7s ease-out forwards; animation-delay: inherit; }
+  .bf-board-socket.fx-shake { animation: none; }
+  .stone-coin.stone-picked { animation: none; }
+  .dh-turn-banner span { animation: fxBannerFade 1.1s ease-in-out forwards; }
+}
+@keyframes fxFade { 0%, 30% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes fxBannerFade { 0% { opacity: 0; } 20%, 75% { opacity: 1; } 100% { opacity: 0; } }

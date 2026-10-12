@@ -11,8 +11,10 @@ import { MINDS } from './Porch';
 import { trapReveals, type TrapReveal } from '../game/trapReveal';
 
 /** Read at load, before the launch code tidies the URL. */
+if (import.meta.env.DEV && typeof window !== 'undefined') (window as unknown as { __dhFx: unknown }).__dhFx = { planFx, runFx };
 const TRAP_DEMO = import.meta.env.DEV && new URLSearchParams(window.location.search).has('trapdemo');
 import { WeatherLayer, pickWeather } from './Weather';
+import { planFx, fxMs, runFx } from './fx';
 import { flightMs, planSlides, slideKeyframes, slideTiming, type Box } from './coinMotion';
 import { playMatchSting, playMusic, sfx, soundEvents, stopMenuMusic } from './sound';
 
@@ -88,6 +90,7 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
   const [m, setM] = useState<Match>(() => startMatch(opts, opts.mapId));
   const [sel, setSel] = useState<Sel>(null);
   const [toast, setToast] = useState<string | null>(null);
+  const [turnBanner, setTurnBanner] = useState<{ id: number; side: Side } | null>(null);
   const [reveals, setReveals] = useState<TrapReveal[]>([]);
   const revealSeq = useRef(0);
   const [peek, setPeek] = useState<{ c: Card; power?: number } | null>(null);
@@ -126,6 +129,8 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
 
   const after = useCallback((next: Match) => {
     soundEvents(next.events, ME, next);
+    const turnEv = next.events.find((e) => e.e === 'turn') as { side: Side } | undefined;
+    if (turnEv && !next.winner) setTurnBanner({ id: Date.now(), side: turnEv.side });
     const tr = trapReveals(next.events, revealSeq.current++);
     if (tr.length) setReveals((q) => [...q, ...tr]);
     const fresh: { id: number; uid: string; text: string }[] = [];
@@ -206,6 +211,14 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
     });
     const prev = coinBoxes.current;
     coinBoxes.current = now;
+    const reducedFx = typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prev.size && m.events.length) {
+      const fx = planFx(m.events, prev, now, reducedFx);
+      if (fx.length) {
+        runFx(grid, fx, (id) => maybeCard(id)?.art ?? '', reducedFx);
+        flightUntil.current = Math.max(flightUntil.current, performance.now() + fxMs(fx));
+      }
+    }
     if (!prev.size && !m.events.some((e) => e.e === 'deploy')) return;
     const deployed = new Set(m.events.filter((e) => e.e === 'deploy').map((e) => (e as { uid: string }).uid));
     const launch = (uid: string): Box | null => {
@@ -252,7 +265,7 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
       anim.oncancel = done;
     }
     const ms = flightMs(slides, reduced);
-    flightUntil.current = performance.now() + ms;
+    flightUntil.current = Math.max(flightUntil.current, performance.now() + ms);
     if (deploying)
       window.setTimeout(() => {
         if (wrap) wrap.style.overflow = '';
@@ -1119,6 +1132,11 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
       </header>
       <div className="bf-banner-slot" aria-live="polite" ref={slotRef} style={drag ? { height: slotH.current, overflow: 'hidden' } : undefined}>
         {!drag && banner}
+        {turnBanner && !reveal && (
+          <div key={turnBanner.id} className={`dh-turn-banner is-${turnBanner.side}`} data-testid="turn-banner" onAnimationEnd={() => setTurnBanner(null)} aria-live="polite">
+            <span>{turnBanner.side === ME ? 'Your Turn' : 'Rival Rides'}</span>
+          </div>
+        )}
         {reveal && (() => {
           const rc = reveal.cardId ? maybeCard(reveal.cardId) : undefined;
           return (
