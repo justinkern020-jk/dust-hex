@@ -1,0 +1,85 @@
+/* ---- Premium card view (zoom / peek / Codex / shop / deck editor) ---- */
+.pc-scrim { background: rgba(8,5,2,.9); display: flex; align-items: flex-start; justify-content: center; overflow-y: auto; overscroll-behavior: contain; padding: max(14px, env(safe-area-inset-top)) 10px 24px; }
+.pc-sheet { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%; max-width: 420px; margin: auto 0; }
+.pc-stage { perspective: 900px; width: min(88vw, 360px, calc((100dvh - 120px) * 0.714)); }
+.pc-card {
+  --mx: 50%; --my: 35%; --rx: 0deg; --ry: 0deg;
+  --rar: #a89474; --rar2: #6e5d44;
+  position: relative; aspect-ratio: 5 / 7; width: 100%; border-radius: 4.5% / 3.2%;
+  transform: rotateX(var(--rx)) rotateY(var(--ry)); isolation: isolate; transition: transform .12s ease-out;
+  will-change: transform; touch-action: pan-y; container-type: inline-size;
+  box-shadow: 0 1.5cqw 5cqw rgba(0,0,0,.65), 0 0 0 1px #1a0f06;
+  background:
+    linear-gradient(135deg, #fff1c2 0%, #d9a94c 18%, #8a5a1c 38%, #f2cf7a 52%, #9a6a24 70%, #f6dc94 86%, #7a4e18 100%);
+  padding: 2.6cqw;
+  animation: pcIn .38s cubic-bezier(.2,1.25,.4,1);
+}
+.pc-card.rarity-uncommon { --rar: #c9d3da; --rar2: #6d7b86; }
+.pc-card.rarity-rare { --rar: #f2c24f; --rar2: #8a5a10; }
+.pc-card.rarity-patron { --rar: #e0546a; --rar2: #6a1424; }
+@keyframes pcIn { from { opacity: 0; transform: translateY(18px) scale(.92) rotateX(10deg); } }
+.pc-frame {
+  position: relative; height: 100%; border-radius: 3.2% / 2.3%; overflow: hidden; display: flex; flex-direction: column;
+  background: #2a1a0e radial-gradient(ellipse at 50% 0%, #4a2e16, #1c1108 75%);
+  box-shadow: inset 0 0 0 0.9cqw var(--rar), inset 0 0 0 1.4cqw #1a0f06, inset 0 0 3cqw rgba(0,0,0,.8);
+  padding: 2.4cqw 2.6cqw 2cqw;
+}
+/* ornate corners */
+.pc-frame::before, .pc-frame::after { content: ''; position: absolute; width: 11cqw; height: 11cqw; pointer-events: none; z-index: 3;
+  background: radial-gradient(circle at 0 0, transparent 52%, #f2d08a 53% 58%, transparent 59%), radial-gradient(circle at 30% 30%, #f6dc94 0 9%, transparent 10%); }
+.pc-frame::before { left: 1.2cqw; top: 1.2cqw; }
+.pc-frame::after { right: 1.2cqw; bottom: 1.2cqw; transform: rotate(180deg); }
+.pc-head { position: relative; z-index: 2; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.6cqw; margin-bottom: 1.8cqw; }
+.pc-name { margin: 0; text-align: center; font: 400 clamp(14px, 6.4cqw, 26px)/1.05 'Rye', Georgia, serif; color: #2a1606; letter-spacing: .02em;
+  padding: 1.6cqw 2.4cqw; border-radius: 1.6cqw; background: linear-gradient(#f6e4b4, #d8b46c 55%, #b48a42);
+  box-shadow: inset 0 .4cqw 0 rgba(255,255,255,.6), inset 0 -.5cqw 0 rgba(90,50,10,.55), 0 .5cqw 1.2cqw rgba(0,0,0,.55);
+  text-shadow: 0 1px 0 rgba(255,240,200,.8), 0 -1px 0 rgba(80,40,0,.35); overflow-wrap: anywhere; }
+.pc-medal { display: grid; place-items: center; width: 12.5cqw; aspect-ratio: 1; border-radius: 50%; position: relative;
+  font: 700 clamp(14px, 6.6cqw, 26px)/1 Georgia, serif; color: #2a1606;
+  background: radial-gradient(circle at 35% 30%, #fff4cc, #e2b85c 45%, #8a5a1c 100%);
+  box-shadow: 0 0 0 .6cqw #3a2208, 0 0 0 1cqw #e6c27a, 0 .8cqw 1.6cqw rgba(0,0,0,.6), inset 0 -.6cqw .8cqw rgba(80,40,0,.5); }
+.pc-medal small { position: absolute; top: 12%; font-size: 40%; opacity: .7; }
+.pc-power { background: radial-gradient(circle at 35% 30%, #fbe0d0, #c0604a 50%, #5e1a10 100%); color: #fff2e0; text-shadow: 0 1px 2px #000; }
+.pc-power.is-hurt { box-shadow: 0 0 0 .6cqw #3a0808, 0 0 0 1cqw #ff8a70, 0 0 3cqw #ff4a2a; }
+.pc-power.is-up { box-shadow: 0 0 0 .6cqw #083a10, 0 0 0 1cqw #8aff9a, 0 0 3cqw #3aff6a; }
+.pc-gem { width: 8cqw; aspect-ratio: 1; transform: rotate(45deg); border-radius: 1.2cqw;
+  background: radial-gradient(circle at 30% 30%, #fff, var(--rar) 35%, var(--rar2) 100%);
+  box-shadow: 0 0 0 .6cqw #3a2208, 0 0 0 1cqw #e6c27a, 0 0 2.5cqw var(--rar); }
+.pc-art { position: relative; z-index: 1; flex: 0 0 auto; aspect-ratio: 4 / 2.85; border-radius: 1.4cqw; overflow: hidden;
+  box-shadow: 0 0 0 .6cqw #1a0f06, 0 0 0 1.2cqw var(--rar), inset 0 0 3cqw rgba(0,0,0,.7); background: #120b05; }
+.pc-art img, .pc-art .card-art-fallback { width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; display: block; }
+.pc-art::after { content: ''; position: absolute; inset: 0; box-shadow: inset 0 0 2.4cqw rgba(0,0,0,.75); pointer-events: none; }
+.pc-type { position: relative; z-index: 2; display: flex; align-items: center; gap: 1.6cqw; margin: 2.2cqw 0 1.4cqw; padding: .8cqw 2cqw .8cqw .8cqw;
+  border-radius: 99px; background: linear-gradient(90deg, #3a2410, #5a3a1a 50%, #3a2410); box-shadow: inset 0 0 0 .4cqw #c8a060;
+  color: #f6e2b5; font: 600 clamp(10px, 3.7cqw, 14px)/1.2 Georgia, serif; }
+.pc-type span { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pc-type em { font-style: normal; font-family: 'Rye', Georgia, serif; font-size: 92%; color: #e6c27a; }
+.pc-crest { width: 7.5cqw; height: 7.5cqw; flex: none; fill: none; stroke: #2a1606; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.pc-crest-disc { fill: #e2b85c; stroke: #3a2208; stroke-width: 1.5; }
+.pc-text { position: relative; z-index: 2; flex: 1 1 auto; min-height: 0; overflow: auto; border-radius: 1.4cqw; padding: 2.4cqw 3cqw;
+  color: #24160a; font: 400 clamp(11px, 3.9cqw, 15px)/1.32 'Libre Baskerville', Georgia, serif;
+  background: #ead7ae url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='p'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' seed='4'/><feColorMatrix values='0 0 0 0 .45  0 0 0 0 .33  0 0 0 0 .18  0 0 0 .22 0'/></filter><rect width='100%' height='100%' filter='url(%23p)'/></svg>");
+  box-shadow: inset 0 0 0 .4cqw #8a6a3a, inset 0 0 4cqw rgba(120,80,30,.45), 0 .4cqw 1cqw rgba(0,0,0,.5); }
+.pc-rules { margin: 0 0 1.6cqw; }
+.pc-lead strong { font-family: 'Rye', Georgia, serif; font-weight: 400; color: #6a2a10; }
+.pc-flavor { margin: 1.6cqw 0 0; padding-top: 1.6cqw; border-top: 1px solid rgba(90,60,25,.35); font-style: italic; font-size: 90%; color: #4a3218; }
+.pc-flavor span { font-style: normal; font-size: 88%; white-space: nowrap; }
+.pc-foot { position: relative; z-index: 2; display: flex; align-items: flex-end; justify-content: space-between; margin-top: 1.6cqw; min-height: 6cqw; }
+.pc-set { font: 600 clamp(8px, 2.9cqw, 11px)/1 Georgia, serif; letter-spacing: .08em; text-transform: uppercase; color: #c8a868; padding-bottom: .6cqw; }
+.pc-foot .pc-power { margin: -8cqw 0 0 0; }
+/* foil + glare: tilt moves the light */
+.pc-foil, .pc-glare { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 4; }
+.pc-foil { opacity: 0; mix-blend-mode: overlay;
+  background: linear-gradient(115deg, transparent 20%, rgba(255,120,120,.55) 32%, rgba(255,226,120,.6) 40%, rgba(120,255,190,.55) 48%, rgba(120,190,255,.55) 56%, rgba(210,130,255,.55) 64%, transparent 76%) var(--mx) var(--my) / 250% 250% no-repeat; }
+.pc-card.rarity-uncommon .pc-foil { opacity: .35; filter: grayscale(1); }
+.pc-card.rarity-rare .pc-foil { opacity: .45; filter: sepia(.5) saturate(1.3); }
+.pc-card.rarity-patron .pc-foil { opacity: .6; }
+.pc-glare { mix-blend-mode: soft-light; background: radial-gradient(circle at var(--mx) var(--my), rgba(255,250,235,.75), rgba(255,255,255,0) 45%); }
+.pc-note { margin: 0; color: #ffd8a8; font: italic 14px Georgia, serif; text-align: center; }
+.pc-kw { width: 100%; margin: 0; padding: 10px 14px; list-style: none; border-radius: 10px; background: rgba(30,18,8,.85); box-shadow: inset 0 0 0 1px #8a6a3a; color: #f1dfb8; font: 13.5px/1.4 Georgia, serif; }
+.pc-kw li + li { margin-top: 6px; }
+.pc-kw strong { color: #f2c24f; font-family: 'Rye', Georgia, serif; font-weight: 400; }
+.pc-close { min-width: 140px; }
+@media (prefers-reduced-motion: reduce) {
+  .pc-card { animation: none; transform: none !important; transition: none; }
+}

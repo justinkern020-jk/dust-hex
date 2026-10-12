@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { Card } from '../game/types';
 import { faction } from '../game/cards';
 import { coinCrop } from './coinface';
+import { PremiumCard } from './PremiumCard';
 
 export const KIND_LABEL: Record<string, string> = {
   unit: 'Unit',
@@ -83,46 +84,30 @@ export function CardPeek({ c, power, onClose }: { c: Card; power?: number; onClo
     return () => window.removeEventListener('keydown', k);
   }, [onClose]);
   const kws = kwList(c);
+  // The finger that long-pressed to open this lifts right after: don't let that release close it.
+  const opened = useRef(performance.now());
   return (
-    <div className="codex-page-scrim" role="dialog" aria-modal aria-label={c.name} data-testid="card-inspect" onClick={onClose}>
-      <article className="codex-page dh-inspect" onClick={(e) => e.stopPropagation()}>
-        <div className="codex-page-art">
-          <CardArt c={c} alt={c.name} />
-        </div>
-        <div className="codex-page-text">
-          <p className="plate-kicker">{basics(c)}</p>
-          <h2>{c.name}</h2>
-          {c.mark && <p className="dh-mark">{c.mark}</p>}
-          {power != null && c.power != null && power !== c.power && (
-            <p className="card-peek-live">
-              On the field now at Power {power} (printed {c.power}).
-            </p>
-          )}
-          <p className="codex-blurb">{c.text}</p>
-          {c.lead && (
-            <p className="codex-blurb">
-              <strong>Lead · {c.lead.label}.</strong> {c.lead.text} Once a match.
-            </p>
-          )}
-          {kws.length > 0 && (
-            <ul className="card-peek-kw">
-              {kws.map((k) => (
-                <li key={k.key}>
-                  <strong>{k.name}:</strong> {k.text}
-                </li>
-              ))}
-            </ul>
-          )}
-          {c.quote && (
-            <blockquote className="codex-quote">
-              “{c.quote}”{c.quoted && <cite>— {c.quoted}</cite>}
-            </blockquote>
-          )}
-          <button type="button" className="brass-btn" onClick={onClose}>
-            Close
-          </button>
-        </div>
-      </article>
+    <div className="codex-page-scrim pc-scrim" role="dialog" aria-modal aria-label={c.name} data-testid="card-inspect" onClick={() => performance.now() - opened.current > 450 && onClose()}>
+      <div className="pc-sheet" onClick={(e) => e.stopPropagation()}>
+        <PremiumCard c={c} power={power} />
+        {power != null && c.power != null && power !== c.power && (
+          <p className="card-peek-live pc-note">
+            On the field now at Power {power} (printed {c.power}).
+          </p>
+        )}
+        {kws.length > 0 && (
+          <ul className="card-peek-kw pc-kw">
+            {kws.map((k) => (
+              <li key={k.key}>
+                <strong>{k.name}:</strong> {k.text}
+              </li>
+            ))}
+          </ul>
+        )}
+        <button type="button" className="brass-btn pc-close" onClick={onClose}>
+          Close
+        </button>
+      </div>
     </div>
   );
 }
