@@ -30,6 +30,7 @@ export function saveSettings(s: Settings) {
   }
   current = s;
   if (!s.music) {
+    stopShowdown(0);
     stopMusic();
     stopMenuMusic(0);
   }
@@ -79,7 +80,7 @@ export function playMusic(track: 'frontier-horn' | 'ghost-town') {
   music = new Audio(src);
   musicSrc = src;
   music.loop = true;
-  music.volume = duckUntil > Date.now() ? MUSIC_VOL * 0.3 : MUSIC_VOL;
+  music.volume = duckUntil > Date.now() ? battleVol() * 0.3 : battleVol();
   void music.play().catch(() => undefined);
 }
 export function stopMusic() {
@@ -272,7 +273,7 @@ export function playMatchSting(): boolean {
   if (duckTimer) clearTimeout(duckTimer);
   duckTimer = setTimeout(() => {
     duckTimer = null;
-    if (music && Date.now() >= duckUntil) music.volume = MUSIC_VOL;
+    if (music && Date.now() >= duckUntil) music.volume = battleVol();
   }, STING_MS);
   const c = unlocked ? audioCtx() : null;
   if (c) {
@@ -324,7 +325,7 @@ export function playCue(c: Cue, vol = 0.6): boolean {
   if (duckTimer) clearTimeout(duckTimer);
   duckTimer = setTimeout(() => {
     duckTimer = null;
-    if (music && Date.now() >= duckUntil) music.volume = MUSIC_VOL;
+    if (music && Date.now() >= duckUntil) music.volume = battleVol();
   }, ms);
   return true;
 }
@@ -386,5 +387,94 @@ export function soundEvents(events: GameEvent[], me: Side = 'blue', m?: Match) {
         voice(e.side === me ? 'victory' : 'defeat');
         break;
     }
+  }
+}
+
+// ------------------------------------------------------------------ showdown (endgame tension)
+/**
+ * "Standoff": a tense loop (ticking watch, heartbeat, tremolo strings, twang,
+ * harmonica, building toms) that crossfades in over the battle track as either
+ * side nears the Claims goal. Same trigger shape as our other card game's battle layer:
+ * silent until a side is ~62% of the way, full by ~92%; long matches add a
+ * little from turn 16. Loops sample-exact through Web Audio; muted with music.
+ */
+export const showdownSrc = () => `/assets/audio/music/showdown.${fmt()}`;
+export const SHOWDOWN_LOOP_S = 53.333;
+const SHOW_VOL = 0.5;
+let showLevel = 0;
+let show: { src: AudioBufferSourceNode | null; gain: GainNode | null } | null = null;
+function battleVol() {
+  return MUSIC_VOL * (1 - 0.8 * showLevel);
+}
+export function showdownIntensity(i: { dom: { blue: number; red: number }; goal: number; turn: number; over: boolean }): number {
+  if (i.over) return 0;
+  const lead = Math.max(i.dom.blue, i.dom.red) / Math.max(1, i.goal);
+  const near = Math.max(0, Math.min(1, (lead - 0.62) / 0.3));
+  const late = Math.max(0, Math.min(0.5, (i.turn - 16) / 16));
+  return Math.round(Math.max(near, late) * 100) / 100;
+}
+export const showdownLevel = () => showLevel;
+function markShow(v: number) {
+  if (typeof document !== 'undefined') document.documentElement.dataset.showdown = v > 0 ? 'on' : 'off';
+}
+export function setShowdown(next: number) {
+  const v = Math.max(0, Math.min(1, next));
+  if (!current.music) {
+    if (show || showLevel) stopShowdown(0);
+    return;
+  }
+  if (Math.abs(v - showLevel) < 0.02) return;
+  if (v === 0) return stopShowdown(1500);
+  showLevel = v;
+  markShow(v);
+  if (music && Date.now() >= duckUntil) music.volume = battleVol();
+  const c = audioCtx();
+  if (!c || !unlocked) return;
+  if (show?.gain) {
+    show.gain.gain.cancelScheduledValues(c.currentTime);
+    show.gain.gain.setValueAtTime(show.gain.gain.value, c.currentTime);
+    show.gain.gain.linearRampToValueAtTime(SHOW_VOL * v, c.currentTime + 2.5);
+    return;
+  }
+  if (show) return; // still loading
+  const slot: { src: AudioBufferSourceNode | null; gain: GainNode | null } = { src: null, gain: null };
+  show = slot;
+  void decoded(c, showdownSrc())
+    .then((buf) => {
+      if (show !== slot || showLevel === 0 || !current.music) return;
+      const src = c.createBufferSource();
+      src.buffer = buf;
+      src.loop = true;
+      src.loopStart = 0;
+      src.loopEnd = Math.min(buf.duration, SHOWDOWN_LOOP_S);
+      const g = c.createGain();
+      g.gain.setValueAtTime(0, c.currentTime);
+      g.gain.linearRampToValueAtTime(SHOW_VOL * showLevel, c.currentTime + 3);
+      src.connect(g).connect(c.destination);
+      src.start();
+      slot.src = src;
+      slot.gain = g;
+    })
+    .catch(() => {
+      if (show === slot) show = null;
+    });
+}
+/** Fade the showdown out (match over, leaving, muted) and give the battle track its level back. */
+export function stopShowdown(ms = 1200) {
+  showLevel = 0;
+  markShow(0);
+  if (music && Date.now() >= duckUntil) music.volume = battleVol();
+  const s = show;
+  show = null;
+  const c = ctx;
+  if (!s?.src || !s.gain || !c) return;
+  const end = c.currentTime + ms / 1000;
+  s.gain.gain.cancelScheduledValues(c.currentTime);
+  s.gain.gain.setValueAtTime(s.gain.gain.value, c.currentTime);
+  s.gain.gain.linearRampToValueAtTime(0, end);
+  try {
+    s.src.stop(end + 0.05);
+  } catch {
+    /* already stopped */
   }
 }

@@ -20,7 +20,7 @@ const TRAP_DEMO = import.meta.env.DEV && new URLSearchParams(window.location.sea
 import { WeatherLayer, pickWeather } from './Weather';
 import { planFx, fxMs, runFx } from './fx';
 import { flightMs, planSlides, slideKeyframes, slideTiming, type Box } from './coinMotion';
-import { playMatchSting, playMusic, sfx, soundEvents, stopMenuMusic } from './sound';
+import { playMatchSting, playMusic, setShowdown, sfx, showdownIntensity, soundEvents, stopMenuMusic, stopShowdown } from './sound';
 
 const ME: Side = 'blue';
 const AI_DELAY = (() => {
@@ -147,6 +147,12 @@ export function Battlefield({ opts, onLeave, onFinish, gold }: {
     playMatchSting();
     playMusic('ghost-town');
   }, []);
+
+  // Endgame tension: the showdown cue rises as either side nears the Claims goal; stops on the result or leaving.
+  useEffect(() => {
+    setShowdown(showdownIntensity({ dom: m.dom, goal: m.goal, turn: m.turn, over: !!m.winner }));
+  }, [m.dom, m.goal, m.turn, m.winner]);
+  useEffect(() => () => stopShowdown(600), []);
 
   const after = useCallback((next: Match) => {
     soundEvents(next.events, ME, next);
