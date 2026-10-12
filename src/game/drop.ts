@@ -68,3 +68,44 @@ export function wheelToScroll(deltaX: number, deltaY: number, deltaMode = 0): nu
   const d = Math.abs(deltaX) > Math.abs(deltaY) ? deltaX : deltaY;
   return deltaMode === 1 ? d * 40 : deltaMode === 2 ? d * 400 : d;
 }
+
+/** A tile's on-screen spot, for snapping a dragged coin. */
+export interface TileSpot {
+  key: string;
+  x: number; // centre
+  y: number;
+  w: number; // tile width
+}
+
+/**
+ * Magnetic snapping: the legal tile nearest the dragged coin's centre, if it lies
+ * within `reach` tile widths. Gaps between tiles, the rim of a round tile, and a
+ * thumb that lands a little off all still find the tile the player meant.
+ */
+export function nearestLegal(x: number, y: number, spots: TileSpot[], legal: ReadonlySet<string>, reach = 1.2): string | null {
+  let best: string | null = null;
+  let bestD = Infinity;
+  for (const s of spots) {
+    if (!legal.has(s.key)) continue;
+    const d = Math.hypot(s.x - x, s.y - y);
+    if (d <= s.w * reach && d < bestD) {
+      bestD = d;
+      best = s.key;
+    }
+  }
+  return best;
+}
+
+/** Every tile a hand card (or the leader) could be dropped on right now, as "r,c". */
+export function legalDrops(m: Match, side: Side, src: HandSource): Set<string> {
+  const out = new Set<string>();
+  for (let r = 0; r < m.h; r++) for (let c = 0; c < m.w; c++) if (dropAction(m, side, src, r, c)) out.add(`${r},${c}`);
+  return out;
+}
+
+/** How far above a finger the dragged coin rides on touch, so the thumb never hides the target. */
+export const TOUCH_LIFT = 66;
+/** Press and hold this long and the card lifts for a drag in any direction. */
+export const HOLD_TO_DRAG_MS = 250;
+/** Held still this long and let go without moving: read the card instead. */
+export const HOLD_TO_READ_MS = 550;

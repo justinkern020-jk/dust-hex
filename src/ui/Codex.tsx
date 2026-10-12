@@ -8,6 +8,7 @@ const KIND_ORDER: Record<string, number> = { leader: 0, unit: 1, rite: 2, item: 
 export function Codex({ onBack }: { onBack: () => void }) {
   const [tab, setTab] = useState(FACTIONS[0].id);
   const [open, setOpen] = useState<Card | null>(null);
+  // Braces matter: newer Chrome returns a Promise from scrollTo, and React would call it on unmount.
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);

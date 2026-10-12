@@ -39,6 +39,38 @@ export function App() {
     if (!res.repeat) setCol(res.col);
     return res.award;
   };
+  // History: the Codex and a match sit one step above the porch, so the in-app Back,
+  // the Android back gesture and the browser's back button all land on the porch.
+  // A deep link (?codex, ?side=...) gets a porch entry slipped in underneath it.
+  useEffect(() => {
+    const s0 = screen.s;
+    const st = window.history.state as { dh?: string } | null;
+    if ((s0 === 'codex' || s0 === 'battle' || s0 === 'shop' || s0 === 'decks') && st?.dh !== s0) {
+      const here = window.location.pathname + window.location.search + window.location.hash;
+      window.history.replaceState({ dh: 'porch' }, '', window.location.pathname);
+      window.history.pushState({ dh: s0 }, '', here);
+    } else if (!st?.dh) window.history.replaceState({ dh: s0 }, '', window.location.href);
+    const onPop = () => setScreen((cur) => (cur.s === 'porch' ? cur : { s: 'porch' }));
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  const open = (next: Screen) => {
+    window.history.pushState({ dh: next.s }, '', window.location.pathname);
+    setScreen(next);
+  };
+  /** Shop <-> deck editor: a sideways step, so Back still goes straight to the porch. */
+  const swap = (next: Screen) => {
+    window.history.replaceState({ dh: next.s }, '', window.location.pathname);
+    setScreen(next);
+  };
+  const toPorch = () => {
+    const st = window.history.state as { dh?: string } | null;
+    if (st?.dh === 'codex' || st?.dh === 'battle' || st?.dh === 'shop' || st?.dh === 'decks') window.history.back(); // popstate brings the porch
+    else {
+      window.history.replaceState({ dh: 'porch' }, '', window.location.pathname);
+      setScreen({ s: 'porch' });
+    }
+  };
   const [mind, setMindState] = useState<Mind>(() => {
     try {
       const v = localStorage.getItem(MIND_KEY) as Mind | null;
@@ -78,29 +110,37 @@ export function App() {
   }, []);
 
   // The title card shows once per fresh launch; leaving a match returns to the porch.
-  if (screen.s === 'title') return <Title onDone={() => setScreen({ s: 'porch' })} />;
-  if (screen.s === 'codex') return <Codex onBack={() => setScreen({ s: 'porch' })} />;
+  if (screen.s === 'title')
+    return (
+      <Title
+        onDone={() => {
+          window.history.replaceState({ dh: 'porch' }, '', window.location.href);
+          setScreen({ s: 'porch' });
+        }}
+      />
+    );
+  if (screen.s === 'codex') return <Codex onBack={toPorch} />;
   if (screen.s === 'shop')
-    return <TradingPost col={col} setCol={setCol} side={side} setSide={setSide} onBack={() => setScreen({ s: 'porch' })} onDecks={() => setScreen({ s: 'decks' })} />;
+    return <TradingPost col={col} setCol={setCol} side={side} setSide={setSide} onBack={toPorch} onDecks={() => swap({ s: 'decks' })} />;
   if (screen.s === 'decks')
-    return <DeckEditor key={side} col={col} setCol={setCol} side={side} setSide={setSide} onBack={() => setScreen({ s: 'porch' })} onShop={() => setScreen({ s: 'shop' })} />;
+    return <DeckEditor key={side} col={col} setCol={setCol} side={side} setSide={setSide} onBack={toPorch} onShop={() => swap({ s: 'shop' })} />;
   if (screen.s === 'battle')
-    return <Battlefield key={screen.key} opts={screen.opts} onLeave={() => setScreen({ s: 'porch' })} onFinish={onFinish} gold={col.gold} />;
+    return <Battlefield key={screen.key} opts={screen.opts} onLeave={toPorch} onFinish={onFinish} gold={col.gold} />;
   return (
     <Porch
       col={col}
-      onShop={() => setScreen({ s: 'shop' })}
-      onDecks={() => setScreen({ s: 'decks' })}
+      onShop={() => open({ s: 'shop' })}
+      onDecks={() => open({ s: 'decks' })}
       mind={mind}
       setMind={setMind}
-      onCodex={() => setScreen({ s: 'codex' })}
+      onCodex={() => open({ s: 'codex' })}
       onRide={(f) => {
         const rivals = FACTIONS.filter((x) => x.id !== f);
         const red = rivals[Math.floor(Math.random() * rivals.length)].id;
         const firsts = MAPS.filter((x) => x.era === 'first');
         const mapId = firsts[Math.floor(Math.random() * firsts.length)].id;
         setSide(f);
-        setScreen({ s: 'battle', opts: { blue: f, red, mind, mapId, deck: deckForMatch(colRef.current, f) }, key: Date.now() });
+        open({ s: 'battle', opts: { blue: f, red, mind, mapId, deck: deckForMatch(colRef.current, f) }, key: Date.now() });
       }}
     />
   );

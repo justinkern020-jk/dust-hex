@@ -1,6 +1,6 @@
 /** Drag from the hand: which way a gesture reads, and what a drop does. */
 import { describe, expect, it } from 'vitest';
-import { scrollTurnsToDrag, classifyGesture, dropAction, scrollToSlider, sliderToScroll, wheelToScroll } from './drop';
+import { scrollTurnsToDrag, classifyGesture, dropAction, nearestLegal, legalDrops, scrollToSlider, sliderToScroll, wheelToScroll } from './drop';
 import { applyAction } from './engine';
 import { field, put } from './testkit';
 
@@ -83,5 +83,41 @@ describe('hand rail scrolling', () => {
     expect(wheelToScroll(-60, 10)).toBe(-60);
     expect(wheelToScroll(0, 3, 1)).toBe(120);
     expect(wheelToScroll(0, 1, 2)).toBe(400);
+  });
+});
+
+describe('magnetic snapping', () => {
+  // A 3x3 board of 60px tiles, 64px apart (gaps between them).
+  const spots = [0, 1, 2].flatMap((r) => [0, 1, 2].map((c) => ({ key: `${r},${c}`, x: 32 + c * 64, y: 32 + r * 64, w: 60 })));
+  const legal = new Set(['2,0', '2,2', '1,1']);
+  it('snaps to the legal tile under the coin', () => {
+    expect(nearestLegal(32, 160, spots, legal)).toBe('2,0');
+    expect(nearestLegal(96, 96, spots, legal)).toBe('1,1');
+  });
+  it('a coin between two tiles, or on a tile rim, picks the nearer legal one', () => {
+    expect(nearestLegal(64, 64, spots, legal)).toBe('1,1'); // the gap between four tiles
+    expect(nearestLegal(120, 115, spots, legal)).toBe('1,1');
+    expect(nearestLegal(150, 170, spots, legal)).toBe('2,2');
+  });
+  it('an unlit tile under the coin defers to the nearest lit one', () => {
+    expect(nearestLegal(80, 166, spots, legal)).toBe('2,0'); // over 2,1, which is unlit
+    expect(nearestLegal(50, 50, spots, legal)).toBe('1,1');
+  });
+  it('far from every legal tile there is no target', () => {
+    expect(nearestLegal(32, 500, spots, legal)).toBeNull();
+    expect(nearestLegal(32, 160, spots, new Set())).toBeNull();
+    expect(nearestLegal(32 + 60 * 1.25, 160 + 0, spots, new Set(['2,0']))).toBeNull();
+    expect(nearestLegal(32 + 60 * 1.15, 160, spots, new Set(['2,0']))).toBe('2,0');
+  });
+  it('legalDrops lists exactly the tiles a drop would play on', () => {
+    const m = field();
+    m.hand.blue = ['baca'];
+    const set = legalDrops(m, 'blue', 0);
+    expect(set.has('4,1')).toBe(true);
+    expect(set.has('2,2')).toBe(false);
+    for (const k of set) {
+      const [r, c] = k.split(',').map(Number);
+      expect(dropAction(m, 'blue', 0, r, c)).not.toBeNull();
+    }
   });
 });
