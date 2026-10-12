@@ -6,7 +6,7 @@ import { chooseAction, choosePending, type Mind } from '../game/ai';
 import { isSpent } from '../game/rules';
 import { posOf, unitAt } from '../game/core';
 import { CardArt, CardPeek, CoinFace, KIND_LABEL } from './cardview';
-import { classifyGesture, dropAction, scrollTurnsToDrag, scrollToSlider, sliderToScroll, wheelToScroll, type HandSource } from '../game/drop';
+import { HOLD_TO_DRAG_MS, HOLD_TO_READ_MS, TOUCH_LIFT, classifyGesture, dropAction, legalDrops, nearestLegal, scrollTurnsToDrag, type TileSpot, scrollToSlider, sliderToScroll, wheelToScroll, type HandSource } from '../game/drop';
 import { MINDS } from './Porch';
 import { WeatherLayer, pickWeather } from './Weather';
 import { flightMs, planSlides, slideKeyframes, slideTiming, type Box } from './coinMotion';
@@ -284,8 +284,13 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
   };
 
   const handRect = (i: number | 'leader') => document.querySelector(i === 'leader' ? '[data-testid="hand-leader"]' : `[data-testid="hand-${i}"]`)?.getBoundingClientRect() ?? null;
+  const tileRef = useRef((_r: number, _c: number) => {});
   const onTile = (r: number, c: number) => {
-    if (inFlight()) return;
+    // Coins still in the air: take the tap as soon as they land instead of dropping it.
+    if (inFlight()) {
+      window.setTimeout(() => tileRef.current(r, c), flightUntil.current - performance.now() + 10);
+      return;
+    }
     const key = `${r},${c}`;
     const u = unitAt(m, r, c);
     if (pendingMine) {
@@ -326,8 +331,25 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
     setSel(null);
   };
 
+  tileRef.current = onTile;
+  /** A tap that lands between tiles (or on a tile's rim) goes to the nearest lit tile close by. */
+  const onGridGap = (e: React.MouseEvent) => {
+    if ((e.target as Element).closest('.stone')) return;
+    const all = new Set([...lit.tiles, ...lit.moves, ...lit.strikes]);
+    const key = nearestLegal(e.clientX, e.clientY, tileSpots(), all, 0.8);
+    if (key) {
+      const [r, c] = key.split(',').map(Number);
+      onTile(r, c);
+    } else if (sel) setSel(null);
+  };
+  /** A tap on bare ground away from the board, hand and buttons puts a picked card back. */
+  const onBackdrop = (e: React.MouseEvent) => {
+    if (!sel || drag) return;
+    if ((e.target as Element).closest('button, input, select, a, [role="button"], [role="grid"], .hand-rail, .dh-tray, .bf-banner-slot, .bf-hud, .primer-veil, .match-veil')) return;
+    setSel(null);
+  };
+
   const onHand = (i: number) => {
-    if (inFlight()) return;
     if (!myTurn) return setPeek({ c: card(m.hand[ME][i]) });
     if (sel?.k === 'hand' && sel.i === i) return setSel(null);
     const c = card(m.hand[ME][i]);
@@ -390,10 +412,37 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
   };
 
   // ---- dragging from the hand and scrolling it
-  // Hand cards take every touch themselves (touch-action: none): with pan-x the browser
-  // claimed any slanted pull toward the board as a sideways swipe and cancelled the drag.
-  // So sideways swipes of the hand (with a little fling) and page pulls are done here.
-  const gesture = useRef<{ id: number; src: HandSource; x0: number; y0: number; mode: 'pending' | 'drag' | 'scroll' | 'page' | 'none'; scroll0: number; page0: number; touch: boolean; hold: number; lx: number; ly: number; raf: number; vx: number; vy: number; t: number } | null>(null);
+  // Hand cards take every touch themselves (touch-action: none) and capture the pointer,
+  // so nothing (the hand scroller, a re-render, the page) can steal a drag half way.
+  // Sideways swipes of the hand (with a little fling) and page pulls are done here.
+  // While dragging, the coin rides above the finger and snaps to the nearest lit tile
+  // (magnetic, ~1.2 tiles of reach); letting go anywhere near it deploys there.
+  type G = {
+    id: number;
+    src: HandSource;
+    c: Card;
+    x0: number;
+    y0: number;
+    t0: number;
+    mode: 'pending' | 'drag' | 'scroll' | 'page' | 'none';
+    scroll0: number;
+    page0: number;
+    touch: boolean;
+    hold: number;
+    lx: number;
+    ly: number;
+    raf: number;
+    vx: number;
+    vy: number;
+    t: number;
+    lift: number;
+    legal: Set<string>;
+    over: string | null;
+    moved: boolean;
+    held: boolean;
+    el: HTMLElement | null;
+  };
+  const gesture = useRef<G | null>(null);
   const fling = useRef(0);
   const swallowClick = useRef(false);
   // Window listeners must be the same functions to add and remove; they call the latest handlers.
@@ -407,9 +456,42 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
     if (cur.winner || cur.side !== ME || cur.pending.length) return false;
     return src === 'leader' ? cur.leaderAt[ME] === 'tray' && canAfford(cur, ME, cur.leader[ME]) : canAfford(cur, ME, cur.hand[ME][src]);
   };
-  const tileAt = (x: number, y: number): [number, number] | null => {
-    const el = document.elementFromPoint(x, y)?.closest('[data-tile-r]') as HTMLElement | null;
-    return el ? [Number(el.dataset.tileR), Number(el.dataset.tileC)] : null;
+  const buzz = (ms: number) => {
+    try {
+      if (typeof navigator !== 'undefined' && typeof navigator.vibrate === 'function') navigator.vibrate(ms);
+    } catch {
+      /* ignore */
+    }
+  };
+  const tileSpots = (): TileSpot[] => {
+    const out: TileSpot[] = [];
+    gridRef.current?.querySelectorAll<HTMLElement>('[data-tile-r]').forEach((el) => {
+      const b = el.getBoundingClientRect();
+      out.push({ key: `${el.dataset.tileR},${el.dataset.tileC}`, x: b.left + b.width / 2, y: b.top + b.height / 2, w: b.width });
+    });
+    return out;
+  };
+  /** Back over the cards in the hand (finger or coin): the drag is being called off. */
+  const overHand = (g: G) => {
+    const b = document.querySelector('.hand-scroller')?.getBoundingClientRect();
+    const inside = (x: number, y: number) => !!b && x >= b.left && x <= b.right && y >= b.top && y <= b.bottom;
+    return inside(g.lx, g.ly) || inside(g.lx, g.ly - g.lift);
+  };
+  /** The coin snaps first; a fingertip resting right on a lit tile counts too. */
+  const snapKey = (g: G) => {
+    const spots = tileSpots();
+    return nearestLegal(g.lx, g.ly - g.lift, spots, g.legal) ?? (g.lift ? nearestLegal(g.lx, g.ly, spots, g.legal, 0.6) : null);
+  };
+  /** Re-aim the dragged coin: snap to the nearest legal tile around the coin (not the fingertip). */
+  const aim = (g: G) => {
+    const cx = g.lx;
+    const cy = g.ly - g.lift;
+    const key = overHand(g) ? null : snapKey(g);
+    if (key !== g.over) {
+      g.over = key;
+      if (key) buzz(8);
+    }
+    setDrag({ src: g.src, x: cx, y: cy, over: key });
   };
   // Near the top edge mid-drag, the page scrolls up so the whole board can be reached.
   const edgeSpeed = (y: number) => {
@@ -420,26 +502,52 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
   const edgeTick = () => {
     const g = gesture.current;
     if (!g || g.mode !== 'drag') return;
-    const v = edgeSpeed(g.ly);
-    if (!v) {
+    const v = edgeSpeed(g.ly - g.lift);
+    if (!v || window.scrollY <= 0) {
       g.raf = 0;
       return;
     }
     window.scrollBy(0, v);
-    const t = tileAt(g.lx, g.ly);
-    setDrag({ src: g.src, x: g.lx, y: g.ly, over: t ? `${t[0]},${t[1]}` : null });
+    aim(g);
     g.raf = window.requestAnimationFrame(edgeTick);
+  };
+  const beginDrag = (g: G, held: boolean) => {
+    window.clearTimeout(g.hold);
+    g.mode = 'drag';
+    g.held = held;
+    g.legal = legalDrops(mRef.current, ME, g.src);
+    slotH.current = slotRef.current?.offsetHeight ?? 0;
+    swallowClick.current = true;
+    setSel(g.src === 'leader' ? { k: 'leader' } : { k: 'hand', i: g.src });
+    setToast(null);
+    buzz(10);
+    aim(g);
   };
   const endGesture = () => {
     const g = gesture.current;
     if (g) {
       window.clearTimeout(g.hold);
       if (g.raf) window.cancelAnimationFrame(g.raf);
+      try {
+        if (g.el?.hasPointerCapture?.(g.id)) g.el.releasePointerCapture(g.id);
+      } catch {
+        /* ignore */
+      }
     }
     gesture.current = null;
     window.removeEventListener('pointermove', stable.move);
     window.removeEventListener('pointerup', stable.up);
     window.removeEventListener('pointercancel', stable.cancel);
+  };
+  /** Act now, or as soon as the coins in the air have landed. */
+  const actWhenLanded = (a: Action, launch: DOMRect | null) => {
+    const go = () => {
+      launchRef.current = launch;
+      if (act(a)) buzz(15);
+    };
+    const wait = flightUntil.current - performance.now();
+    if (wait > 0) window.setTimeout(go, wait + 10);
+    else go();
   };
   function onGestureMove(e: PointerEvent) {
     const g = gesture.current;
@@ -452,10 +560,9 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
       window.clearTimeout(g.hold);
       swallowClick.current = true;
       if (k === 'drag' && canDrag(g.src)) {
-        g.mode = 'drag';
-        slotH.current = slotRef.current?.offsetHeight ?? 0;
-        setSel(g.src === 'leader' ? { k: 'leader' } : { k: 'hand', i: g.src });
-        setToast(null);
+        g.lx = e.clientX;
+        g.ly = e.clientY;
+        beginDrag(g, false);
       } else if (k === 'scroll') {
         g.mode = 'scroll';
         g.scroll0 = rowRef.current?.scrollLeft ?? 0;
@@ -473,30 +580,20 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
     g.vx = 0.8 * ((e.clientX - g.lx) / dt) + 0.2 * g.vx;
     g.vy = 0.8 * ((e.clientY - g.ly) / dt) + 0.2 * g.vy;
     g.t = now;
-    if (g.mode !== 'drag') {
-      g.lx = e.clientX;
-      g.ly = e.clientY;
-    }
+    g.lx = e.clientX;
+    g.ly = e.clientY;
     if (g.mode === 'page') {
       window.scrollTo(window.scrollX, g.page0 - dy);
     } else if (g.mode === 'drag') {
       e.preventDefault();
-      g.lx = e.clientX;
-      g.ly = e.clientY;
-      const t = tileAt(e.clientX, e.clientY);
-      setDrag({ src: g.src, x: e.clientX, y: e.clientY, over: t ? `${t[0]},${t[1]}` : null });
-      if (!g.raf && edgeSpeed(e.clientY)) g.raf = window.requestAnimationFrame(edgeTick);
+      if (Math.hypot(dx, dy) > 12) g.moved = true;
+      aim(g);
+      if (!g.raf && edgeSpeed(e.clientY - g.lift)) g.raf = window.requestAnimationFrame(edgeTick);
     } else if (g.mode === 'scroll' && rowRef.current) {
       if (scrollTurnsToDrag(dy) && canDrag(g.src)) {
         rowRef.current.scrollLeft = g.scroll0;
-        g.mode = 'drag';
-        slotH.current = slotRef.current?.offsetHeight ?? 0;
-        setSel(g.src === 'leader' ? { k: 'leader' } : { k: 'hand', i: g.src });
-        setToast(null);
-        g.lx = e.clientX;
-        g.ly = e.clientY;
-        const t = tileAt(e.clientX, e.clientY);
-        setDrag({ src: g.src, x: e.clientX, y: e.clientY, over: t ? `${t[0]},${t[1]}` : null });
+        g.moved = true;
+        beginDrag(g, false);
       } else rowRef.current.scrollLeft = g.scroll0 - dx;
     }
   }
@@ -504,14 +601,28 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
     const g = gesture.current;
     if (!g || e.pointerId !== g.id) return;
     if (g.mode === 'drag') {
-      const t = tileAt(e.clientX, e.clientY);
-      const a = t ? dropAction(mRef.current, ME, g.src, t[0], t[1]) : null;
-      if (a) {
-        // The coin settles from where the card was let go.
-        if (a.t === 'deploy') launchRef.current = new DOMRect(e.clientX - 28, e.clientY - 48, 56, 56);
-        act(a);
+      g.lx = e.clientX;
+      g.ly = e.clientY;
+      const cx = e.clientX;
+      const cy = e.clientY - g.lift;
+      if (!g.moved && g.held) {
+        // Pressed, held and let go in place: a long hold reads the card; a shorter one leaves it picked for a tap on a tile.
+        if (performance.now() - g.t0 >= HOLD_TO_READ_MS) {
+          setSel(null);
+          setPeek({ c: g.c });
+        }
+      } else if (overHand(g)) {
+        // Put back in the hand: the drag is called off.
+        setSel(null);
+      } else {
+        const key = snapKey(g);
+        const [r, c] = key ? key.split(',').map(Number) : [-1, -1];
+        const a = key ? dropAction(mRef.current, ME, g.src, r, c) : null;
+        if (a) {
+          // The coin settles from where it was let go.
+          actWhenLanded(a, a.t === 'deploy' ? new DOMRect(cx - 28, cy - 28, 56, 56) : null);
+        } else setToast('Too far from a lit tile. Drop it on or near one, or tap a lit tile.');
       }
-      else if (t) setToast('That tile is not lit for this card. Drop it on a lit tile.');
       setDrag(null);
     } else if (g.touch && (g.mode === 'scroll' || g.mode === 'page') && performance.now() - g.t < 90) {
       // Let a quick touch swipe coast, like a native fling.
@@ -537,23 +648,31 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
     window.setTimeout(() => (swallowClick.current = false), 0);
   }
   function onGestureCancel() {
-    // The browser took over (a native horizontal swipe of the hand).
+    // The browser took the pointer back (rare with touch-action: none and capture).
     setDrag(null);
     endGesture();
     swallowClick.current = false;
   }
   live.current = { move: onGestureMove, up: onGestureUp, cancel: onGestureCancel };
   const startGesture = (src: HandSource, c: Card) => (e: React.PointerEvent) => {
-    if (e.button !== 0 || gesture.current || inFlight()) return;
+    if (e.button !== 0 || gesture.current) return;
     const touch = e.pointerType !== 'mouse';
     swallowClick.current = false;
     window.cancelAnimationFrame(fling.current);
     fling.current = 0;
-    gesture.current = {
+    const el = e.currentTarget as HTMLElement;
+    try {
+      el.setPointerCapture(e.pointerId);
+    } catch {
+      /* ignore */
+    }
+    const g: G = {
       id: e.pointerId,
       src,
+      c,
       x0: e.clientX,
       y0: e.clientY,
+      t0: performance.now(),
       mode: 'pending',
       scroll0: 0,
       page0: window.scrollY,
@@ -564,17 +683,30 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
       ly: e.clientY,
       raf: 0,
       touch,
-      // Press and hold reads the card, for phones without a double-click.
-      hold: touch
+      lift: touch ? TOUCH_LIFT : 0,
+      legal: new Set(),
+      over: null,
+      moved: false,
+      held: false,
+      el,
+      hold: 0,
+    };
+    // Press and hold lifts a playable card for a drag in any direction;
+    // on a card you cannot play yet (touch), holding reads it.
+    g.hold = canDrag(src)
+      ? window.setTimeout(() => {
+          if (gesture.current === g && g.mode === 'pending') beginDrag(g, true);
+        }, HOLD_TO_DRAG_MS)
+      : touch
         ? window.setTimeout(() => {
-            if (gesture.current?.mode !== 'pending') return;
+            if (gesture.current !== g || g.mode !== 'pending') return;
             swallowClick.current = true;
             setPeek({ c });
             endGesture();
             window.setTimeout(() => (swallowClick.current = false), 400);
-          }, 550)
-        : 0,
-    };
+          }, HOLD_TO_READ_MS)
+        : 0;
+    gesture.current = g;
     window.addEventListener('pointermove', stable.move, { passive: false });
     window.addEventListener('pointerup', stable.up);
     window.addEventListener('pointercancel', stable.cancel);
@@ -629,7 +761,9 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
       ro?.disconnect();
     };
   }, [measureRail]);
-  useEffect(() => measureRail(), [m.hand, m.leaderAt, measureRail]);
+  useEffect(() => {
+    measureRail();
+  }, [m.hand, m.leaderAt, measureRail]);
   const nudgeHand = (dir: 1 | -1) => {
     const el = rowRef.current;
     if (el) el.scrollBy({ left: dir * Math.max(120, el.clientWidth * 0.8), behavior: 'smooth' });
@@ -854,6 +988,8 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
   };
 
   const hand = m.hand[ME];
+  const dragCard = drag ? (drag.src === 'leader' ? leaderCard : maybeCard(hand[drag.src] ?? '')) : undefined;
+  const dragCoin = dragCard && (dragCard.kind === 'unit' || dragCard.kind === 'leader') ? dragCard : undefined;
   return (
     <div className="app app-shell">
       <nav className="shell-bar" aria-label="Game shell">
@@ -865,7 +1001,7 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
           <em>{map.name}</em>
         </p>
       </nav>
-    <section className="battlefield" id="battlefield" data-testid="battlefield" data-turn={m.turn} data-side={m.side}>
+    <section className="battlefield" id="battlefield" onClick={onBackdrop} data-testid="battlefield" data-turn={m.turn} data-side={m.side}>
       <header className="bf-hud">
         <div className="bf-scores" aria-label="Money and Claims">
           {scoreChip('blue')}
@@ -966,7 +1102,7 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
         <div className="bf-board-socket">
           <img className="bf-board-socket-frame" src="/assets/images/bf_board_frame.png" alt="" aria-hidden draggable={false} />
           <div className={`board-wrap${map.mood === 'bright' ? ' mood-bright' : ''}`} style={{ backgroundImage: `url(/assets/maps/${map.id}.jpg), url(/assets/maps/${map.id === 'big-empty' ? 'outer-fence' : 'gallows-mesa'}.jpg)` }}>
-            <div ref={gridRef} className={`board-grid${m.w > 5 ? ' is-big' : ''}`} role="grid" data-testid="board" style={{ gridTemplateColumns: `repeat(${m.w}, minmax(0, 1fr))`, gridTemplateRows: `repeat(${m.h}, minmax(0, 1fr))` }}>
+            <div ref={gridRef} onClick={onGridGap} className={`board-grid${m.w > 5 ? ' is-big' : ''}${drag ? ' is-dragging' : ''}`} role="grid" data-testid="board" style={{ gridTemplateColumns: `repeat(${m.w}, minmax(0, 1fr))`, gridTemplateRows: `repeat(${m.h}, minmax(0, 1fr))` }}>
               {m.tiles.map((row, r) =>
                 row.map((t, c) => {
                   if (t.k === 'void') return <div key={`${r}-${c}`} className="tile-void" aria-hidden />;
@@ -995,7 +1131,7 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
                         lit.strikes.has(k) ? 'legal-strike' : '',
                         selUnit && posOf(m, selUnit.uid)?.r === r && posOf(m, selUnit.uid)?.c === c ? 'stone-origin' : '',
                         u ? 'has-unit' : '',
-                        drag?.over === k ? (lit.tiles.has(k) ? 'dh-drop-ok' : 'dh-drop-no') : '',
+                        drag?.over === k ? 'dh-drop-ok' : '',
                       ]
                         .filter(Boolean)
                         .join(' ')}
@@ -1020,6 +1156,12 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
                       )}
                       {ring && <span className="dh-ring" aria-hidden />}
                       {u && coin(u)}
+                      {drag?.over === k && !u && dragCoin && (
+                        // Where the coin will land: a faint coin already sitting in the snapped tile.
+                        <span className={`stone-coin is-${ME} coin-mine dh-drop-preview${dragCoin.kind === 'leader' ? ' is-leader' : ''}`} aria-hidden data-testid="drop-preview">
+                          <CoinFace c={dragCoin} />
+                        </span>
+                      )}
                     </button>
                   );
                 }),
@@ -1098,7 +1240,7 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
           </span>
           <span className="dh-kicker-text">
             <strong>Your hand</strong>
-            <span className="dh-kicker-help">Drag a card up to a lit tile, or tap the card then the tile. Hold or double-click to read.</span>
+            <span className="dh-kicker-help">Drag a card toward a lit tile and it snaps on, or tap the card then the tile. Hold still or double-click to read.</span>
           </span>
         </p>
         <div className={`hand-scroller dh-scroller${rail.overflow ? ' is-overflowing' : ''}${rail.atStart ? ' at-start' : ''}${rail.atEnd ? ' at-end' : ''}`} data-testid="hand-scroller">
@@ -1193,7 +1335,7 @@ export function Battlefield({ opts, onLeave }: { opts: BattleOpts; onLeave: () =
         )}
       </div>
       {drag && (
-        <div className="dh-ghost" style={{ left: drag.x, top: drag.y }} aria-hidden data-testid="drag-ghost">
+        <div className={`dh-ghost${drag.over ? ' is-on-target' : ''}`} style={{ left: drag.x, top: drag.y }} aria-hidden data-testid="drag-ghost" data-over={drag.over ?? ''}>
           {(() => {
             const c = drag.src === 'leader' ? leaderCard : card(hand[drag.src] ?? 'jesse');
             return (

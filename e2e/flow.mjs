@@ -120,9 +120,16 @@ async function run(browser, label, ctxOpts) {
       if (r.left < 0 || r.right > innerWidth) el.scrollIntoView({ block: 'nearest', inline: 'nearest' });
     });
     await page.waitForTimeout(200);
-    const from = await box(page, sel);
+    let from = await box(page, sel);
     // The gate farthest across from the card, so the pull is slanted.
     const far = from.x > ctxOpts.viewport.width / 2 ? lit[0] : lit[lit.length - 1];
+    // Keep the target clear of the top edge, where a drag scrolls the page up.
+    const top = await page.locator(`[data-testid="${far.id}"]`).evaluate((el) => el.getBoundingClientRect().top);
+    if (top < 110) {
+      await page.evaluate((d) => window.scrollBy(0, d), top - 110);
+      await page.waitForTimeout(150);
+      from = await box(page, sel);
+    }
     const to = await box(page, `[data-testid="${far.id}"]`);
     const n0 = await mine();
     let ghost = false;
@@ -138,9 +145,10 @@ async function run(browser, label, ctxOpts) {
 
   // A deploy that asks for a choice (look at a tile, pick a target): pass on it.
   const settle = async () => {
-    for (let i = 0; i < 3 && (await page.locator('[data-testid="choose-skip"]').count()); i++) {
-      await tapSel('[data-testid="choose-skip"]');
-      await page.waitForTimeout(400);
+    for (let i = 0; i < 4 && (await page.locator('[data-testid="choice-banner"]').count()); i++) {
+      const skip = (await page.locator('[data-testid="choose-skip"]').count()) > 0;
+      await tapSel(skip ? '[data-testid="choose-skip"]' : '[data-testid="choice-banner"] [data-testid^="choose-"]');
+      await page.waitForTimeout(500);
     }
   };
   const endTurn = async () => {
@@ -195,7 +203,7 @@ async function run(browser, label, ctxOpts) {
     }
     const r = await dragTo(leaderSel, lit);
     await settle();
-    ok(r.ghost && r.ghostCoin && r.placed, `${label}: leader dragged from the tray onto ${r.far} (dx ${r.dx}, dy ${r.dy})`);
+    ok(r.ghost && r.ghostCoin && r.placed, `${label}: leader dragged from the tray onto ${r.far} (dx ${r.dx}, dy ${r.dy}; ghost ${r.ghost}, coin ${r.ghostCoin}, placed ${r.placed})`);
     leaderDone = true;
   }
   if (!leaderDone) console.log(`info ${label}: leader never affordable/placeable in six turns`);

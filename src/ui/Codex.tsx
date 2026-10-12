@@ -8,7 +8,10 @@ const KIND_ORDER: Record<string, number> = { leader: 0, unit: 1, rite: 2, item: 
 export function Codex({ onBack }: { onBack: () => void }) {
   const [tab, setTab] = useState(FACTIONS[0].id);
   const [open, setOpen] = useState<Card | null>(null);
-  useEffect(() => window.scrollTo(0, 0), []);
+  // Braces matter: newer Chrome returns a Promise from scrollTo, and React would call it on unmount.
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const f = FACTIONS.find((x) => x.id === tab)!;
   const groups = useMemo(() => {
     const cs = CARDS.filter((c) => c.faction === tab).sort((a, b) => KIND_ORDER[a.kind] - KIND_ORDER[b.kind] || a.cost - b.cost || a.name.localeCompare(b.name));

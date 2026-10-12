@@ -74,18 +74,19 @@ try {
     ok(landed && !landed.flying && landed.tx === 0 && landed.ty === 0, `${name}: deployed coin lands exactly on its tile`);
     await page.click('[data-testid="hand-0"]');
     await page.waitForSelector('[data-testid="aim-banner"]');
-    // Input is blocked only while in flight.
-    const blocked = await page.evaluate(async () => {
+    // Taps during a flight are not lost: a card tapped mid-flight is picked at once
+    // (a tile tapped mid-flight waits for the landing; see snap.mjs for quick back-to-back drops).
+    const picked = await page.evaluate(async () => {
       document.querySelector('[data-testid="tile-4-3"]').click();
       await new Promise((r) => setTimeout(r, 40));
       document.querySelector('[data-testid="hand-1"]').click();
       await new Promise((r) => setTimeout(r, 30));
-      return !document.querySelector('[data-testid="aim-banner"]');
+      return !!document.querySelector('[data-testid="aim-banner"]');
     });
-    ok(blocked, `${name}: a tap mid-flight is ignored`);
+    ok(picked, `${name}: a card tapped mid-flight is picked, not ignored`);
     await page.waitForTimeout(450);
-    await page.click('[data-testid="hand-1"]');
-    ok((await page.locator('[data-testid="aim-banner"]').count()) === 1, `${name}: input works again right after landing`);
+    ok((await coinState(page, 4, 3)) != null, `${name}: the tile tapped before the flight got its coin`);
+    ok((await page.locator('[data-testid="aim-banner"]').count()) === 1, `${name}: input works right after landing`);
     await page.click('.aim-banner .dev-link >> text=Cancel');
     // Drag deploy: the coin settles from the drop point.
     const from = await center(page, '[data-testid="hand-0"]');
