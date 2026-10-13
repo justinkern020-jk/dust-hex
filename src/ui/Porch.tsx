@@ -42,7 +42,7 @@ export function Porch({ col, mind, setMind, onRide, onCodex, onShop, onDecks }: 
             <span>Dust</span> <span>Hex</span>
           </h1>
           <span className="dh-rule" aria-hidden />
-          <p className="porch-lede">Choose who you ride for. Cryptids are not a side: each one is a sighting that steps in from its side’s bestiary.</p>
+          <p className="porch-lede">Choose who you ride for.</p>
         </header>
         <div className="dh-purse-row" data-testid="porch-purse">
           <GoldPurse gold={col.gold} />
