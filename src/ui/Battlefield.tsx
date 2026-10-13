@@ -1247,6 +1247,8 @@ export function Battlefield({ opts, onLeave, onFinish, gold }: {
                         .join(' ')}
                       data-tile-r={r}
                       data-tile-c={c}
+                      data-elev={h > 0 ? terrainLabel(h).toLowerCase() : undefined}
+                      title={h > 0 ? `${terrainLabel(h)}: high ground, +1 to strikes from here` : undefined}
                       data-testid={`tile-${r}-${c}`}
                       onClick={(e) => {
                         onTile(r, c);
@@ -1264,7 +1266,6 @@ export function Battlefield({ opts, onLeave, onFinish, gold }: {
                         </span>
                       ))}
                       {t.k === 'resource' && <span className={`tile-mark resource-mark resource-${t.sym === 2 ? 'double' : 'single'}${u ? ' mark-under' : ''}`} aria-hidden />}
-                      {h > 0 && <span className={`elev-mark elev-mark-${Math.min(2, h)}`}>{terrainLabel(h)}</span>}
                       {trap && <span className="trap-mark">{TRAP_LABEL[trap.kind] ?? trap.kind}</span>}
                       {!trap && scouted && <span className="trap-mark dh-safe">Clear</span>}
                       {dev && (

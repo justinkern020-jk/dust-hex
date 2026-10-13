@@ -1,11 +1,11 @@
 /* ---- Premium card view (zoom / peek / Codex / shop / deck editor) ---- */
-.pc-scrim { background: rgba(8,5,2,.9); display: flex; align-items: flex-start; justify-content: center; overflow-y: auto; overscroll-behavior: contain; padding: max(14px, env(safe-area-inset-top)) 10px 24px; }
+.pc-scrim { background: rgba(8,5,2,.82); display: flex; align-items: flex-start; justify-content: center; overflow-y: auto; overscroll-behavior: contain; padding: max(14px, env(safe-area-inset-top)) 10px 24px; }
 .pc-sheet { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%; max-width: 420px; margin: auto 0; }
-.pc-stage { perspective: 900px; width: min(88vw, 360px, calc((100dvh - 120px) * 0.714)); }
+.pc-stage { perspective: 900px; width: min(88vw, 360px, calc((100dvh - 120px) * 0.658)); }
 .pc-card {
   --mx: 50%; --my: 35%; --rx: 0deg; --ry: 0deg;
   --rar: #a89474; --rar2: #6e5d44;
-  position: relative; aspect-ratio: 5 / 7; width: 100%; border-radius: 4.5% / 3.2%;
+  position: relative; aspect-ratio: 5 / 7.6; width: 100%; border-radius: 4.5% / 3.2%;
   transform: rotateX(var(--rx)) rotateY(var(--ry)); isolation: isolate; transition: transform .12s ease-out;
   will-change: transform; touch-action: pan-y; container-type: inline-size;
   box-shadow: 0 1.5cqw 5cqw rgba(0,0,0,.65), 0 0 0 1px #1a0f06;
@@ -45,9 +45,9 @@
 .pc-gem { width: 8cqw; aspect-ratio: 1; transform: rotate(45deg); border-radius: 1.2cqw;
   background: radial-gradient(circle at 30% 30%, #fff, var(--rar) 35%, var(--rar2) 100%);
   box-shadow: 0 0 0 .6cqw #3a2208, 0 0 0 1cqw #e6c27a, 0 0 2.5cqw var(--rar); }
-.pc-art { position: relative; z-index: 1; flex: 0 0 auto; aspect-ratio: 4 / 2.85; border-radius: 1.4cqw; overflow: hidden;
+.pc-art { position: relative; z-index: 1; flex: 0 0 auto; aspect-ratio: 4 / 3.25; border-radius: 1.4cqw; overflow: hidden;
   box-shadow: 0 0 0 .6cqw #1a0f06, 0 0 0 1.2cqw var(--rar), inset 0 0 3cqw rgba(0,0,0,.7); background: #120b05; }
-.pc-art img, .pc-art .card-art-fallback { width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; display: block; }
+.pc-art img, .pc-art .card-art-fallback { width: 100%; height: 100%; object-fit: cover; object-position: 50% 14% !important; display: block; }
 .pc-art::after { content: ''; position: absolute; inset: 0; box-shadow: inset 0 0 2.4cqw rgba(0,0,0,.75); pointer-events: none; }
 .pc-type { position: relative; z-index: 2; display: flex; align-items: center; gap: 1.6cqw; margin: 2.2cqw 0 1.4cqw; padding: .8cqw 2cqw .8cqw .8cqw;
   border-radius: 99px; background: linear-gradient(90deg, #3a2410, #5a3a1a 50%, #3a2410); box-shadow: inset 0 0 0 .4cqw #c8a060;
@@ -57,13 +57,13 @@
 .pc-crest { width: 7.5cqw; height: 7.5cqw; flex: none; fill: none; stroke: #2a1606; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 .pc-crest-disc { fill: #e2b85c; stroke: #3a2208; stroke-width: 1.5; }
 .pc-text { position: relative; z-index: 2; flex: 1 1 auto; min-height: 0; overflow: auto; border-radius: 1.4cqw; padding: 2.4cqw 3cqw;
-  color: #24160a; font: 400 clamp(11px, 3.9cqw, 15px)/1.32 'Libre Baskerville', Georgia, serif;
+  color: #24160a; font: 400 clamp(10.5px, 3.7cqw, 14.5px)/1.25 'Libre Baskerville', Georgia, serif;
   background: #ead7ae url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='p'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' seed='4'/><feColorMatrix values='0 0 0 0 .45  0 0 0 0 .33  0 0 0 0 .18  0 0 0 .22 0'/></filter><rect width='100%' height='100%' filter='url(%23p)'/></svg>");
   box-shadow: inset 0 0 0 .4cqw #8a6a3a, inset 0 0 4cqw rgba(120,80,30,.45), 0 .4cqw 1cqw rgba(0,0,0,.5); }
 .pc-rules { margin: 0 0 1.6cqw; }
 .pc-lead strong { font-family: 'Rye', Georgia, serif; font-weight: 400; color: #6a2a10; }
 .pc-flavor { margin: 1.6cqw 0 0; padding-top: 1.6cqw; border-top: 1px solid rgba(90,60,25,.35); font-style: italic; font-size: 90%; color: #4a3218; }
-.pc-flavor span { font-style: normal; font-size: 88%; white-space: nowrap; }
+.pc-flavor span { font-style: normal; font-size: 88%; }
 .pc-foot { position: relative; z-index: 2; display: flex; align-items: flex-end; justify-content: space-between; margin-top: 1.6cqw; min-height: 6cqw; }
 .pc-set { font: 600 clamp(8px, 2.9cqw, 11px)/1 Georgia, serif; letter-spacing: .08em; text-transform: uppercase; color: #c8a868; padding-bottom: .6cqw; }
 .pc-foot .pc-power { margin: -8cqw 0 0 0; }

@@ -299,3 +299,31 @@
 
 /* No pull-to-refresh during a match: a downward swipe at the top must not reload the page. */
 html:has(body[data-screen="battle"]), body[data-screen="battle"] { overscroll-behavior-y: none; }
+
+/* ---- Raised ground: ridges and mesas stand up off the range (no text label) ---- */
+.stone.elev-1, .stone.elev-2 {
+  transform: translateY(-3px);
+  background-image:
+    radial-gradient(circle at 50% 30%, rgba(255,236,190,.16), transparent 55%),
+    radial-gradient(circle at 50% 50%, transparent 58%, rgba(0,0,0,.35) 70%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='r'><feTurbulence type='fractalNoise' baseFrequency='.09' numOctaves='4' seed='9'/><feDiffuseLighting lighting-color='%23c9a77a' surfaceScale='3.2'><feDistantLight azimuth='235' elevation='48'/></feDiffuseLighting></filter><rect width='100%' height='100%' filter='url(%23r)'/></svg>"),
+    linear-gradient(#7a5e42, #5a4430);
+  background-size: auto, auto, 140% 140%, auto;
+  background-blend-mode: normal, normal, multiply, normal;
+}
+.stone.elev-2 { transform: translateY(-6px); }
+/* rock rim + lit top edge + the cliff step under it + cast shadow */
+.stone.elev-1:not(.legal-move):not(.legal-strike):not(.legal-tile) {
+  box-shadow: 0 0 0 1px #1a120c, 0 0 0 3px #b08a58, inset 0 3px 2px rgba(255,236,190,.45), inset 0 -4px 6px rgba(0,0,0,.45),
+    0 3px 0 1px #4a3420, 0 4px 0 2px #2a1c10, 0 9px 12px rgba(0,0,0,.6);
+}
+.stone.elev-2:not(.legal-move):not(.legal-strike):not(.legal-tile) {
+  box-shadow: 0 0 0 1px #1a120c, 0 0 0 3px #d8b070, inset 0 3px 2px rgba(255,240,200,.55), inset 0 -4px 6px rgba(0,0,0,.45),
+    0 3px 0 1px #5a4028, 0 6px 0 2px #3a2816, 0 7px 0 3px #22160c, 0 13px 16px rgba(0,0,0,.65);
+}
+.stone.elev-1.legal-move, .stone.elev-1.legal-strike, .stone.elev-1.legal-tile,
+.stone.elev-2.legal-move, .stone.elev-2.legal-strike, .stone.elev-2.legal-tile { filter: drop-shadow(0 5px 3px rgba(0,0,0,.55)); }
+/* money / gates on high ground keep their art over the rock */
+.stone.elev-1 .tile-mark, .stone.elev-2 .tile-mark { filter: drop-shadow(0 2px 3px #000c); }
+.elev-mark { display: none; }
+.stone.elev-1::after, .stone.elev-2::after { opacity: 0; }

@@ -26,6 +26,21 @@ const CREST: Record<FactionId, string> = {
   lodge: 'M18 3 L9 17 h6 l-3 12 l11 -16 h-6 z',
 };
 
+/** Shrink rules/flavor text in small steps until it fits its box (no clipping). */
+function fitText(el: HTMLDivElement | null) {
+  if (!el) return;
+  const run = () => {
+    el.style.fontSize = '';
+    let px = parseFloat(getComputedStyle(el).fontSize);
+    for (let i = 0; i < 12 && el.scrollHeight > el.clientHeight + 1 && px > 8; i++) {
+      px -= 0.5;
+      el.style.fontSize = px + 'px';
+    }
+  };
+  run();
+  if (document.fonts?.ready) document.fonts.ready.then(run);
+}
+
 export function FactionCrest({ id, className = '' }: { id: FactionId; className?: string }) {
   return (
     <svg className={`pc-crest ${className}`} viewBox="0 0 32 32" aria-label={faction(id).name} role="img">
@@ -112,7 +127,7 @@ export function PremiumCard({ c, power }: { c: Card; power?: number }) {
             </span>
             <em>{f.short}</em>
           </div>
-          <div className="pc-text">
+          <div className="pc-text" ref={fitText}>
             <p className="pc-rules">{c.text}</p>
             {c.lead && (
               <p className="pc-rules pc-lead">
